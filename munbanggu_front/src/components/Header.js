@@ -11,3 +11,5 @@ const Header=(props)=>{
         </React.Fragment>
     )
 }
+
+export default Header;
