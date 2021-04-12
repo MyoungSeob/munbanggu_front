@@ -84,6 +84,7 @@ const FooterWrap = styled.div`
     width: 100%;
     background-color: #f6f6f6;
     padding: 0 0 60px 0;
+    overflow: hidden;
 `;
 
 const FooterBody = styled.div`
