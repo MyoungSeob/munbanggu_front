@@ -2,179 +2,300 @@ import React from 'react';
 import styled from 'styled-components';
 import nexticon from '../shared/next_icon.png'
 import icondot from '../shared/icon_dot.png'
+import DaumPostcode from 'react-daum-postcode';
+import Modal from '@material-ui/core/Modal';
+import { makeStyles } from '@material-ui/core/styles';
+import {isEmail} from '../shared/Check'
+
 
 const SignUpInfo =(props)=> {
+  // 우편번호 API 이용을 위한 주소와 우편번호
+  const [isAddress, setIsAddress] = React.useState("");
+  const [isZoneCode, setIsZoneCode] = React.useState("");
+  // modal을 열기 위해서 만듦
+  const [open, setOpen] = React.useState(false);
+  // 회원가입 시 서버에 보내야 할 것들
+  const [id, setId] = React.useState("");
+  const [pwd, setPwd] = React.useState("");
+  const [checkPwd, setCheckPwd] = React.useState("");
+  const [name, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [phoneNumber, setPhoneNumber] = React.useState("");
+  const [number, setNumber] = React.useState("");
+  const [detailAddress, setDetailAddress] = React.useState("");
 
-    return (
-      <React.Fragment>
-        <Container>
-          <Contents>
-            <SubContents>
-              <ContentBox>
-                <MemberTit>
-                  <Sign>회원가입</Sign>
-                  <SignChap>
-                    <Now>
-                      <Num>01</Num>정보입력
-                      <span>
-                        <IconImg src={nexticon} />
-                      </span>
-                    </Now>
-                    <Next>
-                      <Num>02</Num>가입완료
-                    </Next>
-                  </SignChap>
-                </MemberTit>
-                <MemberCont>
-                  <BaseInfoBox>
-                    <BasicInfo>기본정보</BasicInfo>
-                    <Important>
-                      <ImgDot src={icondot} />
-                      표시는 반드시 입력하셔야 하는 항목입니다.
-                    </Important>
-                  </BaseInfoBox>
-                  <BaseInfoSec>
-                    <Table border="0" cellPadding="0" cellSpacing="0">
-                      <colgroup>
-                        <col width="25%"></col>
-                        <col width="75%"></col>
-                      </colgroup>
-                      <Tbody>
-                        <Tr>
-                          <Th>
-                            <ImgDot src={icondot} />
-                            <span>아이디</span>
-                          </Th>
-                          <Td>
-                            <MemberWarning>
-                              <InputLong />
-                              <MissingId>사용가능한 아이디입니다.</MissingId>
-                            </MemberWarning>
-                          </Td>
-                        </Tr>
-                        <Tr>
-                          <Th>
-                            <ImgDot src={icondot} />
-                            <span>비밀번호</span>
-                          </Th>
-                          <Td>
-                            <MemberWarning>
-                              <InputPwd />
-                              <PwdError>최소 10 이상 입력해 주세요.</PwdError>
-                            </MemberWarning>
-                          </Td>
-                        </Tr>
-                        <Tr>
-                          <Th>
-                            <ImgDot src={icondot} />
-                            <span>비밀번호 확인</span>
-                          </Th>
-                          <Td>
-                            <MemberWarning>
-                              <InputPwd />
-                              <PwdError>비밀번호가 서로 다릅니다.</PwdError>
-                            </MemberWarning>
-                          </Td>
-                        </Tr>
-                        <Tr>
-                          <Th>
-                            <ImgDot src={icondot} />
-                            <span>이름</span>
-                          </Th>
-                          <Td>
-                            <MemberWarning>
-                              <InputLong />
-                            </MemberWarning>
-                          </Td>
-                        </Tr>
-                        <Tr>
-                          <Th>
-                            <ImgDot src={icondot} />
-                            <span>이메일</span>
-                          </Th>
-                          <Td>
-                            <MemberWarning>
-                              <InputEmail type="text" valueTapIndex="-1" />
-                              <Select>
-                                <option value="self">직접입력</option>
-                                <option value="naver.com">naver.com</option>
-                                <option value="hanmail.net">hanmail.net</option>
-                                <option value="daum.net">daum.net</option>
-                                <option value="nate.com">nate.com</option>
-                                <option value="hotmail.com">hotmail.com</option>
-                                <option value="gmail.com">gmail.com</option>
-                                <option value="icloud.com">icloud.com</option>
-                              </Select>
-                              <MissingEmail>
-                                사용가능한 이메일입니다.
-                              </MissingEmail>
-                              <FormElement>
-                                <CheckInput type="checkbox" />
-                                <Label>
-                                  (선택)마케팅 및 이벤트 정보 메일 수신에
-                                  동의합니다.
-                                </Label>
-                              </FormElement>
-                            </MemberWarning>
-                          </Td>
-                        </Tr>
-                        <Tr>
-                          <Th>
-                            <ImgDot src={icondot} />
-                            <span>휴대폰 번호</span>
-                          </Th>
-                          <Td>
-                            <MemberWarning>
-                              <InputMid />
-                              <FormElement>
-                                <CheckInput type="checkbox" />
-                                <Label>
-                                  (선택)마케팅 및 이벤트 정보 메일 수신에
-                                  동의합니다.
-                                </Label>
-                              </FormElement>
-                            </MemberWarning>
-                          </Td>
-                        </Tr>
-                        <Tr>
-                          <Th>
-                            <span>전화번호</span>
-                          </Th>
-                          <Td>
-                            <MemberWarning>
-                              <InputLong />
-                            </MemberWarning>
-                          </Td>
-                        </Tr>
-                        <Tr>
-                          <Th>
-                            <span>주소</span>
-                          </Th>
-                          <Td>
-                            <MemberWarning>
-                              <InputLetterNum />
-                              <PostCodeBtn>우편번호검색</PostCodeBtn>
-                              <AddressInput>
-                                <InputAddress />
-                                <InputSubAddress />
-                              </AddressInput>
-                            </MemberWarning>
-                          </Td>
-                        </Tr>
-                      </Tbody>
-                    </Table>
-                  </BaseInfoSec>
-                </MemberCont>
+  const useStyles = makeStyles((theme) => ({
+    modal: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    paper: {
+      backgroundColor: theme.palette.background.paper,
+      border: '2px solid #000',
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+    },
+  }));
+  const classes = useStyles(); 
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleComplete = (data) => {
+    let fullAddress = data.address;
+    let extraAddress = "";
+
+    if(data.addressType === "R"){
+      if (data.bname !== "") {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== "") {
+        extraAddress +=
+          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== "" ? `(${extraAddress})` : "";
+    }
+    setIsZoneCode(data.zonecode);
+    setIsAddress(fullAddress);
+    handleClose();
+  };
+  const body = (
+    <div>
+    <DaumPostcode onComplete={handleComplete} />
+    </div>
+  )
+
+  function SignUP(){
+    if (
+      id === "" ||
+      pwd === "" ||
+      checkPwd === "" ||
+      name === "" ||
+      email === "" ||
+      phoneNumber === ""
+    ) {
+      window.alert("표시된 항목들을 모두 입력해주세요.");
+    }
+  }
+
+  return (
+    <React.Fragment>
+      <Container>
+        <Contents>
+          <SubContents>
+            <ContentBox>
+              <MemberTit>
+                <Sign>회원가입</Sign>
+                <SignChap>
+                  <Now>
+                    <Num>01</Num>정보입력
+                    <span>
+                      <IconImg src={nexticon} />
+                    </span>
+                  </Now>
+                  <Next>
+                    <Num>02</Num>가입완료
+                  </Next>
+                </SignChap>
+              </MemberTit>
+              <MemberCont>
+                <BaseInfoBox>
+                  <BasicInfo>기본정보</BasicInfo>
+                  <Important>
+                    <ImgDot src={icondot} />
+                    표시는 반드시 입력하셔야 하는 항목입니다.
+                  </Important>
+                </BaseInfoBox>
+                <BaseInfoSec>
+                  <Table border="0" cellPadding="0" cellSpacing="0">
+                    <colgroup>
+                      <col width="25%"></col>
+                      <col width="75%"></col>
+                    </colgroup>
+                    <Tbody>
+                      <Tr>
+                        <Th>
+                          <ImgDot src={icondot} />
+                          <span>아이디</span>
+                        </Th>
+                        <Td>
+                          <MemberWarning>
+                            <InputLong
+                              onChange={(e) => {
+                                setId(e.target.value);
+                              }}
+                            />
+
+                            <BadInput>필수항목입니다.</BadInput>
+                          </MemberWarning>
+                        </Td>
+                      </Tr>
+                      <Tr>
+                        <Th>
+                          <ImgDot src={icondot} />
+                          <span>비밀번호</span>
+                        </Th>
+                        <Td>
+                          <MemberWarning>
+                            <InputPwd
+                              onChange={(e) => {
+                                setPwd(e.target.value);
+                              }}
+                            />
+                            <BadInput>최소 10 이상 입력해 주세요.</BadInput>
+                            <BadInput>필수항목입니다.</BadInput>
+                          </MemberWarning>
+                        </Td>
+                      </Tr>
+                      <Tr>
+                        <Th>
+                          <ImgDot src={icondot} />
+                          <span>비밀번호 확인</span>
+                        </Th>
+                        <Td>
+                          <MemberWarning>
+                            <InputPwd
+                              onChange={(e) => {
+                                setCheckPwd(e.target.value);
+                              }}
+                            />
+                            <BadInput>비밀번호가 서로 다릅니다.</BadInput>
+                            <BadInput>
+                              사용불가! 영문대/소문자,숫자,특수문자 중 2가지
+                              이상 조합하세요.
+                            </BadInput>
+                            <BadInput>필수항목입니다.</BadInput>
+                          </MemberWarning>
+                        </Td>
+                      </Tr>
+                      <Tr>
+                        <Th>
+                          <ImgDot src={icondot} />
+                          <span>이름</span>
+                        </Th>
+                        <Td>
+                          <MemberWarning>
+                            <InputLong
+                              onChange={(e) => {
+                                setName(e.target.value);
+                              }}
+                            />
+                          </MemberWarning>
+                        </Td>
+                      </Tr>
+                      <Tr>
+                        <Th>
+                          <ImgDot src={icondot} />
+                          <span>이메일</span>
+                        </Th>
+                        <Td>
+                          <MemberWarning>
+                            <InputEmail
+                              type="text"
+                              valueTapIndex="-1"
+                              onChange={(e) => {
+                                setEmail(e.target.value);
+                              }}
+                            />
+                            {/* {isEmail(email) ? (<GoodInput>사용가능한 이메일입니다.</GoodInput>) : (<BadInput>이메일을 정확하게 입력해주세요.</BadInput>)} */}
+
+                            <BadInput>필수항목입니다.</BadInput>
+                            <FormElement>
+                              <CheckInput type="checkbox" />
+                              <Label>
+                                (선택)마케팅 및 이벤트 정보 메일 수신에
+                                동의합니다.
+                              </Label>
+                            </FormElement>
+                          </MemberWarning>
+                        </Td>
+                      </Tr>
+                      <Tr>
+                        <Th>
+                          <ImgDot src={icondot} />
+                          <span>휴대폰 번호</span>
+                        </Th>
+                        <Td>
+                          <MemberWarning>
+                            <InputMid
+                              onChange={(e) => {
+                                setPhoneNumber(e.target.value);
+                              }}
+                            />
+                            <BadInput>필수항목입니다.</BadInput>
+                            <FormElement>
+                              <CheckInput type="checkbox" />
+
+                              <Label>
+                                (선택)마케팅 및 이벤트 정보 SMS 수신에
+                                동의합니다.
+                              </Label>
+                            </FormElement>
+                          </MemberWarning>
+                        </Td>
+                      </Tr>
+                      <Tr>
+                        <Th>
+                          <span>전화번호</span>
+                        </Th>
+                        <Td>
+                          <MemberWarning>
+                            <InputLong
+                              onChange={(e) => {
+                                setNumber(e.target.value);
+                              }}
+                            />
+                          </MemberWarning>
+                        </Td>
+                      </Tr>
+                      <Tr>
+                        <Th>
+                          <span>주소</span>
+                        </Th>
+                        <Td>
+                          <MemberWarning>
+                            <InputLetterNum value={isZoneCode} />
+                            <PostCodeBtn onClick={handleOpen}>
+                              우편번호검색
+                            </PostCodeBtn>
+                            <Modal
+                              open={open}
+                              onClose={handleClose}
+                              className={classes.modal}
+                              aria-labelledby="simple-modal-title"
+                              aria-describedby="simple-modal-description"
+                            >
+                              {body}
+                            </Modal>
+                            <AddressInput>
+                              <InputAddress value={isAddress} />
+                              <InputSubAddress
+                                onChange={(e) => {
+                                  setDetailAddress(e.target.value);
+                                }}
+                              />
+                            </AddressInput>
+                          </MemberWarning>
+                        </Td>
+                      </Tr>
+                    </Tbody>
+                  </Table>
+                </BaseInfoSec>
                 <BtnCenterBox>
                   <CancelButton>취소</CancelButton>
-                  <SignUpButton>회원가입</SignUpButton>
+                  <SignUpButton onClick={SignUP}>회원가입</SignUpButton>
                 </BtnCenterBox>
-              </ContentBox>
-            </SubContents>
-          </Contents>
-        </Container>
-      </React.Fragment>
-    );
+              </MemberCont>
+            </ContentBox>
+          </SubContents>
+        </Contents>
+      </Container>
+    </React.Fragment>
+  );
 }
 const Container = styled.div`
     border-top : 1px solid #eaeaea;
@@ -193,6 +314,7 @@ const SubContents = styled.div`
 const ContentBox = styled.div`
     float : left;
     width : 100%;
+    padding : 0 0 60px 0;
 `
 const MemberTit = styled.div`
     overflow : hidden;
@@ -283,7 +405,7 @@ const Th = styled.th`
     padding : 10px 15px;
     font-size : 12px;
 `
-const MissingId = styled.div`
+const GoodInput = styled.div`
     color : #329cff;
     text-align : left;
 `
@@ -319,7 +441,7 @@ const InputPwd = styled.input`
     line-height : 31px;
     box-sizing : border-box;
 `
-const PwdError = styled.div`
+const BadInput = styled.div`
     color : #000;
     text-align : left;
     font-size : 12px;
