@@ -8,11 +8,14 @@ const HeaderLogin =(props)=> {
         <Container>
           <LoginBox>
             <Box>
+              <Ul></Ul>
+              <GridBox>
               <il><LoginText>로그인</LoginText><TextBar /></il>
               <il><LoginText>회원가입</LoginText><TextBar /></il>
               <il><LoginText>마이페이지</LoginText><TextBar /></il>
               <il><LoginText>장바구니<CartCount>0</CartCount></LoginText></il>
-              </Box>
+              </GridBox>
+            </Box>
           </LoginBox>
         </Container>
       </React.Fragment>
@@ -20,18 +23,33 @@ const HeaderLogin =(props)=> {
 }
 
 const Container = styled.div`
+position : relative;
+
+`
+const LoginBox = styled.div`
 height : 40px;
 border-bottom : 1px solid #eaeaea;
 background : #fff;
-width : 100%
-`
-const LoginBox = styled.div`
 
-width : 1200px;
-margin : 0 auto;
 `
 const Box = styled.div`
-    float : right;
+    position : relative;
+    width : 1200px; 
+    margin : 0px auto;
+`
+const Ul = styled.ul`
+  float : left;
+  position : relative;
+  line-height : 1;
+  z-index : 99;
+  list-style : none;
+`
+const GridBox = styled.div`
+  float : right;
+  position : relative;
+  line-height : 1;
+  z-index : 99;
+  list-style : none;
 `
 const LoginText = styled.a`
     display : inline-block;
