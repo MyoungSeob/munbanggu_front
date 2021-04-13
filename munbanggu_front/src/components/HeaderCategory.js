@@ -87,15 +87,20 @@ const HeaderCategory = (props) => {
 
 const All_gnb = styled.div `
     display: none;
-    vertical-align: top;
-    text-align: left;
+    vertical-align: top; 
+    text-align: center;
 `;
 const Headergnb = styled.div`
   background: #fff;
 `;
 
 const Gnb = styled.div`
+  text-align: center;
   position: relative;
+  width:100%;
+  left:140px
+  
+  
 `;
 
 const Menubox = styled.div`
@@ -104,8 +109,12 @@ const Menubox = styled.div`
   position: relative;
   display: inline-block;
   vertical-align: top;
-  margin: 0 5px 0 55px;
+  margin: auto;
   padding: 0 12px;
+  align-items:center;
+  text-align: center;
+  
+  
 `;
 const Left = styled.div`
   position: absolute;
@@ -114,6 +123,7 @@ const Left = styled.div`
   font-size: 0;
   vertical-align: top;
   display: none;
+  
 `;
 const ULlist = styled.div`
   display:flex;
@@ -122,19 +132,20 @@ const ULlist = styled.div`
   font-size: 0;
   vertical-align: top;
   border: none;
-  text-align: center;
-
+  
+  
+ 
+  
     
 `;
 const Category = styled.a`
   
   text-decoration:none ; 
-  
+  display:inline-block;
   padding: 0 19px;
   font-size: 16px;
   color: #333;
   font-weight: bold;
-  text-align: center;
   line-height: 55px;
   
   &:active {
