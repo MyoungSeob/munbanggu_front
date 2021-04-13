@@ -1,6 +1,11 @@
 import React, { useState } from "react";
+
 import styled from "styled-components";
+import "../shared/Product.css";
+
 import product from "../shared/detail.jpeg";
+
+import ProductDetailInfo from "./ProductDetailInfo";
 import ProductButton from "../elements/ProductButton";
 
 const ProductDetail = (props) => {
@@ -18,71 +23,78 @@ const ProductDetail = (props) => {
     console.log(price);
 
     return (
-        <Wrap>
-            <Body>
-                <ImageBody>
-                    <img src={product} alt="product" width="473px" height="100%" />
-                </ImageBody>
-                <InfoBody>
-                    <div>
-                        <ProductName>스웨거x배민. 룸 스프레이 집중</ProductName>
-                        <ProductInfo>
-                            <Dl>
-                                <Dt>판매가격</Dt>
-                                <DdPrice>{originPrice}원</DdPrice>
-                            </Dl>
-                            <Dl>
-                                <Dt>배송정보</Dt>
-                                <DdShipping>
-                                    <span>2,500원 (3만원 이상 구매시 무료)</span>
-                                    <span>오후 2시 당일배송마감</span>
-                                </DdShipping>
-                            </Dl>
-                        </ProductInfo>
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <Td>
-                                        <Span>옵션</Span>
-                                    </Td>
-                                    <td>
-                                        <input type="text" className="goodsCnt" value={goodsCnt} />
-                                        <span>
-                                            <button
-                                                type="button"
-                                                className="goodsCntUp"
-                                                onClick={CntUp}
-                                            >
-                                                증가
-                                            </button>
-                                            <button
-                                                type="button"
-                                                className="goodsCntDwn"
-                                                onClick={CntDwn}
-                                            >
-                                                감소
-                                            </button>
-                                        </span>
-                                    </td>
-                                    <TdPrice>{price}원</TdPrice>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                        <Total>
-                            <DtTotal>총 합계 금액</DtTotal>
-                            <DdTotal>{price}원</DdTotal>
-                        </Total>
-                        <ButtonDiv>
-                            <ProductButton is_like></ProductButton>
-                            <ProductButton is_white>장바구니</ProductButton>
-                            <ProductButton>바로 구매</ProductButton>
-                        </ButtonDiv>
-                    </div>
-                </InfoBody>
-            </Body>
-        </Wrap>
+        <>
+            <Wrap>
+                <Body>
+                    <ImageBody>
+                        <img src={product} alt="product" width="473px" height="100%" />
+                    </ImageBody>
+                    <InfoBody>
+                        <div>
+                            <ProductName>스웨거x배민. 룸 스프레이 집중</ProductName>
+                            <ProductInfo>
+                                <Dl>
+                                    <Dt>판매가격</Dt>
+                                    <DdPrice>{originPrice}원</DdPrice>
+                                </Dl>
+                                <Dl>
+                                    <Dt>배송정보</Dt>
+                                    <DdShipping>
+                                        <span>2,500원 (3만원 이상 구매시 무료)</span>
+                                        <span>오후 2시 당일배송마감</span>
+                                    </DdShipping>
+                                </Dl>
+                            </ProductInfo>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <Td>
+                                            <Span>옵션</Span>
+                                        </Td>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                className="goodsCnt"
+                                                value={goodsCnt}
+                                            />
+                                            <span>
+                                                <button
+                                                    type="button"
+                                                    className="goodsCntUp"
+                                                    onClick={CntUp}
+                                                >
+                                                    증가
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    className="goodsCntDwn"
+                                                    onClick={CntDwn}
+                                                >
+                                                    감소
+                                                </button>
+                                            </span>
+                                        </td>
+                                        <TdPrice>{price}원</TdPrice>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                            <Total>
+                                <DtTotal>총 합계 금액</DtTotal>
+                                <DdTotal>{price}원</DdTotal>
+                            </Total>
+                            <ButtonDiv>
+                                <ProductButton is_like></ProductButton>
+                                <ProductButton is_white>장바구니</ProductButton>
+                                <ProductButton>바로 구매</ProductButton>
+                            </ButtonDiv>
+                        </div>
+                    </InfoBody>
+                </Body>
+            </Wrap>
+            <ProductDetailInfo />
+        </>
     );
 };
 
