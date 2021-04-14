@@ -1,19 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 import styled from "styled-components";
 import Card from "./Card";
 
-const CardList = () => {
+const CardList = (props) => {
+    console.log(props);
     return (
         <ListBody>
             <ItemList>
                 <Card />
-                <Card is_sale />
-                <Card />
-                <Card is_sale />
-                <Card />
-                <Card is_sale />
-                <Card />
-                <Card is_sale />
             </ItemList>
         </ListBody>
     );

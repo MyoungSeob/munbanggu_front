@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import HeaderLogin from './HeaderLogin';
 import headerlogo from '../shared/header_logo.png'
+import HeaderCategory from './HeaderCategory'
 
 const HeaderScrollLogo=(props)=>{
 
@@ -36,6 +37,7 @@ const HeaderScrollLogo=(props)=>{
               </il>
             </GridBox>
           </Box>
+          <HeaderCategory />
         </LoginBox>
       </Container>
     </React.Fragment>
@@ -54,7 +56,7 @@ const Container = styled.div`
 position : relative;
 background : #fff;
 z-index : 99;
-padding-bottom : 40px;
+padding-bottom : 95px;
 `
 const LoginBox = styled.div`
 height : 40px;

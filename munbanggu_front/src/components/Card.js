@@ -1,44 +1,102 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Image from "../elements/Image";
+
+import { history } from "../redux/configStore";
+import { Link } from "react-router-dom";
 
 import detail from "../shared/detail.jpeg";
 import saleBadge from "../shared/SaleBadge.png";
 
+import axios from "axios";
+
 const Card = (props) => {
     const { is_sale } = props;
+    const [api, setApi] = useState("");
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        const fetchProduct = async (param) => {
+            try {
+                setError(null);
+                setApi(null);
+                setLoading(true);
+                const response = await axios.get(
+                    `https://6068a5d60add49001734047c.mockapi.io/product`
+                );
+                setApi(response.data);
+            } catch (e) {
+                setError(e);
+            }
+            setLoading(false);
+        };
+        fetchProduct();
+    }, []);
+    if (!api) return null;
+    if (error) return <div>error</div>;
+    if (loading) return <div>spinner..</div>;
+    console.log(api);
 
     return (
         <>
-            {is_sale ? (
-                <Item>
-                    <ItemInner>
-                        <ImageA href="/goods/:id">
-                            <img src={detail} alt="detail" width="280px"></img>
-                        </ImageA>
-                        <ItemInfo>
-                            <SaleBadge>
-                                <img src={saleBadge} alt="sale" />
-                            </SaleBadge>
-                            <Sale>10%</Sale>
-                            <ItemA>스웨거 배민 룸 스프레이 집중</ItemA>
-                            <PrePrice>15,000원</PrePrice>
-                            <ItemPriceInfo>17,000원</ItemPriceInfo>
-                        </ItemInfo>
-                    </ItemInner>
-                </Item>
-            ) : (
-                <Item>
-                    <ItemInner>
-                        <ImageA href="/goods/:id">
-                            <img src={detail} alt="detail" width="280px"></img>
-                        </ImageA>
-                        <ItemInfo>
-                            <ItemA>스웨거 배민 룸 스프레이 집중</ItemA>
-                            <ItemPriceInfo>17,000원</ItemPriceInfo>
-                        </ItemInfo>
-                    </ItemInner>
-                </Item>
+            {api.map((product) =>
+                product.discount === true
+                    ? [
+                          <Link
+                              key={product._id}
+                              to={`/goods/${product._id}`}
+                              onClick={() => {
+                                  history.push(`/post/${product._id}`);
+                              }}
+                          >
+                              <Item>
+                                  <ItemInner>
+                                      <ImageA href="/goods/:id">
+                                          <img
+                                              src={product.thumbnail_url}
+                                              alt="detail"
+                                              width="280px"
+                                          ></img>
+                                      </ImageA>
+                                      <ItemInfo>
+                                          <SaleBadge>
+                                              <img src={saleBadge} alt="sale" />
+                                          </SaleBadge>
+                                          <Sale>10%</Sale>
+                                          <ItemA>{product.title}</ItemA>
+                                          <PrePrice>15,000원</PrePrice>
+                                          <ItemPriceInfo>{product.sale_price}</ItemPriceInfo>
+                                      </ItemInfo>
+                                  </ItemInner>
+                              </Item>
+                          </Link>,
+                      ]
+                    : [
+                          <Link
+                              key={product.id}
+                              to={`/goods/${product.id}`}
+                              onClick={() => {
+                                  history.push(`/post/${product.id}`);
+                              }}
+                          >
+                              <Item>
+                                  <ItemInner>
+                                      <ImageA href="/goods/:id">
+                                          <img
+                                              src={product.thumbnail_url}
+                                              alt="detail"
+                                              width="280px"
+                                          ></img>
+                                      </ImageA>
+                                      <ItemInfo>
+                                          <ItemA>{product.title}</ItemA>
+                                          <ItemPriceInfo>{product.sale_price}</ItemPriceInfo>
+                                      </ItemInfo>
+                                  </ItemInner>
+                              </Item>
+                          </Link>,
+                      ]
             )}
         </>
     );
@@ -95,12 +153,14 @@ const Sale = styled.span`
     font-family: "Montserrat";
     color: #ff6350;
     font-weight: 800;
+    margin-top: -8px;
 `;
 
 const PrePrice = styled.span`
     color: #888;
     text-decoration: line-through;
     font-size: 12px;
+    margin-bottom: -5px;
 `;
 
 const SaleBadge = styled.div`

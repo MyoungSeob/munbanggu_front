@@ -1,13 +1,12 @@
-import React from 'react';
-import Header from '../components/Header'
+import React from "react";
+import CardList from "../components/CardList";
 
-const Home=(props)=>{
-
+const Home = (props) => {
     return (
         <React.Fragment>
-            <Header />
+            <CardList />
         </React.Fragment>
-    )
-}
+    );
+};
 
 export default Home;

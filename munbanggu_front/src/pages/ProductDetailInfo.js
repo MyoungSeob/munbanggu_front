@@ -8,24 +8,31 @@ import info from "../shared/detail3.jpeg";
 
 import ProductButton from "../elements/ProductButton";
 import GoodsTab from "../components/GoodsTab";
+import ProductDetail from "./ProductDetail";
 
-const ProductDetailInfo = () => {
+const ProductDetailInfo = (props) => {
+    const detailInfo = props.data;
+    const image = detailInfo.detail_image_url[0];
+    console.log(detailInfo.comment_count);
+
     return (
         <Body>
-            <GoodsTab is_info />
+            <GoodsTab is_info review_cnt={detailInfo.comment_count} />
             <InfoImg>
-                <img src={info} alt="info" />
+                <img src={image} alt="product detail" />
             </InfoImg>
             <InfoTable>
                 <h3>상품필수 정보</h3>
                 <tbody>
-                    <tr>
-                        <ProductTh>제품명</ProductTh>
-                        <ProductTd colspan="3">컴퓨터용 사인펜</ProductTd>
-                    </tr>
+                    {detailInfo.detail_info.map((info) => (
+                        <tr>
+                            <ProductTh>{info[0]}</ProductTh>
+                            <ProductTd colspan="3">{info[1]}</ProductTd>
+                        </tr>
+                    ))}
                 </tbody>
             </InfoTable>
-            <GoodsTab is_shipping />
+            <GoodsTab is_shipping review_cnt={detailInfo.comment_count} />
             <div>
                 <h3>배송안내</h3>
                 <Span>
@@ -40,7 +47,7 @@ const ProductDetailInfo = () => {
                     있는 점 양해 부탁드립니다.
                 </Span>
             </div>
-            <GoodsTab is_refund />
+            <GoodsTab is_refund review_cnt={detailInfo.comment_count} />
             <div>
                 <h3>교환 및 반품안내</h3>
                 <Span>
@@ -84,7 +91,7 @@ const ProductDetailInfo = () => {
                     기준(공정거래위원회 고시)에 따라 피해를 보상받을 수 있습니다.
                 </Span>
             </div>
-            <GoodsTab is_reviews />
+            <GoodsTab is_reviews review_cnt={detailInfo.comment_count} />
             <Flex>
                 <h3>상품후기</h3>
                 <AReview>상품후기 글쓰기</AReview>
@@ -110,7 +117,7 @@ const ProductDetailInfo = () => {
                     </tr>
                 </tbody>
             </Table>
-            <GoodsTab />
+            <GoodsTab review_cnt={detailInfo.comment_count} />
             <Flex>
                 <h3>상품문의</h3>
                 <AReview>상품문의 글쓰기</AReview>

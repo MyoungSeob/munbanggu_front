@@ -5,7 +5,8 @@ import icondot from '../shared/icon_dot.png'
 import DaumPostcode from 'react-daum-postcode';
 import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
-import {isEmail} from '../shared/Check'
+import {isEmail, isId, isPwd} from '../shared/Check'
+import axios from 'axios'
 
 
 const SignUpInfo =(props)=> {
@@ -21,8 +22,16 @@ const SignUpInfo =(props)=> {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [phoneNumber, setPhoneNumber] = React.useState("");
-  const [number, setNumber] = React.useState("");
   const [detailAddress, setDetailAddress] = React.useState("");
+
+  const [idCheck, setIdCheck] = React.useState(true);
+  const [pwdCheck, setPwdCheck] = React.useState(true);
+  const [pwdcheckCheck, setPwdcheckCheck] = React.useState(true);
+  const [nameCheck, setNameCheck] = React.useState(true);
+  const [emailCheck, setEmailCheck] = React.useState(true);
+  const [phoneNumberCheck, setPhoneNumberCheck] = React.useState(true);
+  const [detailAddressCheck, setDetailAddressCheck] = React.useState(true);
+  const [samePwd, setSamePwd] = React.useState(true);
 
   const useStyles = makeStyles((theme) => ({
     modal: {
@@ -70,17 +79,62 @@ const SignUpInfo =(props)=> {
   )
 
   function SignUP(){
-    if (
-      id === "" ||
-      pwd === "" ||
-      checkPwd === "" ||
-      name === "" ||
-      email === "" ||
-      phoneNumber === ""
-    ) {
-      window.alert("표시된 항목들을 모두 입력해주세요.");
+    // if (id === "") {
+    //   setIdCheck(false)
+    //   return;
+    // }
+    // if(pwd ===""){
+    //   setPwdCheck(false)
+    //   return;
+    // }
+    // if(checkPwd ===""){
+    //   setPwdcheckCheck(false)
+    // }
+    // if(pwd !== checkPwd){
+    //   setSamePwd(false)
+    //   return;
+    // }
+    // if(name ===""){
+    //   setNameCheck(false)
+    //   return;
+    // }
+    // if(email ===""){
+    //   setEmailCheck(false)
+    //   return;
+    // }
+    // if(phoneNumber ===""){
+    //   setPhoneNumberCheck(false)
+    //   return;
+    // }
+    // if(detailAddress ===""){
+    //   setDetailAddressCheck(false)
+      
+    // }
+    if(id ==="" || pwd === "" || pwdCheck ===""||name===""||email===""||phoneNumber===""||detailAddress===""){
+      window.alert("위의 사항을 모두 입력해주세요!")
+      return;
+    }else{
+      axios.post('http://15.164.211.216/user/register', {
+        id : id,
+        name : name,
+        password : pwd,
+        email : email,
+        zipcode : isZoneCode,
+        address_one : isAddress,
+        address_two : detailAddress,
+        phone_number : phoneNumber
+      })
+      .then(function(res) {
+        console.log(res)
+      })
+      .catch(function(error) {
+        console.log(error);
+      })
     }
+
   }
+
+  
 
   return (
     <React.Fragment>
@@ -129,8 +183,16 @@ const SignUpInfo =(props)=> {
                                 setId(e.target.value);
                               }}
                             />
-
-                            <BadInput>필수항목입니다.</BadInput>
+                            {isId(id, 4) ? (
+                              <GoodInput>사용가능한 아이디입니다.</GoodInput>
+                            ) : (
+                              <BadInput>최소 4 이상 입력하세요</BadInput>
+                            )}
+                            {!idCheck ? (
+                              <BadInput>필수항목입니다.</BadInput>
+                            ) : (
+                              ""
+                            )}
                           </MemberWarning>
                         </Td>
                       </Tr>
@@ -142,12 +204,17 @@ const SignUpInfo =(props)=> {
                         <Td>
                           <MemberWarning>
                             <InputPwd
+                              type="password"
                               onChange={(e) => {
                                 setPwd(e.target.value);
                               }}
                             />
-                            <BadInput>최소 10 이상 입력해 주세요.</BadInput>
-                            <BadInput>필수항목입니다.</BadInput>
+                            {/* {isPwd(pwd) ? (<GoodInput>사용가능한 비밀번호입니다/</GoodInput>) : (<BadInput>최소 10자 이상, 영문과 숫자, 특수문자를 조합하여 입력해 주세요.</BadInput>)} */}
+                            {!pwdCheck ? (
+                              <BadInput>필수항목입니다.</BadInput>
+                            ) : (
+                              ""
+                            )}
                           </MemberWarning>
                         </Td>
                       </Tr>
@@ -159,16 +226,25 @@ const SignUpInfo =(props)=> {
                         <Td>
                           <MemberWarning>
                             <InputPwd
+                              type="password"
                               onChange={(e) => {
                                 setCheckPwd(e.target.value);
                               }}
                             />
-                            <BadInput>비밀번호가 서로 다릅니다.</BadInput>
+                            {!samePwd ? (
+                              <BadInput>비밀번호가 서로 다릅니다.</BadInput>
+                            ) : (
+                              ""
+                            )}
                             <BadInput>
                               사용불가! 영문대/소문자,숫자,특수문자 중 2가지
                               이상 조합하세요.
                             </BadInput>
-                            <BadInput>필수항목입니다.</BadInput>
+                            {!pwdcheckCheck ? (
+                              <BadInput>필수항목입니다.</BadInput>
+                            ) :
+                              ""
+                            }
                           </MemberWarning>
                         </Td>
                       </Tr>
@@ -184,6 +260,11 @@ const SignUpInfo =(props)=> {
                                 setName(e.target.value);
                               }}
                             />
+                            {!setNameCheck ? (
+                              <BadInput>필수항목입니다.</BadInput>
+                            ) : (
+                              ""
+                            )}
                           </MemberWarning>
                         </Td>
                       </Tr>
@@ -201,9 +282,19 @@ const SignUpInfo =(props)=> {
                                 setEmail(e.target.value);
                               }}
                             />
-                            {/* {isEmail(email) ? (<GoodInput>사용가능한 이메일입니다.</GoodInput>) : (<BadInput>이메일을 정확하게 입력해주세요.</BadInput>)} */}
+                            {isEmail(email) ? (
+                              <GoodInput>사용가능한 이메일입니다.</GoodInput>
+                            ) : (
+                              <BadInput>
+                                이메일을 정확하게 입력해주세요.
+                              </BadInput>
+                            )}
+                            {!emailCheck ? (
+                              <BadInput>필수항목입니다.</BadInput>
+                            ) : (
+                              ""
+                            )}
 
-                            <BadInput>필수항목입니다.</BadInput>
                             <FormElement>
                               <CheckInput type="checkbox" />
                               <Label>
@@ -226,7 +317,11 @@ const SignUpInfo =(props)=> {
                                 setPhoneNumber(e.target.value);
                               }}
                             />
-                            <BadInput>필수항목입니다.</BadInput>
+                            {!phoneNumberCheck ? (
+                              <BadInput>필수항목입니다.</BadInput>
+                            ) : (
+                              ""
+                            )}
                             <FormElement>
                               <CheckInput type="checkbox" />
 
@@ -235,20 +330,6 @@ const SignUpInfo =(props)=> {
                                 동의합니다.
                               </Label>
                             </FormElement>
-                          </MemberWarning>
-                        </Td>
-                      </Tr>
-                      <Tr>
-                        <Th>
-                          <span>전화번호</span>
-                        </Th>
-                        <Td>
-                          <MemberWarning>
-                            <InputLong
-                              onChange={(e) => {
-                                setNumber(e.target.value);
-                              }}
-                            />
                           </MemberWarning>
                         </Td>
                       </Tr>
@@ -279,6 +360,11 @@ const SignUpInfo =(props)=> {
                                 }}
                               />
                             </AddressInput>
+                            {!detailAddressCheck ? (
+                              <BadInput>필수항목입니다.</BadInput>
+                            ) : (
+                              ""
+                            )}
                           </MemberWarning>
                         </Td>
                       </Tr>
@@ -346,6 +432,7 @@ const Now = styled.li`
     font-weight : bold;
     float : left;
     font-size : 14px;
+    display : list-item;
 `
 const Next = styled.li`
     float : left;
@@ -387,16 +474,19 @@ const BaseInfoSec = styled.div`
 `
 const Table = styled.table`
     width : 100%;
+    background-color : #ffffff;
 `
 const Tbody = styled.tbody`
     display: table-row-group;
     vertical-align: middle;
     border-color: inherit;
+    background-color : #ffffff;
 `
 const Tr = styled.tr`
 display: table-row;
 vertical-align: inherit;
 border-color: inherit;
+
 `
 const Th = styled.th`
     text-align : left;

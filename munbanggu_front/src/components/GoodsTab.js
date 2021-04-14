@@ -2,7 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 const GoodsTab = (props) => {
+    const review = props.review_cnt;
     const { is_info, is_shipping, is_refund, is_reviews } = props;
+    console.log(review);
     return (
         <div>
             {is_info ? (
@@ -19,7 +21,7 @@ const GoodsTab = (props) => {
                         </Li>
                         <Li>
                             <A href="#reviews">
-                                상품후기 <strong>0</strong>
+                                상품후기 <strong>{review}</strong>
                             </A>
                         </Li>
                         <Li>
@@ -43,7 +45,7 @@ const GoodsTab = (props) => {
                         </Li>
                         <Li>
                             <A href="#reviews">
-                                상품후기 <strong>0</strong>
+                                상품후기 <strong>{review}</strong>
                             </A>
                         </Li>
                         <Li>
@@ -67,7 +69,7 @@ const GoodsTab = (props) => {
                         </Li>
                         <Li>
                             <A href="#reviews">
-                                상품후기 <strong>0</strong>
+                                상품후기 <strong>{review}</strong>
                             </A>
                         </Li>
                         <Li>
@@ -91,7 +93,7 @@ const GoodsTab = (props) => {
                         </Li>
                         <Li className="on">
                             <A href="#reviews">
-                                상품후기 <strong>0</strong>
+                                상품후기 <strong>{review}</strong>
                             </A>
                         </Li>
                         <Li>
@@ -115,7 +117,7 @@ const GoodsTab = (props) => {
                         </Li>
                         <Li>
                             <A href="#reviews">
-                                상품후기 <strong>0</strong>
+                                상품후기 <strong>{review}</strong>
                             </A>
                         </Li>
                         <Li className="on">
