@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 import styled from "styled-components";
 import "../shared/Product.css";
@@ -18,20 +19,44 @@ const ProductDetail = (props) => {
             setGoodsCnt(goodsCnt - 1);
         }
     };
-    const originPrice = 5000;
+    const [api, setApi] = useState("");
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        const fetchProduct = async (param) => {
+            try {
+                setError(null);
+                setApi(null);
+                setLoading(true);
+                const response = await axios.get(
+                    `https://6068a5d60add49001734047c.mockapi.io/product`
+                );
+                setApi(response.data);
+            } catch (e) {
+                setError(e);
+            }
+            setLoading(false);
+        };
+        fetchProduct();
+    }, []);
+    if (!api) return null;
+    if (error) return <div>error</div>;
+    if (loading) return <div>spinner..</div>;
+
+    const originPrice = api[0].sale_price.toLocaleString("en");
     const price = (originPrice * goodsCnt).toLocaleString("en");
-    console.log(price);
 
     return (
         <>
             <Wrap>
                 <Body>
                     <ImageBody>
-                        <img src={product} alt="product" width="473px" height="100%" />
+                        <img src={api[0].thumbnail_url} alt="product" width="473px" height="100%" />
                     </ImageBody>
                     <InfoBody>
                         <div>
-                            <ProductName>스웨거x배민. 룸 스프레이 집중</ProductName>
+                            <ProductName>{api[0].title}</ProductName>
                             <ProductInfo>
                                 <Dl>
                                     <Dt>판매가격</Dt>
@@ -49,7 +74,7 @@ const ProductDetail = (props) => {
                                 <tbody>
                                     <tr>
                                         <Td>
-                                            <Span>옵션</Span>
+                                            <Span>{api[0].option}</Span>
                                         </Td>
                                         <td>
                                             <input
@@ -93,7 +118,7 @@ const ProductDetail = (props) => {
                     </InfoBody>
                 </Body>
             </Wrap>
-            <ProductDetailInfo />
+            <ProductDetailInfo data={api[0]} />
         </>
     );
 };
