@@ -9,7 +9,7 @@ const Login = (props) =>{
 		{/* <!-- //member_tit --> */}
 		<Content_mem>
 
-    </Content_mem>
+    
      <Form id="formLogin" method="post" action="https://store.baemin.com/member/login_ps.php" novalidate="novalidate">
 				<Hiddeninput type="hidden" id="mode" name="mode" value="login">
 				<Hiddeninput type="hidden" id="returnUrl" name="returnUrl" value="https%3A%2F%2Fstore.baemin.com%2F">
@@ -30,28 +30,33 @@ const Login = (props) =>{
 						</Id_chk>
 						<Logbut type="submit">로그인</Logbut>
 					</div>
-
+        
 				</Logbox>
+        
 				{/* <!-- //login_box --> */}
-				<div class="member_sns_login">
-					
 				
+        <div class="member_sns_login">
+					<SnsA href="https://accounts.kakao.com/login?continue=https%3A%2F%2Fkauth.kakao.com%2Foauth%2Fauthorize%3Fclient_id%3Dec10db670bd119e740558ca82e00b250%26redirect_uri%3Dhttps%3A%2F%2Fupbit.com%2Foauth%26response_type%3Dcode%26state%3De30%253D%26encode_state%3Dtrue" ><I>TALK</I>카카오계정으로 로그인</SnsA>
+					
 				</div>
-				<div class="btn_login_box">
+				
+				
+				<Btn_login_box>
 					<UL>
-						<LI><Authbut id="btnJoinMember" class="btn_member_join">회원가입</Authbut></LI>
-						<LI><Authbut id="btnFindId" class="btn_member_white">아이디 찾기</Authbut></LI>
+						<LI><Border><Authbut id="btnJoinMember" class="btn_member_join">회원가입</Authbut></Border></LI>
+						<LI><Border><Authbut id="btnFindId" class="btn_member_white">아이디 찾기</Authbut></Border></LI>
 						<LI><Authbut id="btnFindPwd" class="btn_member_white">비밀번호 찾기</Authbut></LI>
 					</UL>
-				</div>
+				</Btn_login_box>
         
 				{/* <!-- //btn_login_box --> */}
         </Hiddeninput>
         </Hiddeninput>
         </Form>
-        </WrapLogp>
-        </Content_box>
-        </React.Fragment>
+        </Content_mem>
+      </WrapLogp>
+    </Content_box>
+  </React.Fragment>
       
   );
 }
@@ -112,17 +117,67 @@ const Hiddeninput = styled.div `
 `;
 
 const Logbox = styled.div `
-  display: block;
-  margin: 0;
+    display: block;
+    margin: 0;
     padding: 0;
+    line-height: 1px;
+`;
+
+const SnsA = styled.a`
+    background-image: "../shared/kakao_login_medium_narrow.png;";
+    font-weight: 500;
+    margin:8px 0px 0px;
+    background-size: cover 42px;
+    text-align: center; 
+    display: block;
+    margin-top: 20px;
+    height: 55px;
+    padding-left: 18px;
+    background-color: #ffdc00;
+    color: #3c1e1e;
+    font-size: 17px;
+    font-family: Noto Sans KR,sans-serif;
+    padding-top: 14px;
+    width:100%;
+    box-sizing: border-box;
+    border: none;
+    border-radius:.1em;
+
+`;
+
+
+const I =styled.i `
+display: inline-block;
+    width: 24px;
+    height: 23px;
+    margin-right: 10px;
+    background: url(https://cdn.upbit.com/images/bg.e801517.png) -280px -50px no-repeat;
+    overflow: hidden;
+    text-indent: -999em;
+    vertical-align: -5px;
+`;
+
+
+
+const Logbut = styled.button `
+    width: 100%;
+    border: 1px solid #333;
+    background: #333;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 500;
+    height: 55px;
+
 `;
 
 const HLogin = styled.h3`
-  font-weight: normal;
+    font-weight: normal;
     font-size: 24px;
     color: #333;
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 24px;
+
 `;
 
 const Authinput = styled.input `
@@ -140,31 +195,42 @@ const Authinput = styled.input `
 
 
 
-const Logbut = styled.button `
-    width: 100%;
-    border: 1px solid #333;
-    background: #333;
-    color: #ffffff;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: 500;
-    height: 55px;
 
+const Btn_login_box = styled.div`
+    overflow: hidden;
+    margin: 10px 0 0 0;
+    padding: 10px 0 50px 0;
+    border-bottom: 1px solid #dcdcdc;
+    display:block;
+    
+    
+    
 `;
-
 
 
 
 const UL = styled.ul `
-  text-align: center;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    
+    text-align: center;
+    
+    list-style: none;
 `;
 
-
+const Border= styled.div`
+ border-right:1px solid #dcdcdc;
+ padding-right:5px;
+`;
 const LI = styled.li `
+  
   position: relative;
     display: inline-block;
-    padding: 0 12px 0 18px;
-    margin-bottom: 10px;
+   
+    margin-right:5px;
+    
+    
 `
 const Authbut = styled.button `
     color: #333;
@@ -173,7 +239,10 @@ const Authbut = styled.button `
     border: none;
     font-weight: normal;
     width: auto;
-    height: auto;`
+    cursor: pointer;
+    height: auto;
+    
+    `
 ;
 
 
