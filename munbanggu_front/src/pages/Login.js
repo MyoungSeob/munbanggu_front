@@ -3,7 +3,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user"
 import styled from "styled-components";
-import {history} from"../redux/configstore"
+import {history} from"../redux/configStore"
 
 const Login = (props) =>{
 

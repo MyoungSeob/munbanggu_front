@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-import { history } from "../redux/configstore";
+import { history } from "../redux/configStore";
 import { Link } from "react-router-dom";
 
 

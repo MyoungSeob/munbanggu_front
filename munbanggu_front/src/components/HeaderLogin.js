@@ -1,8 +1,18 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import {history} from "../redux/configstore"
-const HeaderLogin =(props)=> {
+import {history} from "../redux/configStore"
+import { actionCreators as userActions } from "../redux/modules/user";
 
+const HeaderLogin =(props)=> {
+  const dispatch = useDispatch();
+
+  const is_login = useSelector((state)=>state.user.is_login);
+  
+  const log_token = localStorage.getItem("log_token")? true:false
+  console.log(log_token);
+
+  if(is_login && log_token){
     return (
       <React.Fragment>
         <Container>
@@ -10,12 +20,7 @@ const HeaderLogin =(props)=> {
             <Box>
               <Ul></Ul>
               <GridBox>
-              <il><LoginText onClick={()=>{
-                history.push("/user/login");
-              }}> 로그인</LoginText><TextBar /></il>
-              <il><LoginText onClick={()=>{
-                history.push("/user/register");
-              }}>회원가입</LoginText><TextBar /></il>
+              <il><LoginText href="#" onClick={()=>{dispatch(userActions.logoutDB())}}>로그아웃</LoginText><TextBar /></il>
               <il><LoginText>마이페이지</LoginText><TextBar /></il>
               <il><LoginText>장바구니<CartCount>0</CartCount></LoginText></il>
               </GridBox>
@@ -24,8 +29,33 @@ const HeaderLogin =(props)=> {
         </Container>
       </React.Fragment>
     );
-}
+  }
 
+
+return(
+          <React.Fragment>
+          <Container>
+            <LoginBox>
+              <Box>
+                <Ul></Ul>
+                <GridBox>
+                <il><LoginText onClick={()=>{
+                  history.push("/user/login");
+                }}> 로그인</LoginText><TextBar /></il>
+                <il><LoginText onClick={()=>{
+                  history.push("/user/register");
+                }}>회원가입</LoginText><TextBar /></il>
+                <il><LoginText>마이페이지</LoginText><TextBar /></il>
+                <il><LoginText>장바구니<CartCount>0</CartCount></LoginText></il>
+                </GridBox>
+              </Box>
+            </LoginBox>
+          </Container>
+        </React.Fragment>
+)
+
+    
+              }
 const Container = styled.div`
 position : relative;
 

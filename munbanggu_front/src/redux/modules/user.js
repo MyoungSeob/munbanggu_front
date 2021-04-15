@@ -1,4 +1,4 @@
-import {createAction, handleAtions} from "redux-actions"
+import {createAction, handleActions} from "redux-actions"
 import {produce} from "immer";
 import axios from "axios";
 
@@ -37,6 +37,7 @@ const signUpDB = (id, name, pwd, email, isZoneCode, isAddress, detailAddress, ph
             console.log(error)
         })
         history.push('/user/login')
+        
     }
 }
 
@@ -51,12 +52,19 @@ const loginDB = (id, pwd) => {
     })
     .then(function(res) {
       console.log(res);
+      console.log(res.data.result.user.token)
+      localStorage.setItem("log_token",res.data.result.user.token)
+      console.log(localStorage.getItem("log_token"))
 
       dispatch(
-
+          logIn({
+            id:id,
+            pwd:pwd
+          })
       )
       history.push("/")
     })
+
     .catch(function(error) {
       console.log(error);
     })
@@ -65,6 +73,15 @@ const loginDB = (id, pwd) => {
 
 }
 
+const logoutDB =()=>{
+  return function(dispatch,  {history}){
+    localStorage.removeItem("log_token");
+      dispatch(logOut());
+      window.alert("로그아웃 되었습니다.");
+      
+  };
+};
+
 export default handleActions(
   {
     [LOG_IN]: (state, action) =>
@@ -72,14 +89,23 @@ export default handleActions(
         draft.user = action.payload.user;
         draft.is_login = true;
       }),
+      [LOG_OUT]: (state, action) =>
+      produce(state, (draft) => {
+        draft.user = null;
+        draft.is_login = false;
+      }),
   },
   initialState
 );
 
 
 const actionCreators = {
+    getUser,
+    logIn,
+    logOut,
     signUpDB,
-    loginDB
+    loginDB,
+    logoutDB
 }
 
 export {actionCreators}

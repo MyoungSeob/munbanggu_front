@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import beaminbutton from '../shared/beamin_button.png'
 import facebookicon from '../shared/facebookicon.png'
-
+import  {history}  from "../redux/configStore"
 const Signup=(props)=>{
 
     return (
@@ -23,7 +23,7 @@ const Signup=(props)=>{
                 </MemberLoginBox>
               </MemberCont>
               <MemberGuide>
-                  <p>이미 배민문방구 회원이신가요?<Login href="/user/login">로그인</Login></p>
+                  <p>이미 배민문방구 회원이신가요?<Login href="#" onClick={()=>{history.push("/user/login")}}>로그인</Login></p>
               </MemberGuide>
             </MemberWrap>
           </ContentBox>
