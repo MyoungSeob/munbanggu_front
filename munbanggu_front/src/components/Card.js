@@ -4,10 +4,7 @@ import styled from "styled-components";
 import { history } from "../redux/configstore";
 import { Link } from "react-router-dom";
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 6ca57bc1e8d61580ed911c9bf69649e2c9681d6a
 import saleBadge from "../shared/SaleBadge.png";
 
 import axios from "axios";
