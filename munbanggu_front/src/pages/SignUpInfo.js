@@ -7,9 +7,13 @@ import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
 import {isEmail, isId, isPwd} from '../shared/Check'
 import axios from 'axios'
+import { history } from '../redux/configStore'
+import {actionCreators as userActions} from '../redux/modules/user'
+import { useDispatch } from 'react-redux';
 
 
 const SignUpInfo =(props)=> {
+  const dispatch = useDispatch();
   // 우편번호 API 이용을 위한 주소와 우편번호
   const [isAddress, setIsAddress] = React.useState("");
   const [isZoneCode, setIsZoneCode] = React.useState("");
@@ -79,59 +83,38 @@ const SignUpInfo =(props)=> {
   )
 
   function SignUP(){
-    // if (id === "") {
-    //   setIdCheck(false)
-    //   return;
-    // }
-    // if(pwd ===""){
-    //   setPwdCheck(false)
-    //   return;
-    // }
-    // if(checkPwd ===""){
-    //   setPwdcheckCheck(false)
-    // }
-    // if(pwd !== checkPwd){
-    //   setSamePwd(false)
-    //   return;
-    // }
-    // if(name ===""){
-    //   setNameCheck(false)
-    //   return;
-    // }
-    // if(email ===""){
-    //   setEmailCheck(false)
-    //   return;
-    // }
-    // if(phoneNumber ===""){
-    //   setPhoneNumberCheck(false)
-    //   return;
-    // }
-    // if(detailAddress ===""){
-    //   setDetailAddressCheck(false)
-      
-    // }
     if(id ==="" || pwd === "" || pwdCheck ===""||name===""||email===""||phoneNumber===""||detailAddress===""){
       window.alert("위의 사항을 모두 입력해주세요!")
       return;
-    }else{
-      axios.post('http://15.164.211.216/user/register', {
-        id : id,
-        name : name,
-        password : pwd,
-        email : email,
-        zipcode : isZoneCode,
-        address_one : isAddress,
-        address_two : detailAddress,
-        phone_number : phoneNumber
-      })
-      .then(function(res) {
-        console.log(res)
-      })
-      .catch(function(error) {
-        console.log(error);
-      })
     }
-
+    if(!isId(id)){
+      window.alert("사용할 수 없는 아이디입니다.")
+      return
+    }
+    if(!isPwd(pwd)){
+      window.alert("사용할 수 없는 비밀번호 입니다.")
+      return
+    }
+    if(pwd !== checkPwd){
+      window.alert("비밀번호가 일치하지 않습니다.")
+      return
+    }
+    if(!isEmail(email)){
+      window.alert("이메일 형식을 확인해주세요.")
+      return
+    }
+    dispatch(
+      userActions.signUpDB(
+        id,
+        name,
+        pwd,
+        email,
+        isZoneCode,
+        isAddress,
+        detailAddress,
+        phoneNumber,
+      )
+    );
   }
 
   
@@ -179,11 +162,13 @@ const SignUpInfo =(props)=> {
                         <Td>
                           <MemberWarning>
                             <InputLong
+                              type="text"
+                              pattern="[A-Za-z0-9]+"
                               onChange={(e) => {
                                 setId(e.target.value);
                               }}
                             />
-                            {isId(id, 4) ? (
+                            {isId(id) ? (
                               <GoodInput>사용가능한 아이디입니다.</GoodInput>
                             ) : (
                               <BadInput>최소 4 이상 입력하세요</BadInput>
@@ -209,7 +194,14 @@ const SignUpInfo =(props)=> {
                                 setPwd(e.target.value);
                               }}
                             />
-                            {/* {isPwd(pwd) ? (<GoodInput>사용가능한 비밀번호입니다/</GoodInput>) : (<BadInput>최소 10자 이상, 영문과 숫자, 특수문자를 조합하여 입력해 주세요.</BadInput>)} */}
+                            {isPwd(pwd) ? (
+                              <GoodInput>사용가능한 비밀번호입니다</GoodInput>
+                            ) : (
+                              <BadInput>
+                                영문,숫자,특수문자를 조합하여 10자 이상
+                                적어주세요.
+                              </BadInput>
+                            )}
                             {!pwdCheck ? (
                               <BadInput>필수항목입니다.</BadInput>
                             ) : (
@@ -231,20 +223,13 @@ const SignUpInfo =(props)=> {
                                 setCheckPwd(e.target.value);
                               }}
                             />
-                            {!samePwd ? (
-                              <BadInput>비밀번호가 서로 다릅니다.</BadInput>
+                          
+
+                            {!pwdcheckCheck ? (
+                              <BadInput>필수항목입니다.</BadInput>
                             ) : (
                               ""
                             )}
-                            <BadInput>
-                              사용불가! 영문대/소문자,숫자,특수문자 중 2가지
-                              이상 조합하세요.
-                            </BadInput>
-                            {!pwdcheckCheck ? (
-                              <BadInput>필수항목입니다.</BadInput>
-                            ) :
-                              ""
-                            }
                           </MemberWarning>
                         </Td>
                       </Tr>
@@ -335,6 +320,7 @@ const SignUpInfo =(props)=> {
                       </Tr>
                       <Tr>
                         <Th>
+                        <ImgDot src={icondot} />
                           <span>주소</span>
                         </Th>
                         <Td>
@@ -372,7 +358,13 @@ const SignUpInfo =(props)=> {
                   </Table>
                 </BaseInfoSec>
                 <BtnCenterBox>
-                  <CancelButton>취소</CancelButton>
+                  <CancelButton
+                    onClick={() => {
+                      history.push("/");
+                    }}
+                  >
+                    취소
+                  </CancelButton>
                   <SignUpButton onClick={SignUP}>회원가입</SignUpButton>
                 </BtnCenterBox>
               </MemberCont>
@@ -422,6 +414,7 @@ const SignChap = styled.ol`
 const Num = styled.span`
     font-size : 16px;
     font-weight : bold;
+    display : inline;
 `
 const IconImg = styled.img`
     padding : 0 14px;
@@ -613,14 +606,14 @@ const InputAddress = styled.input`
     border : 1px solid #d6d6d6;
 `
 const InputSubAddress = styled.input`
-margin : 10px 0 0 0;
-padding : 0 10px;
-width : 380px;
-outline : none;
-height : 31px;
-color : #333333;
-border : 1px solid #d6d6d6;
-`
+  margin: 10px 0 0 0;
+  padding: 0 10px;
+  width: 380px;
+  outline: none;
+  height: 31px;
+  color: #333333;
+  border: 1px solid #d6d6d6;
+`;
 const PostCodeBtn = styled.button`
     float : left;
     margin : 0 0 0 5px;
