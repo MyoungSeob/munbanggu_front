@@ -1,9 +1,16 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import beaminbutton from '../shared/beamin_button.png'
 import facebookicon from '../shared/facebookicon.png'
+import google_login_btn from '../shared/google_login_btn.png'
+import {actionCreators as userActions} from '../redux/modules/user'
 
 const Signup=(props)=>{
+  const dispatch = useDispatch()
+  function googleLogin () {
+    dispatch(userActions.googleLoginDB())
+  }
 
     return (
       <React.Fragment>
@@ -17,9 +24,9 @@ const Signup=(props)=>{
                       <BeaminImg src={beaminbutton} />
                     </JoinButton>
                   </MemberLoginShop>
-                  <FaceBook>
-                    <FaceBookButton >페이스북으로 회원가입</FaceBookButton>
-                  </FaceBook>
+                  <Google>
+                    <GoogleBtn onClick={googleLogin} src={google_login_btn} />
+                  </Google>
                 </MemberLoginBox>
               </MemberCont>
               <MemberGuide>
@@ -62,25 +69,15 @@ cursor : pointer;
 const BeaminImg = styled.img`
     width : 100%;
 `
-const FaceBook = styled.div`
+const Google = styled.div`
   text-align : center;
   display:block;
 `
 
-const FaceBookButton = styled.a`
-    background: url("https://store.baemin.com/data/skin/front/udweb_C/img/custom/txt_pc_facebook_join@3x.png") 40px 5px no-repeat;
-    background-size: 38px;
-    background-color: #4267b2;
-    height: 55px;
-    width : 460px;
-    padding: 14px 164px;
-    color: #fff;
-    font-size: 14px;
-    font-weight : bold;
-    padding-top: 14px;
-    box-sizing: border-box;
-    border: none;
+const GoogleBtn = styled.img`
     cursor : pointer;
+    width : auto;
+    height : 55px;
 `
 const MemberLoginBox = styled.div`
     width : 460px;

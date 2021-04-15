@@ -1,4 +1,4 @@
-import {createAction, handleAtions} from "redux-actions"
+import {createAction, handleActions} from "redux-actions"
 import {produce} from "immer";
 import axios from "axios";
 
@@ -65,6 +65,18 @@ const loginDB = (id, pwd) => {
 
 }
 
+const googleLoginDB = () => {
+    return function (getState, dispatch, {history}) {
+        axios.get('http://15.164.211.216/auth/google')
+         .then(function(response){
+             console.log(response)
+         })
+         .catch(function(err){
+             console.log(err)
+         })
+    }
+ }
+
 export default handleActions(
   {
     [LOG_IN]: (state, action) =>
@@ -79,7 +91,8 @@ export default handleActions(
 
 const actionCreators = {
     signUpDB,
-    loginDB
+    loginDB,
+    googleLoginDB,
 }
 
 export {actionCreators}
