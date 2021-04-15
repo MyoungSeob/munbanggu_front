@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Image from "../elements/Image";
 
 import { history } from "../redux/configstore";
 import { Link } from "react-router-dom";
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6ca57bc1e8d61580ed911c9bf69649e2c9681d6a
 import saleBadge from "../shared/SaleBadge.png";
 
 import axios from "axios";
@@ -22,10 +24,8 @@ const Card = (props) => {
                 setError(null);
                 setApi(null);
                 setLoading(true);
-                const response = await axios.get(
-                    `https://6068a5d60add49001734047c.mockapi.io/product`
-                );
-                setApi(response.data);
+                const response = await axios.get(`http://15.164.211.216/goods`);
+                setApi(response.data.result);
             } catch (e) {
                 setError(e);
             }
@@ -36,7 +36,7 @@ const Card = (props) => {
     if (!api) return null;
     if (error) return <div>error</div>;
     if (loading) return <div>spinner..</div>;
-    console.log(api);
+    console.log(api[0]._id);
 
     return (
         <>
@@ -44,10 +44,8 @@ const Card = (props) => {
                 product.discount === true
                     ? [
                           <Link
-                              key={product._id}
-                              to={`/goods/${product._id}`}
                               onClick={() => {
-                                  history.push(`/post/${product._id}`);
+                                  history.push(`/goods/${product._id}`);
                               }}
                           >
                               <Item>
@@ -74,10 +72,8 @@ const Card = (props) => {
                       ]
                     : [
                           <Link
-                              key={product.id}
-                              to={`/goods/${product.id}`}
                               onClick={() => {
-                                  history.push(`/post/${product.id}`);
+                                  history.push(`/goods/${product._id}`);
                               }}
                           >
                               <Item>

@@ -4,7 +4,6 @@ import styled from "styled-components";
 const GoodsTab = (props) => {
     const review = props.review_cnt;
     const { is_info, is_shipping, is_refund, is_reviews } = props;
-    console.log(review);
     return (
         <div>
             {is_info ? (
