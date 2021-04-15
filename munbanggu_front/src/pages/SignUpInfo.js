@@ -28,15 +28,6 @@ const SignUpInfo =(props)=> {
   const [phoneNumber, setPhoneNumber] = React.useState("");
   const [detailAddress, setDetailAddress] = React.useState("");
 
-  const [idCheck, setIdCheck] = React.useState(true);
-  const [pwdCheck, setPwdCheck] = React.useState(true);
-  const [pwdcheckCheck, setPwdcheckCheck] = React.useState(true);
-  const [nameCheck, setNameCheck] = React.useState(true);
-  const [emailCheck, setEmailCheck] = React.useState(true);
-  const [phoneNumberCheck, setPhoneNumberCheck] = React.useState(true);
-  const [detailAddressCheck, setDetailAddressCheck] = React.useState(true);
-  const [samePwd, setSamePwd] = React.useState(true);
-
   const useStyles = makeStyles((theme) => ({
     modal: {
       display: 'flex',
@@ -83,7 +74,9 @@ const SignUpInfo =(props)=> {
   )
 
   function SignUP(){
-    if(id ==="" || pwd === "" || pwdCheck ===""||name===""||email===""||phoneNumber===""||detailAddress===""){
+    console.log(isAddress)
+    console.log(isZoneCode)
+    if(id ==="" || pwd === "" || checkPwd ===""||name===""||email===""||phoneNumber===""||detailAddress===""){
       window.alert("위의 사항을 모두 입력해주세요!")
       return;
     }
@@ -115,6 +108,7 @@ const SignUpInfo =(props)=> {
         phoneNumber,
       )
     );
+    
   }
 
   
@@ -171,12 +165,7 @@ const SignUpInfo =(props)=> {
                             {isId(id) ? (
                               <GoodInput>사용가능한 아이디입니다.</GoodInput>
                             ) : (
-                              <BadInput>최소 4 이상 입력하세요</BadInput>
-                            )}
-                            {!idCheck ? (
-                              <BadInput>필수항목입니다.</BadInput>
-                            ) : (
-                              ""
+                              <BadInput>최소 4자 이상 입력하세요</BadInput>
                             )}
                           </MemberWarning>
                         </Td>
@@ -202,11 +191,6 @@ const SignUpInfo =(props)=> {
                                 적어주세요.
                               </BadInput>
                             )}
-                            {!pwdCheck ? (
-                              <BadInput>필수항목입니다.</BadInput>
-                            ) : (
-                              ""
-                            )}
                           </MemberWarning>
                         </Td>
                       </Tr>
@@ -223,13 +207,6 @@ const SignUpInfo =(props)=> {
                                 setCheckPwd(e.target.value);
                               }}
                             />
-                          
-
-                            {!pwdcheckCheck ? (
-                              <BadInput>필수항목입니다.</BadInput>
-                            ) : (
-                              ""
-                            )}
                           </MemberWarning>
                         </Td>
                       </Tr>
@@ -245,11 +222,6 @@ const SignUpInfo =(props)=> {
                                 setName(e.target.value);
                               }}
                             />
-                            {!setNameCheck ? (
-                              <BadInput>필수항목입니다.</BadInput>
-                            ) : (
-                              ""
-                            )}
                           </MemberWarning>
                         </Td>
                       </Tr>
@@ -274,11 +246,6 @@ const SignUpInfo =(props)=> {
                                 이메일을 정확하게 입력해주세요.
                               </BadInput>
                             )}
-                            {!emailCheck ? (
-                              <BadInput>필수항목입니다.</BadInput>
-                            ) : (
-                              ""
-                            )}
 
                             <FormElement>
                               <CheckInput type="checkbox" />
@@ -302,11 +269,7 @@ const SignUpInfo =(props)=> {
                                 setPhoneNumber(e.target.value);
                               }}
                             />
-                            {!phoneNumberCheck ? (
-                              <BadInput>필수항목입니다.</BadInput>
-                            ) : (
-                              ""
-                            )}
+
                             <FormElement>
                               <CheckInput type="checkbox" />
 
@@ -320,7 +283,7 @@ const SignUpInfo =(props)=> {
                       </Tr>
                       <Tr>
                         <Th>
-                        <ImgDot src={icondot} />
+                          <ImgDot src={icondot} />
                           <span>주소</span>
                         </Th>
                         <Td>
@@ -346,11 +309,6 @@ const SignUpInfo =(props)=> {
                                 }}
                               />
                             </AddressInput>
-                            {!detailAddressCheck ? (
-                              <BadInput>필수항목입니다.</BadInput>
-                            ) : (
-                              ""
-                            )}
                           </MemberWarning>
                         </Td>
                       </Tr>

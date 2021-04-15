@@ -4,12 +4,20 @@ import axios from "axios";
 import styled from "styled-components";
 import "../shared/Product.css";
 
-
+import { useSelector, useDispatch } from "react-redux";
+import { actionsCreators as productActions } from "../redux/modules/product";
 
 import ProductDetailInfo from "./ProductDetailInfo";
 import ProductButton from "../elements/ProductButton";
 
 const ProductDetail = (props) => {
+    const id = props.match.params.id;
+
+    const dispatch = useDispatch();
+    const product_list = useSelector((store) => store.product.list);
+    const idx = product_list.findIndex((p) => p._id === id);
+    const data = product_list[idx];
+    console.log(data);
     const [goodsCnt, setGoodsCnt] = useState(1);
     const CntUp = () => {
         setGoodsCnt(goodsCnt + 1);
@@ -19,32 +27,42 @@ const ProductDetail = (props) => {
             setGoodsCnt(goodsCnt - 1);
         }
     };
-    const [api, setApi] = useState("");
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
 
     useEffect(() => {
-        const fetchProduct = async (param) => {
-            try {
-                setError(null);
-                setApi(null);
-                setLoading(true);
-                const response = await axios.get(
-                    `https://6068a5d60add49001734047c.mockapi.io/product`
-                );
-                setApi(response.data);
-            } catch (e) {
-                setError(e);
-            }
-            setLoading(false);
-        };
-        fetchProduct();
+        dispatch(productActions.getProductDB(id));
     }, []);
-    if (!api) return null;
-    if (error) return <div>error</div>;
-    if (loading) return <div>spinner..</div>;
+    // const [api, setApi] = useState("");
+    // const [loading, setLoading] = useState(true);
+    // const [error, setError] = useState("");
 
-    const originPrice = api[0].sale_price.toLocaleString("en");
+    // useEffect(() => {
+    //     const fetchProduct = async (param) => {
+    //         try {
+    //             setError(null);
+    //             setApi(null);
+    //             setLoading(true);
+    //             const response = await axios.get(`http://15.164.211.216/goods/${id}`);
+
+    //             // const data = response.data.result;
+    //             // const result = data.find((e, i, a) => {
+    //             //     console.log(e._id);
+    //             //     return e._id === id;
+    //             // });
+
+    //             setApi(response.data.result[0]);
+    //         } catch (e) {
+    //             setError(e);
+    //         }
+    //         setLoading(false);
+    //     };
+    //     fetchProduct();
+    // }, []);
+    // if (!api) return null;
+    // if (error) return <div>error</div>;
+    // if (loading) return <div>spinner..</div>;
+    // console.log(api);
+
+    const originPrice = data.sale_price;
     const price = (originPrice * goodsCnt).toLocaleString("en");
 
     return (
@@ -52,11 +70,11 @@ const ProductDetail = (props) => {
             <Wrap>
                 <Body>
                     <ImageBody>
-                        <img src={api[0].thumbnail_url} alt="product" width="473px" height="100%" />
+                        <img src={data.thumbnail_url} alt="product" width="473px" height="100%" />
                     </ImageBody>
                     <InfoBody>
                         <div>
-                            <ProductName>{api[0].title}</ProductName>
+                            <ProductName>{data.title}</ProductName>
                             <ProductInfo>
                                 <Dl>
                                     <Dt>판매가격</Dt>
@@ -74,7 +92,7 @@ const ProductDetail = (props) => {
                                 <tbody>
                                     <tr>
                                         <Td>
-                                            <Span>{api[0].option}</Span>
+                                            <Span>{data.option}</Span>
                                         </Td>
                                         <td>
                                             <input
@@ -118,7 +136,7 @@ const ProductDetail = (props) => {
                     </InfoBody>
                 </Body>
             </Wrap>
-            <ProductDetailInfo data={api[0]} />
+            <ProductDetailInfo data={data} />
         </>
     );
 };

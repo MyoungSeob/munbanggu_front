@@ -1,16 +1,26 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { actionsCreators as productActions } from "../redux/modules/product";
 
 import styled from "styled-components";
 import Card from "./Card";
 
 const CardList = (props) => {
-    console.log(props);
+    const dispatch = useDispatch();
+    const product_list = useSelector((store) => store.product.list);
+
+    useEffect(() => {
+        dispatch(productActions.getProductDB());
+    }, [dispatch]);
+
     return (
         <ListBody>
             <ItemList>
-                <Card />
+                {product_list.map((p) => {
+                    return <Card {...p} key={p.id} />;
+                })}
             </ItemList>
+            ;
         </ListBody>
     );
 };

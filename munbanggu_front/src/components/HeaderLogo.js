@@ -1,8 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import headerlogo from '../shared/header_logo.png'
+<<<<<<< HEAD
 import search_icon from '../shared/searchicon.jpeg'
 import  {history}  from "../redux/configStore"
+=======
+import search_icon from '../shared/searchicon.png'
+import history from "../redux/configStore"
+>>>>>>> d8fc2f04e045693553cdebdf5c121a230e2712ff
 
 const HeaderLogo=(props)=>{
 
@@ -99,7 +104,8 @@ const SearchButton = styled.button`
     width : 34px;
     border : 0 none;
     background-color : transparent;
-    cursor : pointer
+    cursor : pointer;
+    outline : none;
 `
 const BtnImg = styled.img`
 height : 34px;
