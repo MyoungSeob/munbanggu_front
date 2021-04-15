@@ -1,7 +1,35 @@
 import React from "react";
+
+import { useDispatch } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user"
 import styled from "styled-components";
+import {history} from"../redux/configstore"
 
 const Login = (props) =>{
+
+    const dispatch = useDispatch();
+
+    const[id,setId] = React.useState("");
+    const[pwd,setPwd] = React.useState("");
+
+
+    const login = () => {
+      // console.log(getCookie('user_id'))
+      if(id === "" || pwd ==="") {
+          window.alert("아이디와 비밀번호를 입력해주세요.")
+          // 아이디와 비밀번호의 입력창이 공백이라면 alert를 띄웁니다.
+          return;
+      }else{
+      dispatch(userActions.loginDB(id, pwd));}
+      // redux의 loginDB에 id, pwd를 보내줍니다.
+      // history.push('/')
+
+  }
+
+
+
+
+
   return(
     <React.Fragment>
       <Content_box>
@@ -17,18 +45,17 @@ const Login = (props) =>{
 					<HLogin>회원 로그인</HLogin>
 					<div class="login_input_sec">
 						<div>
-							<Authinput type="text" id="loginId" name="loginId" value="" placeholder="아이디" required="true" aria-required="true"/>
-							<Authinput type="password" id="loginPwd" name="loginPwd" value="" placeholder="비밀번호" required="true" aria-required="true"/>
+							<Authinput onChange={(e)=>{setId(e.target.value);}}  type="text"   placeholder="아이디" required="true" aria-required="true"/> 
+							<Authinput onChange={(e)=>{setPwd(e.target.value);}} type="password"   placeholder="비밀번호" required="true" aria-required="true"/>
 						</div>
 						<Id_chk>
 							<Form_element>
 								<input type="checkbox" id="saveId" name="saveId" value="y" checked=""/>
 								<Label for="saveId" class="">아이디 저장</Label>
-                
 							</Form_element>
 							{/* <p class="dn js_caution_msg1">아이디, 비밀번호가 일치하지 않습니다. 다시 입력해 주세요.</p> */}
 						</Id_chk>
-						<Logbut type="submit">로그인</Logbut>
+						<Logbut type="submit"onClick={()=>{console.log("login complete"); login() }}>로그인</Logbut>
 					</div>
         
 				</Logbox>
@@ -43,7 +70,7 @@ const Login = (props) =>{
 				
 				<Btn_login_box>
 					<UL>
-						<LI><Border><Authbut id="btnJoinMember" class="btn_member_join">회원가입</Authbut></Border></LI>
+						<LI><Border><Authbut onClick={()=>{history.push("/user/register")}}>회원가입</Authbut></Border></LI>
 						<LI><Border><Authbut id="btnFindId" class="btn_member_white">아이디 찾기</Authbut></Border></LI>
 						<LI><Authbut id="btnFindPwd" class="btn_member_white">비밀번호 찾기</Authbut></LI>
 					</UL>
@@ -181,7 +208,7 @@ const HLogin = styled.h3`
 `;
 
 const Authinput = styled.input `
-    display: block;
+    display: inline-block;
     width: 100%;
     
     height: 50px;
