@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import "../shared/Product.css";
 
-
-
 import ProductButton from "../elements/ProductButton";
 import GoodsTab from "../components/GoodsTab";
 import ProductDetail from "./ProductDetail";
@@ -12,7 +10,6 @@ import ProductDetail from "./ProductDetail";
 const ProductDetailInfo = (props) => {
     const detailInfo = props.data;
     const image = detailInfo.detail_image_url[0];
-    console.log(detailInfo.comment_count);
 
     return (
         <Body>
@@ -20,17 +17,19 @@ const ProductDetailInfo = (props) => {
             <InfoImg>
                 <img src={image} alt="product detail" />
             </InfoImg>
-            <InfoTable>
-                <h3>상품필수 정보</h3>
-                <tbody>
-                    {detailInfo.detail_info.map((info) => (
-                        <tr>
-                            <ProductTh>{info[0]}</ProductTh>
-                            <ProductTd colspan="3">{info[1]}</ProductTd>
-                        </tr>
-                    ))}
-                </tbody>
-            </InfoTable>
+            {detailInfo.detail_info.length === 0 ? null : (
+                <InfoTable>
+                    <h3>상품필수 정보</h3>
+                    <tbody>
+                        {detailInfo.detail_info.map((info) => (
+                            <tr>
+                                <ProductTh>{info[0]}</ProductTh>
+                                <ProductTd colspan="3">{info[1]}</ProductTd>
+                            </tr>
+                        ))}
+                    </tbody>
+                </InfoTable>
+            )}
             <GoodsTab is_shipping review_cnt={detailInfo.comment_count} />
             <div>
                 <h3>배송안내</h3>
@@ -97,19 +96,19 @@ const ProductDetailInfo = (props) => {
             </Flex>
             <Table>
                 {/* <colgroup>
-                    <col width="13%" />
-                    <col />
-                    <col width="13%" />
-                    <col width="13%" />
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th>평점</th>
-                        <th>제목</th>
-                        <th>작성자</th>
-                        <th>작성일</th>
-                    </tr>
-                </thead> */}
+                <col width="13%" />
+                <col />
+                <col width="13%" />
+                <col width="13%" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>평점</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
+                </tr>
+            </thead> */}
                 <tbody>
                     <tr>
                         <Td colspan="4">등록된 상품후기가 없습니다.</Td>
@@ -123,19 +122,19 @@ const ProductDetailInfo = (props) => {
             </Flex>
             <Table>
                 {/* <colgroup>
-                    <col width="13%" />
-                    <col />
-                    <col width="13%" />
-                    <col width="13%" />
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th>평점</th>
-                        <th>제목</th>
-                        <th>작성자</th>
-                        <th>작성일</th>
-                    </tr>
-                </thead> */}
+                <col width="13%" />
+                <col />
+                <col width="13%" />
+                <col width="13%" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>평점</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
+                </tr>
+            </thead> */}
                 <tbody>
                     <tr>
                         <Td colspan="4">등록된 상품문의가 없습니다.</Td>
