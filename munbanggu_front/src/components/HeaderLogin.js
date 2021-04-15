@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import {history} from "../redux/configstore"
 const HeaderLogin =(props)=> {
 
     return (
@@ -10,8 +10,12 @@ const HeaderLogin =(props)=> {
             <Box>
               <Ul></Ul>
               <GridBox>
-              <il><LoginText>로그인</LoginText><TextBar /></il>
-              <il><LoginText>회원가입</LoginText><TextBar /></il>
+              <il><LoginText onClick={()=>{
+                history.push("/user/login");
+              }}> 로그인</LoginText><TextBar /></il>
+              <il><LoginText onClick={()=>{
+                history.push("/user/register");
+              }}>회원가입</LoginText><TextBar /></il>
               <il><LoginText>마이페이지</LoginText><TextBar /></il>
               <il><LoginText>장바구니<CartCount>0</CartCount></LoginText></il>
               </GridBox>
@@ -59,10 +63,10 @@ const LoginText = styled.a`
     font-weight : 500;
     font-size : 12px;
     line-height : 40px;
-    &: hover {
+    &:hover {
         cursor : pointer;
     }
-`
+`;
 const TextBar = styled.span`
     display : inline-block;
     width : 1px;

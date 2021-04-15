@@ -13,17 +13,17 @@ const Signup=(props)=>{
               <MemberCont>
                 <MemberLoginBox>
                   <MemberLoginShop>
-                    <JoinButton>
+                    <JoinButton href="/user/register/info">
                       <BeaminImg src={beaminbutton} />
                     </JoinButton>
                   </MemberLoginShop>
                   <FaceBook>
-                    <FaceBookButton>페이스북으로 회원가입</FaceBookButton>
+                    <FaceBookButton >페이스북으로 회원가입</FaceBookButton>
                   </FaceBook>
                 </MemberLoginBox>
               </MemberCont>
               <MemberGuide>
-                  <p>이미 배민문방구 회원이신가요?<Login>로그인</Login></p>
+                  <p>이미 배민문방구 회원이신가요?<Login href="/user/login">로그인</Login></p>
               </MemberGuide>
             </MemberWrap>
           </ContentBox>
@@ -63,8 +63,8 @@ const BeaminImg = styled.img`
     width : 100%;
 `
 const FaceBook = styled.div`
-  text-align : center
-  display : block;
+  text-align : center;
+  display:block;
 `
 
 const FaceBookButton = styled.a`
@@ -87,8 +87,8 @@ const MemberLoginBox = styled.div`
     height : 163.92px;
 `
 const MemberGuide = styled.div`
-    text-align : center;
-    padding : 18px; 0 20px 0;
+    text-align:center;
+    padding:18px 0px 20px 0;
     color : #666666;
     font-size : 12px;
 `

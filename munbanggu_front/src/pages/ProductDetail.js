@@ -4,7 +4,7 @@ import axios from "axios";
 import styled from "styled-components";
 import "../shared/Product.css";
 
-import product from "../shared/detail.jpeg";
+
 
 import ProductDetailInfo from "./ProductDetailInfo";
 import ProductButton from "../elements/ProductButton";

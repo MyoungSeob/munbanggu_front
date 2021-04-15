@@ -11,7 +11,7 @@ import Home from "../pages/Home";
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
-import { history } from "../redux/configStore";
+import { history } from "../redux/configstore";
 
 function App() {
     return (

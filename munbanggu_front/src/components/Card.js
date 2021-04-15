@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Image from "../elements/Image";
 
-import { history } from "../redux/configStore";
+import { history } from "../redux/configstore";
 import { Link } from "react-router-dom";
 
-import detail from "../shared/detail.jpeg";
+
 import saleBadge from "../shared/SaleBadge.png";
 
 import axios from "axios";

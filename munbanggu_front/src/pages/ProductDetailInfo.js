@@ -3,8 +3,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import "../shared/Product.css";
 
-import product from "../shared/detail.jpeg";
-import info from "../shared/detail3.jpeg";
+
 
 import ProductButton from "../elements/ProductButton";
 import GoodsTab from "../components/GoodsTab";

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import headerlogo from '../shared/header_logo.png'
 import search_icon from '../shared/searchicon.jpeg'
+import history from "../redux/configstore"
 
 const HeaderLogo=(props)=>{
 
@@ -9,8 +10,8 @@ const HeaderLogo=(props)=>{
       <React.Fragment>
         <Container>
           <LogoBox>
-            <ImgBox>
-              <Img src={headerlogo} />
+            <ImgBox href="http://localhost:3000/" >
+              <Img src={headerlogo}  />
             </ImgBox>
           </LogoBox>
           <InputBox>
