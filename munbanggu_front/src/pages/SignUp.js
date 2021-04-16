@@ -3,13 +3,10 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import beaminbutton from '../shared/beamin_button.png'
 import facebookicon from '../shared/facebookicon.png'
-<<<<<<< HEAD
-import  {history}  from "../redux/configStore"
-=======
 import google_login_btn from '../shared/google_login_btn.png'
 import {actionCreators as userActions} from '../redux/modules/user'
+import {history} from "../redux/configStore"
 
->>>>>>> d8fc2f04e045693553cdebdf5c121a230e2712ff
 const Signup=(props)=>{
   const dispatch = useDispatch()
   function googleLogin () {

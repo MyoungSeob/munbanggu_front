@@ -12,7 +12,7 @@ const HeaderLogin =(props)=> {
   const log_token = localStorage.getItem("log_token")? true:false
   console.log(log_token);
 
-  if(is_login && log_token){
+  if(log_token){
     return (
       <React.Fragment>
         <Container>
