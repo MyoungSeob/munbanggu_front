@@ -1,5 +1,4 @@
 import { createAction, handleActions } from "redux-actions";
-import { useDispatch } from "react-redux";
 import { produce } from "immer";
 import axios from "axios";
 
@@ -17,8 +16,6 @@ const getProductDB = () => {
             .get(`http://15.164.211.216/goods`)
             .then((response) => {
                 let product_list = [];
-                // let data = response.data.result;
-                // console.log(data);
                 response.data.result.forEach((response) => {
                     let product = {
                         detail_image_url: response.detail_image_url,
