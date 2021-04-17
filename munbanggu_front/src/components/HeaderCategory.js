@@ -1,182 +1,111 @@
 import React from "react";
+import "../shared/App.css";
 import styled from "styled-components";
 
-const HeaderCategory = (props) => {
-  return (
-    <React.Fragment>
-      <Headergnb>
-        <Gnb>
-          {/* <!-- 전체 카테고리 출력 레이어 시작 --> */}
-          <All_gnb>
-            <strong>ALL CATEGORY</strong>
-            <Atag href="#;">
-              <Image src="/data/skin/front/udweb_C/img/common/btn/btn_allmenu_open_white.png"
-                alt="전체메뉴보기"></Image>
-              </Atag>
-            </All_gnb>
-            <div class="gnb_allmenu_wrap"></div>
-            {/* <!-- 전체 카테고리 출력 레이어 끝 -->
-    <!-- 상단 카테고리 출력 시작 --> */}
-            <Menubox>
-              <Left>
-                <a href="#PREV" class="active">
-                  PREV
-                </a>
-              </Left>
-              <ULlist>
-              
-                <li>
-                  <Category href="../goods/goods_list.php?cateCd=001" >
-                    전체
-                  </Category>
-                </li>
-                <li>
-                
-                  <Category href="../goods/goods_list.php?cateCd=008" >
-                    문구
-                  </Category>
-                </li>
-                <li>
-                  <Category href="../goods/goods_list.php?cateCd=009" >
-                    리빙
-                  </Category>
-                </li>
-                <li>
-                  <Category href="https://store.baemin.com/goods/goods_list.php?cateCd=014" >
-                    책
-                  </Category>
-                </li>
-                <li>
-                  <Category href="../goods/goods_list.php?cateCd=018" >
-                    을지로에디션
-                  </Category>
-                </li>
-                <li>
-                  <Category href="../goods/goods_list.php?cateCd=011" >
-                    ㅋㅋ에디션
-                  </Category>
-                </li>
-                <li>
-                  <Category href="../goods/goods_list.php?cateCd=017" >
-                    배달이친구들
-                  </Category>
-                </li>
-                <li>
-                  <Category href="../goods/goods_list.php?cateCd=016" >
-                    선물세트
-                  </Category>
-                </li>
-                <li>
-                  <Category href="../goods/goods_list.php?cateCd=012" >
-                    콜라보레이션
-                  </Category>
-                </li>
-              </ULlist>
-              
-            </Menubox>
-            {/* <!-- 상단 카테고리 출력 끝 --> */}
-          </Gnb>
-          {/* <!-- //gnb --> */}
+import { NavLink } from "react-router-dom";
 
-          {/* <!-- //gnb_allmenu --> */}
-        </Headergnb>
-      </React.Fragment>
-    
-  );
+const HeaderCategory = (props) => {
+    return (
+        <React.Fragment>
+            <Headergnb>
+                <Gnb>
+                    <Menubox>
+                        <ULNavLinkst>
+                            <NavLink exact to="/" activeClassName="is_active">
+                                <Category>전체</Category>
+                            </NavLink>
+                            <NavLink exact to="/goods/category/문구/" activeClassName="is_active">
+                                <Category>문구</Category>
+                            </NavLink>
+                            <NavLink exact to="/goods/category/리빙/" activeClassName="is_active">
+                                <Category>리빙</Category>
+                            </NavLink>
+                            <NavLink exact to="/goods/category/책/" activeClassName="is_active">
+                                <Category>책</Category>
+                            </NavLink>
+                            <NavLink
+                                exact
+                                to="/goods/category/을지로에디션/"
+                                activeClassName="is_active"
+                            >
+                                <Category>을지로에디션</Category>
+                            </NavLink>
+                            <NavLink
+                                exact
+                                to="/goods/category/ㅋㅋ에디션/"
+                                activeClassName="is_active"
+                            >
+                                <Category>ㅋㅋ에디션</Category>
+                            </NavLink>
+                            <NavLink
+                                exact
+                                to="/goods/category/배달이친구들/"
+                                activeClassName="is_active"
+                            >
+                                <Category>배달이친구들</Category>
+                            </NavLink>
+                            <NavLink
+                                exact
+                                to="/goods/category/선물세트/"
+                                activeClassName="is_active"
+                            >
+                                <Category>선물세트</Category>
+                            </NavLink>
+                            <NavLink
+                                exact
+                                to="/goods/category/콜라보레이션/"
+                                activeClassName="is_active"
+                            >
+                                <Category>콜라보레이션</Category>
+                            </NavLink>
+                        </ULNavLinkst>
+                    </Menubox>
+                </Gnb>
+            </Headergnb>
+        </React.Fragment>
+    );
 };
 
-const All_gnb = styled.div `
-    display: none;
-    vertical-align: top; 
-    text-align: center;
-`;
 const Headergnb = styled.div`
-  background: #fff;
+    background: #fff;
+    border-bottom: 1px solid #efefef;
 `;
 
 const Gnb = styled.div`
-  text-align: center;
-  position: relative;
-  width:100%;
-  left:140px
-  
-  
+    text-align: center;
+    position: relative;
+    width: 100%;
+    left: 140px;
 `;
 
 const Menubox = styled.div`
-  width: 1130px;
-  box-sizing: border-box;
-  position: relative;
-  display: inline-block;
-  vertical-align: top;
-  margin: auto;
-  padding: 0 12px;
-  align-items:center;
-  text-align: center;
-  
-  
-`;
-const Left = styled.div`
-  position: absolute;
-  top: 0px;
-  left: 0;
-  font-size: 0;
-  vertical-align: top;
-  display: none;
-  
-`;
-const ULlist = styled.div`
-  display:flex;
-  overflow: visible;
-  height: 100%;
-  font-size: 0;
-  vertical-align: top;
-  border: none;
-  
-  
- 
-  
-    
-`;
-const Category = styled.a`
-  
-  text-decoration:none ; 
-  display:inline-block;
-  padding: 0 19px;
-  font-size: 16px;
-  color: #333;
-  font-weight: bold;
-  line-height: 55px;
-  
-  &:active {
-    border-bottom: 3px solid #30c1c3;
-    height: 55px;
+    width: 1130px;
     box-sizing: border-box;
-    color:#30c1c3;
-    
-   
-    
-    
-  } 
-  
-`;
-const Atag = styled.a`
-    
-    font-size: 12px;
-    line-height: 55px;
-    width: 55px;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    margin: auto;
+    padding: 0 12px;
+    align-items: center;
     text-align: center;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    background-color: #111;
-    border-left: 1px solid #eaeaea;
-    border-right: 1px solid #eaeaea;
-`
-const Image = styled.image`
-  vertical-align: middle;
 `;
 
+const ULNavLinkst = styled.div`
+    display: flex;
+    overflow: visible;
+    height: 45px;
+    font-size: 0;
+    vertical-align: top;
+    margin-top: 16px;
+`;
 
-  
+const Category = styled.span`
+    text-decoration: none;
+    display: inline-block;
+    padding: 0 19px;
+    font-size: 16px;
+    height: 55px;
+    color: #333;
+`;
+
 export default HeaderCategory;

@@ -8,31 +8,6 @@ import { Link } from "react-router-dom";
 import saleBadge from "../shared/SaleBadge.png";
 
 const Card = (props) => {
-    //리덕스를 쓰지 않고 바로 가져올 수도 있습니다.
-
-    // const { is_sale } = props;
-    // const [api, setApi] = useState("");
-    // const [loading, setLoading] = useState(true);
-    // const [error, setError] = useState("");
-
-    //     const fetchProduct = async (param) => {
-    //         try {
-    //             setError(null);
-    //             setApi(null);
-    //             setLoading(true);
-    //             const response = await axios.get(`http://15.164.211.216/goods`);
-    //             setApi(response.data.result);
-    //         } catch (e) {
-    //             setError(e);
-    //         }
-    //         setLoading(false);
-    //     };
-    //     fetchProduct();
-    // }, []);
-    // if (!api) return null;
-    // if (error) return <div>error</div>;
-    // if (loading) return <div>spinner..</div>;
-
     return (
         <>
             {props.discount === true
@@ -100,12 +75,6 @@ const ItemInfo = styled.div`
     width: 100%;
     padding: 8px 0 20px 0px;
     box-sizing: border-box;
-`;
-
-const ImageA = styled.a`
-    display: block;
-    height: 100%;
-    cursor: pointer;
 `;
 
 const ItemA = styled.a`

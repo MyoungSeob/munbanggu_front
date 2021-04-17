@@ -3,10 +3,16 @@ import { produce } from "immer";
 import axios from "axios";
 
 const GET_PRODUCT = "GET_PRODUCT";
+const GET_PRODUCT_LOW_HIGH = "GET_PRODUCT_LOW_HEIGH";
+const GET_PRODUCT_HIGH_LOW = "GET_PRODUCT_HIGH_LOW";
 const getProduct = createAction(GET_PRODUCT, (product_list) => product_list);
+const getProductLowHigh = createAction(GET_PRODUCT_LOW_HIGH, (product_list) => product_list);
+const getProductHighLow = createAction(GET_PRODUCT_HIGH_LOW, (product_list) => product_list);
 
 const initialState = {
     list: [],
+    lowHight: [],
+    hightLow: [],
     is_loading: false,
 };
 
@@ -34,7 +40,22 @@ const getProductDB = () => {
                     };
                     product_list.push(product);
                 });
+
                 dispatch(getProduct(product_list));
+                dispatch(
+                    getProductLowHigh(
+                        [...product_list].sort(
+                            (a, b) => parseInt(a.sale_price) - parseInt(b.sale_price)
+                        )
+                    )
+                );
+                dispatch(
+                    getProductHighLow(
+                        [...product_list].sort(
+                            (a, b) => parseInt(b.sale_price) - parseInt(a.sale_price)
+                        )
+                    )
+                );
             })
             .catch((error) => {
                 console.log(error);
@@ -47,7 +68,15 @@ export default handleActions(
         [GET_PRODUCT]: (state, action) =>
             produce(state, (draft) => {
                 draft.list = action.payload;
-                draft.is_loading = action.payload.is_loading;
+                // draft.is_loading = action.payload.is_loading;
+            }),
+        [GET_PRODUCT_LOW_HIGH]: (state, action) =>
+            produce(state, (draft) => {
+                draft.lowHigh = action.payload;
+            }),
+        [GET_PRODUCT_HIGH_LOW]: (state, action) =>
+            produce(state, (draft) => {
+                draft.highLow = action.payload;
             }),
     },
     initialState
@@ -56,6 +85,8 @@ export default handleActions(
 const actionsCreators = {
     getProductDB,
     getProduct,
+    getProductLowHigh,
+    getProductHighLow,
 };
 
 export { actionsCreators };
