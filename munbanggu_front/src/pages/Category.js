@@ -53,7 +53,7 @@ const Category = (props) => {
 const ListBody = styled.div`
     max-width: 1200px;
     margin: 0 auto;
-    padding: 40px 0;
+    padding: 0;
 `;
 
 const ItemList = styled.ul`

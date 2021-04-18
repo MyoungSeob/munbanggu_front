@@ -3,18 +3,18 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import "../shared/Product.css";
 
-import ProductButton from "../elements/ProductButton";
 import GoodsTab from "../components/GoodsTab";
-import ProductDetail from "./ProductDetail";
 
 const ProductDetailInfo = (props) => {
     const detailInfo = props.data;
+    const id = detailInfo._id;
     const image = detailInfo.detail_image_url[0];
 
     return (
         <Body>
             <GoodsTab is_info review_cnt={detailInfo.comment_count} />
             <InfoImg>
+                <H3>상품상세 정보</H3>
                 <img src={image} alt="product detail" />
             </InfoImg>
             {detailInfo.detail_info.length === 0 ? null : (
@@ -92,7 +92,17 @@ const ProductDetailInfo = (props) => {
             <GoodsTab is_reviews review_cnt={detailInfo.comment_count} />
             <Flex>
                 <h3>상품후기</h3>
-                <AReview>상품후기 글쓰기</AReview>
+                <AReview
+                    onClick={() =>
+                        window.open(
+                            `${id}/comment`,
+                            "window_name",
+                            "width=420,height=600,location=(50,50),status=no,scrollbars=yes"
+                        )
+                    }
+                >
+                    상품후기 글쓰기
+                </AReview>
             </Flex>
             <Table>
                 {/* <colgroup>
@@ -154,6 +164,12 @@ const InfoImg = styled.div`
     display: block;
     margin: 0 auto;
     text-align: center;
+    width: 900px;
+`;
+
+const H3 = styled.h3`
+    text-align: left;
+    margin: 48px 0 24px 0;
 `;
 
 const InfoTable = styled.table`
@@ -198,21 +214,22 @@ const Span = styled.span`
 const Flex = styled.div`
     display: flex;
     justify-content: space-between;
+    align-items: center;
     position: relative;
+    padding: 24px 0 4px 0;
 `;
 
 const AReview = styled.a`
     display: inline-block;
     min-width: 120px;
     padding: 10px 10px 10px 10px;
+    font-size: 12px;
     color: #ffffff;
     font-weight: bold;
     border: 1px solid #000;
     background: #000;
+    height: 20px;
     text-align: center;
-    position: absolute;
-    top: 44px;
-    right: 0;
 `;
 
 const Table = styled.table`

@@ -43,18 +43,10 @@ const getProductDB = () => {
 
                 dispatch(getProduct(product_list));
                 dispatch(
-                    getProductLowHigh(
-                        [...product_list].sort(
-                            (a, b) => parseInt(a.sale_price) - parseInt(b.sale_price)
-                        )
-                    )
+                    getProductLowHigh([...product_list].sort((a, b) => a.sale_price - b.sale_price))
                 );
                 dispatch(
-                    getProductHighLow(
-                        [...product_list].sort(
-                            (a, b) => parseInt(b.sale_price) - parseInt(a.sale_price)
-                        )
-                    )
+                    getProductHighLow([...product_list].sort((a, b) => b.sale_price - a.sale_price))
                 );
             })
             .catch((error) => {
