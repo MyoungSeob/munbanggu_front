@@ -30,13 +30,13 @@ const CardList = (props) => {
     return (
         <ListBody>
             <Sort>
-                <div>총 0개</div>
+                <div>총 {product_list.length}개</div>
                 <div>
                     <SortId onClick={init}>추천순</SortId>
                     <SortId>인기순</SortId>
                     <SortId>최신순</SortId>
-                    <SortId onClick={low}>높은 가격순</SortId>
-                    <SortId onClick={high}>낮은 가격순</SortId>
+                    <SortId onClick={low}>낮은 가격순</SortId>
+                    <SortId onClick={high}>높은 가격순</SortId>
                 </div>
             </Sort>
             <ItemList>

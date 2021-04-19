@@ -11,8 +11,9 @@ import axios from "axios";
 
 const Comment = (props) => {
     const id = props.match.params.id;
+    const token = localStorage.getItem("log_token");
 
-    const [goodstitle, setGoodsTitle] = useState();
+    const [goods, setGoods] = useState("");
     const [rating, setRating] = useState(5);
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
@@ -23,22 +24,39 @@ const Comment = (props) => {
             window.alert("내용을 다 입력해 주세요");
             return;
         }
-        console.log(rating, "+", title, "+", content, "+", id, "+", createdAt);
+
+        axios
+            .post(`http://52.79.240.76/goods/${id}/comment`, {
+                headers: {
+                    user: `authorization: Bearer ${token}`,
+                },
+
+                goods: goods.title,
+                title: title,
+                content: content,
+                star_rating: rating,
+                createdAt: createdAt,
+                updatedAt: createdAt,
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
     useEffect(() => {
         const getComment = async (param) => {
-            setTitle(null);
-            const title = await axios.get(`http://15.164.211.216/goods/${id}`);
-            setGoodsTitle(title.data.result[0].title);
+            setGoods(null);
+            const goods = await axios.get(`http://15.164.211.216/goods/${id}`);
+            setGoods(goods.data.result[0]);
         };
         getComment();
     }, []);
+    if (!goods) return null;
 
     return (
         <>
             <Header>
-                <H3>{goodstitle}</H3>
+                <H3>{goods.title}</H3>
                 <span>에 대한 후기를 작성해 주세요!</span>
             </Header>
             <Star>
