@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import Mypage from '../pages/Mypage';
 import {history} from "../redux/configStore"
 import { actionCreators as userActions } from "../redux/modules/user";
 
