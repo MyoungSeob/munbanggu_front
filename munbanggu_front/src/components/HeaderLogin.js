@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import Mypage from '../pages/Mypage';
 import {history} from "../redux/configStore"
 import { actionCreators as userActions } from "../redux/modules/user";
 
@@ -21,7 +22,7 @@ const HeaderLogin =(props)=> {
               <Ul></Ul>
               <GridBox>
               <il><LoginText href="#" onClick={()=>{dispatch(userActions.logoutDB())}}>로그아웃</LoginText><TextBar /></il>
-              <il><LoginText>마이페이지</LoginText><TextBar /></il>
+              <il><LoginText onClick={()=>{history.push("/user/mypage")}}>마이페이지</LoginText><TextBar /></il>
               <il><LoginText>장바구니<CartCount>0</CartCount></LoginText></il>
               </GridBox>
             </Box>
@@ -45,7 +46,9 @@ return(
                 <il><LoginText onClick={()=>{
                   history.push("/user/register");
                 }}>회원가입</LoginText><TextBar /></il>
-                <il><LoginText>마이페이지</LoginText><TextBar /></il>
+                <il><LoginText onClick={()=>{
+                  history.push("/user/login");
+                }}>마이페이지</LoginText><TextBar /></il>
                 <il><LoginText>장바구니<CartCount>0</CartCount></LoginText></il>
                 </GridBox>
               </Box>

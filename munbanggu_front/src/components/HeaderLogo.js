@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import headerlogo from '../shared/header_logo.png'
 import search_icon from '../shared/searchicon.png'
-import history from "../redux/configStore"
+import {history} from "../redux/configStore"
 
 const HeaderLogo=(props)=>{
 
