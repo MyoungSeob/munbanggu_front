@@ -15,10 +15,14 @@ const ProductDetail = (props) => {
 
     const dispatch = useDispatch();
     const product_list = useSelector((store) => store.product.list);
+
     const idx = product_list.findIndex((p) => p._id === id);
     const data = product_list[idx];
-    console.log(data);
     const [goodsCnt, setGoodsCnt] = useState(1);
+
+    const originPrice = data.sale_price;
+    const price = (originPrice * goodsCnt).toLocaleString("en");
+
     const CntUp = () => {
         setGoodsCnt(goodsCnt + 1);
     };
@@ -31,39 +35,61 @@ const ProductDetail = (props) => {
     useEffect(() => {
         dispatch(productActions.getProductDB(id));
     }, []);
-    // const [api, setApi] = useState("");
-    // const [loading, setLoading] = useState(true);
-    // const [error, setError] = useState("");
 
-    // useEffect(() => {
-    //     const fetchProduct = async (param) => {
-    //         try {
-    //             setError(null);
-    //             setApi(null);
-    //             setLoading(true);
-    //             const response = await axios.get(`http://15.164.211.216/goods/${id}`);
-
-    //             // const data = response.data.result;
-    //             // const result = data.find((e, i, a) => {
-    //             //     console.log(e._id);
-    //             //     return e._id === id;
-    //             // });
-
-    //             setApi(response.data.result[0]);
-    //         } catch (e) {
-    //             setError(e);
-    //         }
-    //         setLoading(false);
-    //     };
-    //     fetchProduct();
-    // }, []);
-    // if (!api) return null;
-    // if (error) return <div>error</div>;
-    // if (loading) return <div>spinner..</div>;
-    // console.log(api);
-
-    const originPrice = data.sale_price;
-    const price = (originPrice * goodsCnt).toLocaleString("en");
+    const addToCart = () => {
+        let index = 0;
+        let isSame = false;
+        const goods = data._id;
+        const name = data.title;
+        const amount = goodsCnt;
+        const url = data.thumbnail_url;
+        const option = data.option;
+  
+        if (localStorage.length > 0) {
+          for (var i = 0; i < localStorage.length; i++) {
+            if (Number(index) < Number(localStorage.key(i))) {
+              index = localStorage.key(i);
+              var cartItem = JSON.parse(
+                localStorage.getItem(localStorage.key(i))
+              );
+              if (
+                JSON.stringify(cartItem.goods) === JSON.stringify(goods) &&
+                JSON.stringify(cartItem.name) === JSON.stringify(name)
+              ) {
+                  isSame = true;
+                  cartItem.amount = cartItem.amount + amount;
+                  cartItem.url = url;
+                  cartItem.price = cartItem.price + price;
+                  cartItem.option = option;
+                  break;
+              }
+            }
+          }
+        }
+        if(isSame == true){
+            var cartInfo = {
+                id : index,
+                goods : data._id,
+                url : data.thumbnail_url,
+                amount : goodsCnt,
+                option : data.option,
+                name : data.title,
+                price : price,
+            };
+        }else{
+            index = Number(index) + 1;
+            var cartInfo ={
+              id : index,
+              goods : data._id,
+              url : data.thumbnail_url,
+              amount : goodsCnt,
+              option : data.option,
+              name : data.title,
+              price : price,
+            }
+        }
+        localStorage.setItem(index, JSON.stringify(cartInfo));
+      };
 
     return (
         <>
@@ -88,7 +114,7 @@ const ProductDetail = (props) => {
                                     </DdShipping>
                                 </Dl>
                             </ProductInfo>
-                            <table>
+                            <Tables>
                                 <tbody>
                                     <tr>
                                         <Td>
@@ -120,7 +146,7 @@ const ProductDetail = (props) => {
                                         <TdPrice>{price}원</TdPrice>
                                     </tr>
                                 </tbody>
-                            </table>
+                            </Tables>
                         </div>
                         <div>
                             <Total>
@@ -129,7 +155,7 @@ const ProductDetail = (props) => {
                             </Total>
                             <ButtonDiv>
                                 <ProductButton is_like></ProductButton>
-                                <ProductButton is_white>장바구니</ProductButton>
+                                <ProductButton is_white _onClick={addToCart}>장바구니</ProductButton>
                                 <ProductButton>바로 구매</ProductButton>
                             </ButtonDiv>
                         </div>
@@ -212,15 +238,25 @@ const DdShipping = styled.dd`
     font-weight: 500;
 `;
 
-// const TBody = styled.tbody`
-//     // display: table-row-group;
-//     // border-color: inherit;
-// `;
+const Tables = styled.table`
+    width: 100%;
+    background-color: #efefef;
+    border-collapse: separate;
+    text-indent: initial;
+    border-spacing: 2px;
+    padding: 2px 30px 2px 20px;
 
-// const Tr = styled.tr`
-//     // display: table-row;
-//     // border-color: inherit;
-// `;
+    & > tbody {
+        display: table-row-group;
+        vertical-align: middle;
+        border-color: inherit;
+    }
+    & > tbodt > tr {
+        display: table-row;
+        vertical-align: inherit;
+        border-color: inherit;
+    }
+`;
 
 const Td = styled.td`
     text-align: left;

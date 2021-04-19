@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user"
 import styled from "styled-components";
 import {history} from"../redux/configStore"
+import KaKaoLogin from "react-kakao-login";
 
 const Login = (props) =>{
 
@@ -11,6 +12,7 @@ const Login = (props) =>{
 
     const[id,setId] = React.useState("");
     const[pwd,setPwd] = React.useState("");
+    const[kakaoToken, setKakaoToken] = React.useState();
 
 
     const login = () => {
@@ -23,9 +25,12 @@ const Login = (props) =>{
       dispatch(userActions.loginDB(id, pwd));}
       // redux의 loginDB에 id, pwd를 보내줍니다.
       // history.push('/')
-
   }
 
+    function sendKakaoToken(kakaoToken){
+      dispatch(userActions.kakaoLoginDB(kakaoToken))
+      console.log(kakaoToken)
+    }
 
 
 
@@ -62,9 +67,18 @@ const Login = (props) =>{
         
 				{/* <!-- //login_box --> */}
 				
-        <div class="member_sns_login">
-					<SnsA href="https://accounts.kakao.com/login?continue=https%3A%2F%2Fkauth.kakao.com%2Foauth%2Fauthorize%3Fclient_id%3Dec10db670bd119e740558ca82e00b250%26redirect_uri%3Dhttps%3A%2F%2Fupbit.com%2Foauth%26response_type%3Dcode%26state%3De30%253D%26encode_state%3Dtrue" ><I>TALK</I>카카오계정으로 로그인</SnsA>
-					
+        <div>
+					<KaKaoBtn
+            token={'77cf3a731ee167706680f1d2044f0f9e'}
+            onSuccess={(res) => {
+              setKakaoToken(res.response.access_token)
+              sendKakaoToken(res.response.access_token)
+            }
+          }
+            onFailure={(err) => console.log(err)}
+            buttonText="카카오 계정으로 로그인"
+            getProfile={true}
+          />
 				</div>
 				
 				
@@ -101,7 +115,9 @@ const WrapLogp = styled.div`
 const Content_mem= styled.div`
   padding: 30px 145px;
 `;
-
+const KaKaoBtn = styled(KaKaoLogin)`
+  width : auto
+`
 
 const Id_chk = styled.div`
   padding: 0 0 26px 0;
