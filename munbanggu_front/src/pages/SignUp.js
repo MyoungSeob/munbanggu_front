@@ -3,14 +3,21 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import beaminbutton from '../shared/beamin_button.png'
 import facebookicon from '../shared/facebookicon.png'
+
+import  {history}  from "../redux/configStore"
+
 import google_login_btn from '../shared/google_login_btn.png'
 import {actionCreators as userActions} from '../redux/modules/user'
-import {history} from "../redux/configStore"
+import GoogleLogin from 'react-google-login'
+
 
 const Signup=(props)=>{
-  const dispatch = useDispatch()
-  function googleLogin () {
-    dispatch(userActions.googleLoginDB())
+  const [googleToken, setGoogleToken] = React.useState("");
+  const dispatch = useDispatch();
+  
+  function sendToken(googleToken){
+    console.log(googleToken)
+    dispatch(userActions.googleLoginDB(googleToken)) 
   }
 
     return (
@@ -26,12 +33,35 @@ const Signup=(props)=>{
                     </JoinButton>
                   </MemberLoginShop>
                   <Google>
-                    <GoogleBtn onClick={googleLogin} src={google_login_btn} />
+                    <GoogleLogin
+                      clientId="803198658516-l35b5pqrcmr299llbmi9lnqr196j4b6j.apps.googleusercontent.com"
+                      buttonText="Login with Google"
+                      onSuccess={
+                        (result) => {
+                          console.log(result)
+                          setGoogleToken(result.accessToken)
+                          sendToken(result.accessToken)
+                        }
+
+                      }
+                      onFailure={(result) => console.log(result)}
+                      cookiePolicy={"single_host_origin"}
+                    />
                   </Google>
                 </MemberLoginBox>
               </MemberCont>
               <MemberGuide>
-                  <p>이미 배민문방구 회원이신가요?<Login href="#" onClick={()=>{history.push("/user/login")}}>로그인</Login></p>
+                <p>
+                  이미 배민문방구 회원이신가요?
+                  <Login
+                    href="#"
+                    onClick={() => {
+                      history.push("/user/login");
+                    }}
+                  >
+                    로그인
+                  </Login>
+                </p>
               </MemberGuide>
             </MemberWrap>
           </ContentBox>
@@ -73,6 +103,7 @@ const BeaminImg = styled.img`
 const Google = styled.div`
   text-align : center;
   display:block;
+  width : 100%
 `
 
 const GoogleBtn = styled.img`

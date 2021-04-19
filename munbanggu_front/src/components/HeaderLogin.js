@@ -8,9 +8,13 @@ const HeaderLogin =(props)=> {
   const dispatch = useDispatch();
 
   const is_login = useSelector((state)=>state.user.is_login);
-  
-  const log_token = localStorage.getItem("log_token")? true:false
-  console.log(log_token);
+  const log_token = localStorage.getItem("log_token")
+
+  function pleaseLogin(){
+    window.alert("장바구니는 로그인이 필요한 기능입니다.")
+    history.push('/user/login')
+    return;
+  }
 
   if(log_token){
     return (
@@ -20,9 +24,9 @@ const HeaderLogin =(props)=> {
             <Box>
               <Ul></Ul>
               <GridBox>
-              <il><LoginText href="#" onClick={()=>{dispatch(userActions.logoutDB())}}>로그아웃</LoginText><TextBar /></il>
+              <il><LoginText onClick={()=>{dispatch(userActions.logoutDB())}}>로그아웃</LoginText><TextBar /></il>
               <il><LoginText>마이페이지</LoginText><TextBar /></il>
-              <il><LoginText>장바구니<CartCount>0</CartCount></LoginText></il>
+              <il><LoginText onClick={()=>{history.push('/cart')}}>장바구니<CartCount>0</CartCount></LoginText></il>
               </GridBox>
             </Box>
           </LoginBox>
@@ -46,7 +50,7 @@ return(
                   history.push("/user/register");
                 }}>회원가입</LoginText><TextBar /></il>
                 <il><LoginText>마이페이지</LoginText><TextBar /></il>
-                <il><LoginText>장바구니<CartCount>0</CartCount></LoginText></il>
+                <il><LoginText onClick={pleaseLogin}>장바구니<CartCount>0</CartCount></LoginText></il>
                 </GridBox>
               </Box>
             </LoginBox>

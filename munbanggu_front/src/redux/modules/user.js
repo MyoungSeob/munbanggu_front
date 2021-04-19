@@ -3,12 +3,12 @@ import {produce} from "immer";
 import axios from "axios";
 
 
-
-const SET_USER = "SET_USER";
+const LOG_IN = "LOG_IN";
+const GET_USER = "GET_USER";
 const LOG_OUT = "LOG_OUT";
 
-
-const setUser = createAction(SET_USER, (user) => ({user}));
+const logIn = createAction(LOG_IN, (user) => ({user}));
+const getUser = createAction(GET_USER, (user) => ({user}));
 const logOut = createAction(LOG_OUT, (user) => ({user}));
 
 
@@ -30,21 +30,13 @@ const signUpDB = (id, name, pwd, email, isZoneCode, isAddress, detailAddress, ph
             address_two : detailAddress,
             phone_number : phoneNumber
         })
-        .then(function(res){
-            console.log(res)
-            dispatch(setUser({
-              id:id,
-              pwd:pwd,
-              name:name,
-              email:email,
-              
-            }))
-            history.push('/user/login')
+        .then(function(response){
+            console.log(response)
         })
         .catch(function(error){
             console.log(error)
         })
-       
+        history.push('/user/login')
         
     }
 }
@@ -60,17 +52,14 @@ const loginDB = (id, pwd) => {
     })
     .then(function(res) {
       console.log(res);
-      console.log(res.config.data.name)
+      console.log(res.data.result.user.token)
       localStorage.setItem("log_token",res.data.result.user.token)
       console.log(localStorage.getItem("log_token"))
 
       dispatch(
-          setUser({
+          logIn({
             id:id,
-            pwd:pwd,
-           
-            
-
+            pwd:pwd
           })
       )
       history.push("/")
@@ -85,17 +74,37 @@ const loginDB = (id, pwd) => {
 }
 
 const logoutDB =()=>{
-  return function(dispatch, getState,  {history}){
+  return function(dispatch, getState, {history}){
     localStorage.removeItem("log_token");
       dispatch(logOut());
       window.alert("로그아웃 되었습니다.");
-      history.replace("/")
+      
   };
 };
+const googleLoginDB = (token) => {
+  return function (getState, dispatch, {history}) {
+      axios.get('http://15.164.211.216/auth/google', {
+        headers : {
+         'Access-Control-Allow-Origin': '*'}
+        }
+      )
+       .then(function(response){
+           console.log(response, 1111)
+       })
+       .catch(function(err){
+           console.log(err)
+       })
+  }
+}
+const kakaoLoginDB = ()=>{
+  return function (getState, dispatch, {history}) {
+    
+  }
+}
 
 export default handleActions(
   {
-    [SET_USER]: (state, action) =>
+    [LOG_IN]: (state, action) =>
       produce(state, (draft) => {
         draft.user = action.payload.user;
         draft.is_login = true;
@@ -111,11 +120,14 @@ export default handleActions(
 
 
 const actionCreators = {
-    setUser,
+    getUser,
+    logIn,
     logOut,
     signUpDB,
     loginDB,
-    logoutDB
+    logoutDB,
+    googleLoginDB,
+    kakaoLoginDB,
 }
 
 export {actionCreators}

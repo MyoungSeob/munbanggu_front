@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import HeaderLogin from './HeaderLogin';
 import headerlogo from '../shared/header_logo.png'
 import HeaderCategory from './HeaderCategory'
-
+import { history } from '../redux/configStore'
 const HeaderScrollLogo=(props)=>{
 
     
@@ -14,16 +14,16 @@ const HeaderScrollLogo=(props)=>{
           <Box>
             <GridBox>
               <ImgBox>
-                <Atag>
+                <Atag onClick={()=>{history.push('/')}}>
                   <Img src={headerlogo} />
                 </Atag>
               </ImgBox>
               <il>
-                <LoginText>로그인</LoginText>
+                <LoginText onClick={()=>{history.push('/user/login')}}>로그인</LoginText>
                 <TextBar />
               </il>
               <il>
-                <LoginText>회원가입</LoginText>
+                <LoginText onClick={()=>{history.push('/user/register')}}>회원가입</LoginText>
                 <TextBar />
               </il>
               <il>
@@ -45,11 +45,6 @@ const HeaderScrollLogo=(props)=>{
 }
 
 
-// <ScrollLogo>
-//                 <LogoBox>
-
-//                 </LogoBox>
-//               </ScrollLogo>
 
 
 const Container = styled.div`
@@ -97,6 +92,9 @@ const Atag = styled.a`
     width : auto;
     display : block;
     margin : 0 300px;
+    &: hover {
+      cursor : pointer;
+    }
 `
 const Img = styled.img`
 height: 39px;

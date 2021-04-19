@@ -3,7 +3,8 @@ import HeaderLogin from './HeaderLogin';
 import HeaderLogo from './HeaderLogo';
 import styled from 'styled-components'
 import HeaderCategory from './HeaderCategory';
-import HeaderScrollLogo from './HeaderScrollLogo'
+import HeaderScrollLogo from './HeaderScrollLogo';
+
 
 const Header=(props)=>{
     
@@ -22,7 +23,7 @@ const Header=(props)=>{
 
     return (
         <React.Fragment>
-            {window.pageYOffset < 40 ? (  
+            {window.pageYOffset <= 40 ? (  
           <Box>
             <HeaderLogin />
             <HeaderLogo />

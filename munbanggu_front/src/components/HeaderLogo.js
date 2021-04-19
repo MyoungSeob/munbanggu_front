@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import headerlogo from '../shared/header_logo.png'
 import search_icon from '../shared/searchicon.png'
-import history from "../redux/configStore"
+import { history } from "../redux/configStore"
 
 const HeaderLogo=(props)=>{
 
@@ -10,7 +10,7 @@ const HeaderLogo=(props)=>{
       <React.Fragment>
         <Container>
           <LogoBox>
-            <ImgBox href="#"onClick={()=>{history.push("/")}} >
+            <ImgBox onClick={()=>{history.push("/")}} >
               <Img src={headerlogo}  />
             </ImgBox>
           </LogoBox>

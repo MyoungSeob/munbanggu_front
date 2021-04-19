@@ -11,6 +11,7 @@ export const history = createBrowserHistory();
 // 가져온 리듀서를 루트 리듀서로 묶어줍니다.
 const rootReducer = combineReducers({
     user: user,
+    
     router: connectRouter(history),
     product: product,
 });
