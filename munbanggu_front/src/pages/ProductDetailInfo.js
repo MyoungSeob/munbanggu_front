@@ -4,6 +4,7 @@ import styled from "styled-components";
 import "../shared/Product.css";
 
 import GoodsTab from "../components/GoodsTab";
+import CommentList from "../components/CommentList";
 
 const ProductDetailInfo = (props) => {
     const detailInfo = props.data;
@@ -104,27 +105,19 @@ const ProductDetailInfo = (props) => {
                     상품후기 글쓰기
                 </AReview>
             </Flex>
-            <Table>
-                {/* <colgroup>
-                <col width="13%" />
-                <col />
-                <col width="13%" />
-                <col width="13%" />
-            </colgroup>
-            <thead>
-                <tr>
-                    <th>평점</th>
-                    <th>제목</th>
-                    <th>작성자</th>
-                    <th>작성일</th>
-                </tr>
-            </thead> */}
-                <tbody>
-                    <tr>
-                        <Td colspan="4">등록된 상품후기가 없습니다.</Td>
-                    </tr>
-                </tbody>
-            </Table>
+            {detailInfo.comment_count === 0 ? (
+                <Table>
+                    <tbody>
+                        <tr>
+                            <Td colspan="4">등록된 상품후기가 없습니다.</Td>
+                        </tr>
+                    </tbody>
+                </Table>
+            ) : (
+                <Table>
+                    <CommentList id={id} />
+                </Table>
+            )}
             <GoodsTab review_cnt={detailInfo.comment_count} />
             <Flex>
                 <h3>상품문의</h3>
@@ -156,7 +149,7 @@ const ProductDetailInfo = (props) => {
 };
 
 const Body = styled.div`
-    width: 1100px;
+    width: 1160px;
     margin: 0 auto 100px auto;
 `;
 

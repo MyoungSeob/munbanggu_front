@@ -68,3 +68,34 @@ a > strong {
     color: #29c1bc;
     font-weight: 600;
 }
+
+.open {
+    background: #f6f6f6;
+    display: block;
+    display: table-row;
+}
+
+.close {
+    display: none;
+}
+
+.open > td {
+    padding: 13px 10px 15px 18px;
+    border-bottom: 1px solid #dbdbdb;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.panel {
+    padding: 0 18px;
+    background-color: white;
+    display: none;
+    overflow: hidden;
+}
+
+.open > td > div {
+    float: right;
+    width: 82.5%;
+    padding: 0 30px 60px 0;
+}
