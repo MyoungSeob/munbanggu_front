@@ -19,7 +19,7 @@ const initialState = {
 const getProductDB = () => {
     return function (dispatch, getState, { history }) {
         return axios
-            .get(`http://52.79.240.76/goods`)
+            .get(`http://13.125.248.86/goods`)
             .then((response) => {
                 let product_list = [];
                 response.data.result.forEach((response) => {
@@ -55,6 +55,48 @@ const getProductDB = () => {
     };
 };
 
+const orderProductDB = (
+    isZoneCode,
+    isAddress,
+    detailAddress,
+    deliveryComment,
+    payMethod,
+    phoneNumber
+  ) => {
+    return function (dispatch, getState, { history }) {
+      const orderInfoList = [];
+      const order_list = [];
+      for (let i = 1; i < localStorage.length; i++) {
+        orderInfoList.push(JSON.parse(localStorage.getItem(i)));
+       const loginToken = localStorage.getItem("log_token");
+        axios({
+          method: "post",
+          url: "http://13.125.248.86/order",
+          headers: {
+            authorization: `Bearer ${loginToken}`,
+            'Content-type' : 'application/json' 
+          },
+          data: JSON.stringify({
+              goods: orderInfoList[i - 1].goods,
+              quantity: orderInfoList[i - 1].amount,
+              zipcode: isZoneCode,
+              address_one: isAddress,
+              address_two: detailAddress,
+              delivery_comment: deliveryComment,
+              payment_method: payMethod,
+              phone_number: phoneNumber,
+          }),
+        })
+          .then(function (res) {
+            console.log(res);
+          })
+          .catch(function (err) {
+            console.log("에러입니다", err);
+          });
+      }
+    };
+  };
+
 export default handleActions(
     {
         [GET_PRODUCT]: (state, action) =>
@@ -79,6 +121,7 @@ const actionsCreators = {
     getProduct,
     getProductLowHigh,
     getProductHighLow,
+    orderProductDB
 };
 
 export { actionsCreators };

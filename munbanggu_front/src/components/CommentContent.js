@@ -2,16 +2,23 @@ import React, { useEffect, useState } from "react";
 import "../shared/Product.css";
 import styled from "styled-components";
 
+import { useSelector } from "react-redux";
+
 import star from "../shared/icon_star_bg_new@3x.png";
 import starFill from "../shared/icon_star_fill_new@3x.png";
 
-import axios from "axios";
-
 const CommentContent = (props) => {
-    const { rating, title, user, date } = props;
-    const id = props.id;
+    const id = props.comment._id;
+    const title = props.title;
+    console.log(props);
+    const comments = props.comment;
+    const stars = props.comment.star_rating;
+    const date = props.comment.createdAt.substr(0, 10);
 
-    const [comment, setComment] = useState();
+    const commentId = props.comment._id;
+
+    const user = useSelector((store) => store.user.user.id);
+
     const [open, setOpen] = useState(false);
 
     const clickHandler = () => {
@@ -28,18 +35,32 @@ const CommentContent = (props) => {
                 <Tr>
                     <Td>
                         <Star>
-                            <StarFill>별</StarFill>
+                            <StarFill stars={stars}>별</StarFill>
                         </Star>
                     </Td>
-                    <TdTitle onClick={clickHandler}>제목</TdTitle>
-                    <Td>작성자</Td>
-                    <Td>작성일</Td>
+                    <TdTitle onClick={clickHandler}>{comments.title}</TdTitle>
+                    <Td>{comments.user.id}</Td>
+                    <Td>{date}</Td>
                 </Tr>
                 <tr className={open === true ? "open" : "close"} open>
                     <td colSpan="4">
                         <div>
-                            하루만에 뒷꿈치 장식이 떨어져서 후기에만 그냥 남겼는데 하나더
-                            배송해주시는 배민만의 서비스에 감동받았습니다
+                            {comments.content} <br /> <br />
+                            {comments.user.id === user ? (
+                                <Button
+                                    onClick={() =>
+                                        window.open(
+                                            `${id}/comment/${commentId}`,
+                                            `window_name`,
+                                            "width=420,height=600,location=(50,50),status=no,scrollbars=yes"
+                                        )
+                                    }
+                                >
+                                    수정
+                                </Button>
+                            ) : null}
+                            &nbsp;&nbsp;&nbsp;
+                            {comments.user.id === user ? <Button>삭제</Button> : null}
                         </div>
                     </td>
                 </tr>
@@ -92,9 +113,29 @@ const Star = styled.span`
 const StarFill = styled.span`
     display: block;
     background: url(${starFill}) no-repeat left top;
-    width: 60%;
+    width: ${(props) =>
+        props.stars === 5
+            ? "100%;"
+            : props.stars === 4
+            ? "80%;"
+            : props.stars === 3
+            ? "60%;"
+            : props.stars === 2
+            ? "40%;"
+            : props.stars === 1
+            ? "20%;"
+            : null}
     -webkit-background-size: 88px 15px;
     background-size: 88px 15px;
+`;
+
+const Button = styled.button`
+    width: 36px;
+    height: 24px;
+    border: 1px solid #999;
+    & {
+        font-size: 12px;
+    }
 `;
 
 export default CommentContent;

@@ -44,52 +44,50 @@ const ProductDetail = (props) => {
         const amount = goodsCnt;
         const url = data.thumbnail_url;
         const option = data.option;
-  
+
         if (localStorage.length > 0) {
-          for (var i = 0; i < localStorage.length; i++) {
-            if (Number(index) < Number(localStorage.key(i))) {
-              index = localStorage.key(i);
-              var cartItem = JSON.parse(
-                localStorage.getItem(localStorage.key(i))
-              );
-              if (
-                JSON.stringify(cartItem.goods) === JSON.stringify(goods) &&
-                JSON.stringify(cartItem.name) === JSON.stringify(name)
-              ) {
-                  isSame = true;
-                  cartItem.amount = cartItem.amount + amount;
-                  cartItem.url = url;
-                  cartItem.price = cartItem.price + price;
-                  cartItem.option = option;
-                  break;
-              }
+            for (var i = 0; i < localStorage.length; i++) {
+                if (Number(index) < Number(localStorage.key(i))) {
+                    index = localStorage.key(i);
+                    var cartItem = JSON.parse(localStorage.getItem(localStorage.key(i)));
+                    if (
+                        JSON.stringify(cartItem.goods) === JSON.stringify(goods) &&
+                        JSON.stringify(cartItem.name) === JSON.stringify(name)
+                    ) {
+                        isSame = true;
+                        cartItem.amount = cartItem.amount + amount;
+                        cartItem.url = url;
+                        cartItem.price = cartItem.price + price;
+                        cartItem.option = option;
+                        break;
+                    }
+                }
             }
-          }
         }
-        if(isSame == true){
+        if (isSame == true) {
             var cartInfo = {
-                id : index,
-                goods : data._id,
-                url : data.thumbnail_url,
-                amount : goodsCnt,
-                option : data.option,
-                name : data.title,
-                price : price,
+                id: index,
+                goods: data._id,
+                url: data.thumbnail_url,
+                amount: goodsCnt,
+                option: data.option,
+                name: data.title,
+                price: price,
             };
-        }else{
+        } else {
             index = Number(index) + 1;
-            var cartInfo ={
-              id : index,
-              goods : data._id,
-              url : data.thumbnail_url,
-              amount : goodsCnt,
-              option : data.option,
-              name : data.title,
-              price : price,
-            }
+            var cartInfo = {
+                id: index,
+                goods: data._id,
+                url: data.thumbnail_url,
+                amount: goodsCnt,
+                option: data.option,
+                name: data.title,
+                price: price,
+            };
         }
         localStorage.setItem(index, JSON.stringify(cartInfo));
-      };
+    };
 
     return (
         <>
@@ -155,7 +153,9 @@ const ProductDetail = (props) => {
                             </Total>
                             <ButtonDiv>
                                 <ProductButton is_like></ProductButton>
-                                <ProductButton is_white _onClick={addToCart}>장바구니</ProductButton>
+                                <ProductButton is_white _onClick={addToCart}>
+                                    장바구니
+                                </ProductButton>
                                 <ProductButton>바로 구매</ProductButton>
                             </ButtonDiv>
                         </div>

@@ -2,7 +2,6 @@ import styled from "styled-components";
 import "../shared/App.css";
 
 import Rating from "@material-ui/lab/Rating";
-import { makeStyles } from "@material-ui/core/styles";
 import moment from "moment";
 
 import { useState, useEffect } from "react";
@@ -12,6 +11,7 @@ import axios from "axios";
 const Comment = (props) => {
     const id = props.match.params.id;
     const token = localStorage.getItem("log_token");
+    console.log(id);
 
     const [goods, setGoods] = useState("");
     const [rating, setRating] = useState(5);
@@ -24,34 +24,41 @@ const Comment = (props) => {
             window.alert("내용을 다 입력해 주세요");
             return;
         }
-
-        axios
-            .post(`http://52.79.240.76/goods/${id}/comment`, {
-                headers: {
-                    user: `authorization: Bearer ${token}`,
-                },
-
-                goods: goods.title,
-                title: title,
-                content: content,
-                star_rating: rating,
-                createdAt: createdAt,
-                updatedAt: createdAt,
+        const comment = {
+            title: title,
+            content: content,
+            star_rating: rating,
+            createdAt: createdAt,
+        };
+        axios({
+            method: "post",
+            url: `http://13.125.248.86/goods/${id}/comment`,
+            headers: {
+                authorization: `Bearer ${token}`,
+                "Content-type": "application/json",
+                Accept: "application/json",
+            },
+            data: comment,
+        })
+            .then(function (response) {
+                console.log(response);
+                window.alert("후기가 작성되었습니다");
+                window.close();
             })
             .catch((error) => {
-                console.log(error);
+                console.log(error.response);
             });
     };
 
-    useEffect(() => {
-        const getComment = async (param) => {
-            setGoods(null);
-            const goods = await axios.get(`http://15.164.211.216/goods/${id}`);
-            setGoods(goods.data.result[0]);
-        };
-        getComment();
-    }, []);
-    if (!goods) return null;
+    // useEffect(() => {
+    //     const getComment = async (param) => {
+    //         setGoods(null);
+    //         const goods = await axios.get(`http://13.125.248.86/goods/${id}`);
+    //         setGoods(goods.data.result[0]);
+    //     };
+    //     getComment();
+    // }, []);
+    // if (!goods) return null;
 
     return (
         <>

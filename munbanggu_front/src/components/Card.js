@@ -12,7 +12,7 @@ const Card = (props) => {
         <>
             {props.discount === true
                 ? [
-                      <Link
+                      <a
                           onClick={() => {
                               history.push(`/goods/${props._id}`);
                           }}
@@ -32,10 +32,10 @@ const Card = (props) => {
                                   </ItemInfo>
                               </ItemInner>
                           </Item>
-                      </Link>,
+                      </a>,
                   ]
                 : [
-                      <Link
+                      <a
                           onClick={() => {
                               history.push(`/goods/${props._id}`);
                           }}
@@ -50,7 +50,7 @@ const Card = (props) => {
                                   </ItemInfo>
                               </ItemInner>
                           </Item>
-                      </Link>,
+                      </a>,
                   ]}
         </>
     );
