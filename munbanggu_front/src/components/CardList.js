@@ -58,7 +58,7 @@ const Sort = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 40px 10px;
-    $ > * {
+     > * {
         font-size: 14px;
     }
 `;

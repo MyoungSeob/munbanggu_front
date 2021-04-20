@@ -19,7 +19,7 @@ const initialState = {
 const getProductDB = () => {
     return function (dispatch, getState, { history }) {
         return axios
-            .get(`http://15.164.211.216/goods`)
+            .get(`http://52.79.240.76/goods`)
             .then((response) => {
                 let product_list = [];
                 response.data.result.forEach((response) => {

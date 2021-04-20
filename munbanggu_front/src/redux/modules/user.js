@@ -20,7 +20,7 @@ const initialState = {
 
 const signUpDB = (id, name, pwd, email, isZoneCode, isAddress, detailAddress, phoneNumber) =>{
     return function (dispatch, getState, {history}) {
-        axios.post('http://15.164.211.216/user/register', {
+        axios.post('http://52.79.240.76/user/register', {
             id : id,
             name : name,
             password : pwd,            
@@ -45,7 +45,7 @@ const signUpDB = (id, name, pwd, email, isZoneCode, isAddress, detailAddress, ph
 
 const loginDB = (id, pwd) => {
   return function(dispatch, getState, {history}) {
-    axios.post('http://15.164.211.216/user/login', {
+    axios.post('http://52.79.240.76/user/login', {
     id : id,
     password : pwd,
       
@@ -83,7 +83,7 @@ const logoutDB =()=>{
 };
 const googleLoginDB = (token) => {
   return function (getState, dispatch, {history}) {
-      axios.get('http://15.164.211.216/auth/google', {
+      axios.get('http://52.79.240.76/auth/google', {
         headers : {
          'Access-Control-Allow-Origin': '*'}
         }

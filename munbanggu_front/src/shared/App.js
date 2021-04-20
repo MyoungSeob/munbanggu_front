@@ -9,10 +9,14 @@ import SignUpInfo from "../pages/SignUpInfo";
 import ProductDetail from "../pages/ProductDetail";
 import Home from "../pages/Home";
 import Category from "../pages/Category";
+import Cart from "../pages/Cart"
+import Comment from "../pages/Comment"
+import Mypage from "../pages/Mypage"
 
 import { BrowserRouter, Route } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configStore";
+
 
 function App() {
     return (
@@ -24,8 +28,11 @@ function App() {
                     <Route path="/goods/category/:id" component={Category} />
                     <Route exact path="/goods/:id" component={ProductDetail} />
                     <Route exact path="/user/register" component={SignUp} />
+                    <Route exact path="/cart" component={Cart} />
                     <Route exact path="/user/register/info" component={SignUpInfo} />
                     <Route exact path="/user/login" component={Login} />
+                    <Route exact path="/goods/:id/comment" component={Comment} />
+                    <Route exact path="/user/mypage" component={Mypage} />
                     <Footer />
                 </ConnectedRouter>
             </BrowserRouter>
