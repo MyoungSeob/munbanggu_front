@@ -1,15 +1,30 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import "../shared/Product.css";
 
 import GoodsTab from "../components/GoodsTab";
-import CommentList from "../components/CommentList";
+import CommentContent from "../components/CommentContent";
 
 const ProductDetailInfo = (props) => {
     const detailInfo = props.data;
     const id = detailInfo._id;
     const image = detailInfo.detail_image_url[0];
+    const title = detailInfo.title;
+
+    const log_token = localStorage.getItem("log_token");
+
+    const [comment, setComment] = useState();
+
+    useEffect(() => {
+        const comment = async (param) => {
+            setComment(null);
+            const res = await axios.get(`http://13.125.248.86/goods/${id}/comment`);
+            setComment(res.data.result);
+        };
+        comment();
+    }, []);
+    if (!comment) return null;
 
     return (
         <Body>
@@ -97,7 +112,7 @@ const ProductDetailInfo = (props) => {
                     onClick={() =>
                         window.open(
                             `${id}/comment`,
-                            "window_name",
+                            `window_name`,
                             "width=420,height=600,location=(50,50),status=no,scrollbars=yes"
                         )
                     }
@@ -105,7 +120,7 @@ const ProductDetailInfo = (props) => {
                     상품후기 글쓰기
                 </AReview>
             </Flex>
-            {detailInfo.comment_count === 0 ? (
+            {/* {detailInfo.comment_count === 0 ? (
                 <Table>
                     <tbody>
                         <tr>
@@ -113,11 +128,13 @@ const ProductDetailInfo = (props) => {
                         </tr>
                     </tbody>
                 </Table>
-            ) : (
-                <Table>
-                    <CommentList id={id} />
-                </Table>
-            )}
+            ) : ( */}
+            <Table>
+                {comment.map((p) => {
+                    return <CommentContent id={id} title={title} comment={p} />;
+                })}
+            </Table>
+            {/* )} */}
             <GoodsTab review_cnt={detailInfo.comment_count} />
             <Flex>
                 <h3>상품문의</h3>
