@@ -26,7 +26,7 @@ const HeaderLogin =(props)=> {
               <Ul></Ul>
               <GridBox>
               <il><LoginText onClick={()=>{dispatch(userActions.logoutDB())}}>로그아웃</LoginText><TextBar /></il>
-              <il><LoginText>마이페이지</LoginText><TextBar /></il>
+              <il><LoginText onClick={()=>(history.push('/user/mypage'))}>마이페이지</LoginText><TextBar /></il>
               <il><LoginText onClick={()=>{history.push('/cart')}}>장바구니<CartCount>0</CartCount></LoginText></il>
               </GridBox>
             </Box>
