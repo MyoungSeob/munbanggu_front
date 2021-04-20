@@ -28,33 +28,38 @@ const Order = (props) => {
   const [isCheckedPhone, setIsCheckedPhone] = React.useState(false);
   const [payMethod, setPayMethod] = React.useState("");
 
-  const checkedHandle = () => {
-    if (!isCheckedCard) {
-      if (!isCheckedCard && isCheckedPhone) {
-        setIsCheckedCard(true);
-        setIsCheckedPhone(false);
-        setPayMethod("신용카드");
-      } else {
-        if (!isCheckedCard && !isCheckedPhone) {
-          setIsCheckedCard(true);
-          setIsCheckedPhone(false);
-          setPayMethod("신용카드");
-        }
+  const checkedCard = () => {
+    if(!isCheckedCard && !isCheckedPhone){
+      setIsCheckedCard(true)
+      setPayMethod("신용카드")
+    }else{
+      if(!isCheckedCard && isCheckedPhone){
+        setIsCheckedPhone(false)
+        setIsCheckedCard(true)
+        setPayMethod("신용카드")
       }
     }
-    if (!isCheckedPhone) {
-      if (isCheckedCard && !isCheckedPhone) {
-        setIsCheckedCard(false);
-        setIsCheckedPhone(true);
-        setPayMethod("휴대폰결제");
-      } else {
-        if (!isCheckedCard && !isCheckedPhone) {
-          setIsCheckedPhone(true);
-          setIsCheckedCard(false);
-          setPayMethod("휴대폰결제");
-        }
+    if(isCheckedCard){
+      setIsCheckedCard(false)
+      setPayMethod("")
+    }
+    
+  };
+  const checkedPhone = () => {
+    if(!isCheckedCard && !isCheckedPhone){
+      setIsCheckedPhone(true)
+      setPayMethod("휴대폰결제")
+    }else{
+      if(isCheckedCard && !isCheckedPhone){
+        setIsCheckedCard(false)
+        setIsCheckedPhone(true)
+        setPayMethod("휴대폰결제")
       }
     }
+    if(isCheckedPhone){
+      setIsCheckedPhone(false)
+      setPayMethod("")
+    }    
   };
   console.log(payMethod);
 
@@ -104,16 +109,21 @@ const Order = (props) => {
   );
  
   function orderProduct() {
-    dispatch(
-      productActions.orderProductDB(
-        isZoneCode,
-        isAddress,
-        detailAddress,
-        deliveryComment,
-        payMethod,
-        phoneNumber,
-      )
-    );
+    if (isZoneCode === "" || isAddress ==="" || detailAddress === "" || deliveryComment === "" || payMethod === "" ||phoneNumber ===""){
+      window.alert("위의 항목들을 모두 입력해주세요.")
+      return;
+    }else{
+      dispatch(
+        productActions.orderProductDB(
+          isZoneCode,
+          isAddress,
+          detailAddress,
+          deliveryComment,
+          payMethod,
+          phoneNumber
+        )
+      );
+    }
   }
 
   console.log((localStorage.getItem(1).goods))
@@ -268,7 +278,7 @@ const Order = (props) => {
                           <MemberWarning>
                             <FormElement>
                               <CheckInput
-                                onClick={checkedHandle}
+                                onClick={checkedCard}
                                 checked={isCheckedCard}
                                 id="card"
                                 type="checkbox"
@@ -276,7 +286,7 @@ const Order = (props) => {
                               />
                               <Label for="card">신용카드</Label>
                               <CheckInput_
-                                onClick={checkedHandle}
+                                onClick={checkedPhone}
                                 checked={isCheckedPhone}
                                 id="phone"
                                 type="checkbox"
