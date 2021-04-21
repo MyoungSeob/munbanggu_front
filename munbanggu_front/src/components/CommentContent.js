@@ -11,8 +11,6 @@ import starFill from "../shared/icon_star_fill_new@3x.png";
 const CommentContent = (props) => {
     const id = props.id;
     const title = props.title;
-    const token = localStorage.getItem("log_token");
-    const user_id = localStorage.getItem("id");
 
     const comments = props.comment;
     const stars = props.comment.star_rating;
@@ -30,31 +28,56 @@ const CommentContent = (props) => {
         }
     };
 
-    const deleteComment = () => {
-        const Id = {
-            _id: commentId,
-        };
-        axios({
-            method: "DELETE",
-            url: `http://13.125.248.86/goods/${id}/comment`,
-            headers: {
-                authorization: `Bearer ${token}`,
-                "Content-type": "application/json",
-            },
-            data: Id,
-        })
-            .then(function (response) {
-                console.log(response);
-                window.alert("후기가 삭제되었습니다");
-                window.replace("/");
-            })
-            .catch((error) => {
-                console.log(error.response);
-            });
-    };
+    const token = localStorage.getItem("log_token");
+    const user_id = localStorage.getItem("id");
 
-    return (
-        <>
+    if (!token || !user_id) {
+        return (
+            <Tbody>
+                <Tr>
+                    <Td>
+                        <Star>
+                            <StarFill stars={stars}>별</StarFill>
+                        </Star>
+                    </Td>
+                    <TdTitle onClick={clickHandler}>{comments.title}</TdTitle>
+                    <Td>{comments.user.id}</Td>
+                    <Td>{date}</Td>
+                </Tr>
+                <tr className={open === true ? "open" : "close"} open>
+                    <td colSpan="4">
+                        <div>
+                            {comments.content} <br /> <br />
+                        </div>
+                    </td>
+                </tr>
+            </Tbody>
+        );
+    } else {
+        const deleteComment = () => {
+            const Id = {
+                _id: commentId,
+            };
+            axios({
+                method: "DELETE",
+                url: `http://13.125.248.86/goods/${id}/comment`,
+                headers: {
+                    authorization: `Bearer ${token}`,
+                    "Content-type": "application/json",
+                },
+                data: Id,
+            })
+                .then(function (response) {
+                    console.log(response);
+                    window.alert("후기가 삭제되었습니다");
+                    window.replace("/");
+                })
+                .catch((error) => {
+                    console.log(error.response);
+                });
+        };
+
+        return (
             <Tbody>
                 <Tr>
                     <Td>
@@ -91,8 +114,10 @@ const CommentContent = (props) => {
                     </td>
                 </tr>
             </Tbody>
-        </>
-    );
+        );
+    }
+
+    return <></>;
 };
 
 const Tbody = styled.tbody`
