@@ -2,17 +2,20 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axios from "axios";
 
+const GET_PRODUCT_LATELY="GET_PRODUCT_LATELY"
 const GET_PRODUCT = "GET_PRODUCT";
 const GET_PRODUCT_LOW_HIGH = "GET_PRODUCT_LOW_HEIGH";
 const GET_PRODUCT_HIGH_LOW = "GET_PRODUCT_HIGH_LOW";
 const getProduct = createAction(GET_PRODUCT, (product_list) => product_list);
 const getProductLowHigh = createAction(GET_PRODUCT_LOW_HIGH, (product_list) => product_list);
 const getProductHighLow = createAction(GET_PRODUCT_HIGH_LOW, (product_list) => product_list);
+const getProductlately = createAction(GET_PRODUCT_LATELY, (lately_orderlist) =>  lately_orderlist);
 
 const initialState = {
     list: [],
     lowHight: [],
     hightLow: [],
+    lately_orderlist:[],
     is_loading: false,
 };
 
@@ -54,6 +57,30 @@ const getProductDB = () => {
             });
     };
 };
+
+const lately_orderlistDB = () =>{
+    return function(dispatch,getState,{history}){
+      let lately_orderlist = [];
+      
+      axios.get(`http://13.125.248.86/order`, {
+        headers:{
+          authorization: `Bearer ${localStorage.getItem("log_token")}`
+        }
+      })
+      
+      .then((res)=>{
+        console.log(res)
+        const lately_orderlist=res.data;
+        dispatch(getProductlately(lately_orderlist))
+        
+      })
+      
+    }
+  }
+
+
+
+
 
 const orderProductDB = (
     isZoneCode,
@@ -97,6 +124,11 @@ const orderProductDB = (
     };
   };
 
+
+
+
+
+
 export default handleActions(
     {
         [GET_PRODUCT]: (state, action) =>
@@ -110,8 +142,12 @@ export default handleActions(
             }),
         [GET_PRODUCT_HIGH_LOW]: (state, action) =>
             produce(state, (draft) => {
-                draft.highLow = action.payload;
+                draft.hightLow = action.payload;
             }),
+        [GET_PRODUCT_LATELY]:(state,action)=>
+        produce(state,(draft)=>{
+          draft.lately_orderlist=action.payload;
+        }),
     },
     initialState
 );
@@ -121,7 +157,9 @@ const actionsCreators = {
     getProduct,
     getProductLowHigh,
     getProductHighLow,
-    orderProductDB
+    orderProductDB,
+    lately_orderlistDB,
+    getProductlately
 };
 
 export { actionsCreators };

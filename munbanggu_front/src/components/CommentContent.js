@@ -124,7 +124,7 @@ const StarFill = styled.span`
             ? "40%;"
             : props.stars === 1
             ? "20%;"
-            : null}
+            : null};
     -webkit-background-size: 88px 15px;
     background-size: 88px 15px;
 `;

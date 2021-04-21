@@ -2,9 +2,21 @@ import React from "react";
 import react from "react";
 import styled from "styled-components"
 import Header from "../components/Header";
-
+import CartContent from "../components/CartContent";
+import { useDispatch, useSelector } from "react-redux";
+import { actionsCreators as productActions } from "../redux/modules/product";
 
 const Mypage =(props) =>{
+  const dispatch = useDispatch();
+  const lately_orderlist=useSelector((store)=>store.product.lately_orderlist)
+  
+  React.useEffect(()=>{
+    dispatch(productActions.lately_orderlistDB());
+    
+  },[]);
+
+  
+
   return(
   <React.Fragment>
      <Container>
@@ -116,7 +128,9 @@ const Mypage =(props) =>{
         <Tbody>
 
         <Tr>
-            <Td><P class="no_data">조회내역이 없습니다.</P></Td>
+            {/* <Td>{lately_orderlist.map((p) => {
+              return <CartContent key={p.id} {...p} />;
+            })}</Td> */}
         </Tr>
         </Tbody>
     </Table>
