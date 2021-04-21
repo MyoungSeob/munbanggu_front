@@ -27,7 +27,7 @@ const Cart = (props) => {
                 </LiTwo>
               </Ol>
             </OrderTit>
-            {localStorage.length > 1 ? (
+            {localStorage.length > 2 ? (
               <CartList />
             ) : (
               <CartCont>
@@ -76,24 +76,42 @@ const Cart = (props) => {
                 </PriceSumList>
               </PriceSumCont>
             </PriceSum>
-            <BtnOrderBox>
-              <BtnLeftBoxtwo>
-                <ButtonOrderDel>선택 상품 삭제</ButtonOrderDel>
-                <ButtonOrderWish>선택 상품 찜</ButtonOrderWish>
-              </BtnLeftBoxtwo>
-              <BtnRightBox>
-                <BtnChoiceBuy>선택 상품 주문</BtnChoiceBuy>
-                <BtnOrderWholeBuy>전체 상품 주문</BtnOrderWholeBuy>
-              </BtnRightBox>
-            </BtnOrderBox>
-            <Bill>
-              <Emtwo>
-                <span>
-                  <WarningIcon src={warningIcon} />
-                </span>
-                주문서 작성단계에서 할인/적립금 적용을 하실 수 있습니다.
-              </Emtwo>
-            </Bill>
+            {localStorage.length > 2 ? (
+              <div>
+                <BtnOrderBox>
+                  <BtnLeftBoxtwo>
+                    <ButtonOrderDel>선택 상품 삭제</ButtonOrderDel>
+                    <ButtonOrderWish>선택 상품 찜</ButtonOrderWish>
+                  </BtnLeftBoxtwo>
+                  <BtnRightBox>
+                    <BtnChoiceBuy
+                      onClick={() => {
+                        history.push("/order");
+                      }}
+                    >
+                      선택 상품 주문
+                    </BtnChoiceBuy>
+                    <BtnOrderWholeBuy
+                      onClick={() => {
+                        history.push("/order");
+                      }}
+                    >
+                      전체 상품 주문
+                    </BtnOrderWholeBuy>
+                  </BtnRightBox>
+                </BtnOrderBox>
+                <Bill>
+                  <Emtwo>
+                    <span>
+                      <WarningIcon src={warningIcon} />
+                    </span>
+                    주문서 작성단계에서 할인/적립금 적용을 하실 수 있습니다.
+                  </Emtwo>
+                </Bill>
+              </div>
+            ) : (
+              ""
+            )}
           </OrderWrap>
         </ContentBox>
       </SubContent>
@@ -109,8 +127,11 @@ const SubContent = styled.div`
 const ContentBox = styled.div`
   float: left;
   width: 100%;
+  padding-bottom : 60px;
 `;
-const OrderWrap = styled.div``;
+const OrderWrap = styled.div`
+  
+`;
 const OrderTit = styled.div`
   overflow: hidden;
   border-bottom: 1px solid #dbdbdb;

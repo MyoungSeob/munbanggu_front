@@ -90,9 +90,19 @@ const googleLoginDB = (token) => {
     };
 };
 const kakaoLoginDB = () => {
-    return function (getState, dispatch, { history }) {};
+  return function (getState, dispatch, { history }) {
+    if (window.location.href === "http://13.125.248.86/auth/kakao") {
+      axios
+        .get("http://13.125.248.86/auth/kakao", {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    }
+  };
 };
-
 export default handleActions(
     {
         [LOG_IN]: (state, action) =>

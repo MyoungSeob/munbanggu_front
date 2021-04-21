@@ -35,7 +35,7 @@ const Signup=(props)=>{
                   <Google>
                     <GoogleLogin
                       clientId="803198658516-l35b5pqrcmr299llbmi9lnqr196j4b6j.apps.googleusercontent.com"
-                      buttonText="Login with Google"
+                      buttonText="Sign Up with Google"
                       onSuccess={
                         (result) => {
                           console.log(result)

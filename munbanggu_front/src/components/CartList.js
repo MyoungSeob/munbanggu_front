@@ -4,11 +4,10 @@ import beer from "../shared/beer.jpeg";
 import CartContent from "./CartContent";
 const CartList = (props) => {
   const cart_list = [];
-  for (let i = 1; i < localStorage.length; i++) {
+  for (let i = 1; i < localStorage.length-1; i++) {
     cart_list.push(JSON.parse(localStorage.getItem(i)));
   }
 
-  console.log(cart_list);
 
   return (
     <React.Fragment>
