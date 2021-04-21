@@ -10,48 +10,46 @@ import saleBadge from "../shared/SaleBadge.png";
 const Card = (props) => {
     return (
         <>
-            {props.discount === true
-                ? [
-                      <a
-                          onClick={() => {
-                              history.push(`/goods/${props._id}`);
-                          }}
-                          key={props._id}
-                      >
-                          <Item key={props._id}>
-                              <ItemInner>
-                                  <img src={props.thumbnail_url} alt="detail" width="280px"></img>
-                                  <ItemInfo>
-                                      <SaleBadge>
-                                          <img src={saleBadge} alt="sale" />
-                                      </SaleBadge>
-                                      <Sale>10%</Sale>
-                                      <ItemA>{props.title}</ItemA>
-                                      <PrePrice>15,000원</PrePrice>
-                                      <ItemPriceInfo>{props.sale_price}</ItemPriceInfo>
-                                  </ItemInfo>
-                              </ItemInner>
-                          </Item>
-                      </a>,
-                  ]
-                : [
-                      <a
-                          onClick={() => {
-                              history.push(`/goods/${props._id}`);
-                          }}
-                          key={props._id}
-                      >
-                          <Item>
-                              <ItemInner>
-                                  <img src={props.thumbnail_url} alt="detail" width="280px"></img>
-                                  <ItemInfo>
-                                      <ItemA>{props.title}</ItemA>
-                                      <ItemPriceInfo>{props.sale_price}</ItemPriceInfo>
-                                  </ItemInfo>
-                              </ItemInner>
-                          </Item>
-                      </a>,
-                  ]}
+            {props.discount === true ? (
+                <a
+                    onClick={() => {
+                        history.push(`/goods/${props._id}`);
+                    }}
+                    key={props._id}
+                >
+                    <Item key={props._id}>
+                        <ItemInner>
+                            <img src={props.thumbnail_url} alt="detail" width="280px"></img>
+                            <ItemInfo>
+                                <SaleBadge>
+                                    <img src={saleBadge} alt="sale" />
+                                </SaleBadge>
+                                <Sale>10%</Sale>
+                                <ItemA>{props.title}</ItemA>
+                                <PrePrice>15,000원</PrePrice>
+                                <ItemPriceInfo>{props.sale_price}</ItemPriceInfo>
+                            </ItemInfo>
+                        </ItemInner>
+                    </Item>
+                </a>
+            ) : (
+                <a
+                    onClick={() => {
+                        history.push(`/goods/${props._id}`);
+                    }}
+                    key={props._id}
+                >
+                    <Item>
+                        <ItemInner>
+                            <img src={props.thumbnail_url} alt="detail" width="280px"></img>
+                            <ItemInfo>
+                                <ItemA>{props.title}</ItemA>
+                                <ItemPriceInfo>{props.sale_price}</ItemPriceInfo>
+                            </ItemInfo>
+                        </ItemInner>
+                    </Item>
+                </a>
+            )}
         </>
     );
 };

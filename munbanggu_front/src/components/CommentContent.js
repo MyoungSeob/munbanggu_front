@@ -3,21 +3,22 @@ import "../shared/Product.css";
 import styled from "styled-components";
 
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 import star from "../shared/icon_star_bg_new@3x.png";
 import starFill from "../shared/icon_star_fill_new@3x.png";
 
 const CommentContent = (props) => {
-    const id = props.comment._id;
+    const id = props.id;
     const title = props.title;
-    console.log(props);
+    const token = localStorage.getItem("log_token");
+    const user_id = localStorage.getItem("id");
+
     const comments = props.comment;
     const stars = props.comment.star_rating;
     const date = props.comment.createdAt.substr(0, 10);
 
     const commentId = props.comment._id;
-
-    const user = useSelector((store) => store.user.user.id);
 
     const [open, setOpen] = useState(false);
 
@@ -27,6 +28,29 @@ const CommentContent = (props) => {
         } else {
             setOpen(false);
         }
+    };
+
+    const deleteComment = () => {
+        const Id = {
+            _id: commentId,
+        };
+        axios({
+            method: "DELETE",
+            url: `http://13.125.248.86/goods/${id}/comment`,
+            headers: {
+                authorization: `Bearer ${token}`,
+                "Content-type": "application/json",
+            },
+            data: Id,
+        })
+            .then(function (response) {
+                console.log(response);
+                window.alert("후기가 삭제되었습니다");
+                window.replace("/");
+            })
+            .catch((error) => {
+                console.log(error.response);
+            });
     };
 
     return (
@@ -46,7 +70,7 @@ const CommentContent = (props) => {
                     <td colSpan="4">
                         <div>
                             {comments.content} <br /> <br />
-                            {comments.user.id === user ? (
+                            {comments.user.id === user_id ? (
                                 <Button
                                     onClick={() =>
                                         window.open(
@@ -60,7 +84,9 @@ const CommentContent = (props) => {
                                 </Button>
                             ) : null}
                             &nbsp;&nbsp;&nbsp;
-                            {comments.user.id === user ? <Button>삭제</Button> : null}
+                            {comments.user.id === user_id ? (
+                                <Button onClick={deleteComment}>삭제</Button>
+                            ) : null}
                         </div>
                     </td>
                 </tr>
@@ -133,6 +159,7 @@ const Button = styled.button`
     width: 36px;
     height: 24px;
     border: 1px solid #999;
+    cursor: pointer;
     & {
         font-size: 12px;
     }

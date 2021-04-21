@@ -44,6 +44,7 @@ const Button = styled.button`
     background: #000;
     text-align: center;
     font-weight: bold;
+    cursor: pointer;
     &:hover {
         bacground: #222;
         border: 1px solid #222;
@@ -62,6 +63,7 @@ const WhiteButton = styled.button`
     background: #ffffff;
     text-align: center;
     font-weight: bold;
+    cursor: pointer;
 `;
 
 export default ProductButton;

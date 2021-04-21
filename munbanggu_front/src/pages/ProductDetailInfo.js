@@ -120,7 +120,7 @@ const ProductDetailInfo = (props) => {
                     상품후기 글쓰기
                 </AReview>
             </Flex>
-            {/* {detailInfo.comment_count === 0 ? (
+            {detailInfo.comment_count === 0 ? (
                 <Table>
                     <tbody>
                         <tr>
@@ -128,13 +128,13 @@ const ProductDetailInfo = (props) => {
                         </tr>
                     </tbody>
                 </Table>
-            ) : ( */}
-            <Table>
-                {comment.map((p) => {
-                    return <CommentContent id={id} title={title} comment={p} />;
-                })}
-            </Table>
-            {/* )} */}
+            ) : (
+                <Table>
+                    {comment.map((p) => {
+                        return <CommentContent id={id} title={title} comment={p} />;
+                    })}
+                </Table>
+            )}
             <GoodsTab review_cnt={detailInfo.comment_count} />
             <Flex>
                 <h3>상품문의</h3>
