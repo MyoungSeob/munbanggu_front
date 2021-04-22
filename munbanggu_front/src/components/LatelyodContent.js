@@ -6,7 +6,7 @@ const LatelyodContent = (props) => {
   
  
 
-  
+
 
   return (
     <React.Fragment>
@@ -42,7 +42,7 @@ const LatelyodContent = (props) => {
           
        
           <Td>
-            <StrongPrice>{props.price}원</StrongPrice>
+            <StrongPrice>{props.price*props.amount}원</StrongPrice>
           </Td>
      
         </Tr>

@@ -124,7 +124,8 @@ const lately_orderlistDB = () => {
                   amount:_order.quantity,
                   option:_order.goods.option,
                   date:_order.createdAt.substr(0,10),
-                  user_name:_order.user.name
+                  user_name:_order.user.name,
+                  
                 };
                 
                 console.log(order);
