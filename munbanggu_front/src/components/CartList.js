@@ -19,7 +19,7 @@ const CartList = (props) => {
               <Tr>
                 <Th>
                   <FormElement>
-                    <CheckBox type="checkbox" />
+                    <CheckBox checked={true} type="checkbox" />
                     <Label></Label>
                   </FormElement>
                 </Th>

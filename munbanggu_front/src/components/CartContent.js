@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
+import upIcon from "../shared/btn_count_up.png"
+import downIcon from "../shared/btn_count_down.png"
 
 const CartContent = (props) => {
   //localStorage에서 정보를 받아와 물품의 가격 및 수량, 원가를 구했습니다.
@@ -151,8 +153,8 @@ const CartContent = (props) => {
                       <GoodsQty>
                         <GoodsInput value={num+amount} />
                         <BtnSpan>
-                          <Upbutton onClick={amountUp}/>
-                          <Dbutton onClick={amountDown}/>
+                          <Upbutton src={upIcon} onClick={amountUp}/>
+                          <Dbutton src={downIcon} onClick={amountDown}/>
                         </BtnSpan>
                       </GoodsQty>
                     </CountSpan>
@@ -178,7 +180,7 @@ const CartContent = (props) => {
       <Tbody>
         <Tr>
           <Td>
-            <CheckBox onClick={chooseOrderList} checked={checkProduct} value={orderContent} type="checkbox" />
+            <CheckBox onClick={chooseOrderList} checked={true} value={orderContent} type="checkbox" />
           </Td>
           <Tdleft>
             <PickAddCont>
@@ -358,9 +360,8 @@ const BtnSpan = styled.span`
   float: left;
   margin: 0 0 0 -1px;
 `;
-const Upbutton = styled.button`
-  background: url("https://store.baemin.com/data/skin/front/udweb_C/img/common/btn/btn_count_up.png")
-    no-repeat left top;
+const Upbutton = styled.img`
+  no-repeat left top;
   display: block;
   width: 23px;
   height: 17px;
@@ -369,10 +370,9 @@ const Upbutton = styled.button`
   border: 0 none;
   cursor: pointer;
 `;
-const Dbutton = styled.button`
+const Dbutton = styled.img`
   margin: -1px 0 0;
-  background: url("https://store.baemin.com/data/skin/front/udweb_C/img/common/btn/btn_count_down.png")
-    no-repeat left top;
+  no-repeat left top;
   display: block;
   width: 23px;
   height: 18px;

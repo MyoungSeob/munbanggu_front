@@ -5,6 +5,7 @@ import user, { actionCreators as userActions } from "../redux/modules/user"
 import styled from "styled-components";
 import {history} from"../redux/configStore"
 import KaKaoLogin from "react-kakao-login";
+import KakaoLogin from "react-kakao-login";
 
 
 const Login = (props) =>{
@@ -72,19 +73,17 @@ const Login = (props) =>{
 				{/* <!-- //login_box --> */}
 				
         <div>
-					{/* <KaKaoBtn
+					<KaKaoBtn
             token={'77cf3a731ee167706680f1d2044f0f9e'}
             onSuccess={(res) => {
-              setKakaoToken(res.response.access_token)
-              sendKakaoToken(res.response.access_token)
+              console.log(res)
             }
           }
             onFailure={(err) => console.log(err)}
             buttonText="카카오 계정으로 로그인"
             getProfile={true}
-          /> */}
+          />
           
-          <a onClick={Kakao}>카카오톡로그인</a>
 				</div>
 				
 				
@@ -122,7 +121,9 @@ const Content_mem= styled.div`
   padding: 30px 145px;
 `;
 const KaKaoBtn = styled(KaKaoLogin)`
-  width : auto
+  width : 400px;
+  margin: 5px 0 0 38px;
+  height : 45px;
 `
 
 const Id_chk = styled.div`
@@ -205,7 +206,6 @@ display: inline-block;
     text-indent: -999em;
     vertical-align: -5px;
 `;
-
 
 
 const Logbut = styled.button `

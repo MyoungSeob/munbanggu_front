@@ -174,16 +174,17 @@ const orderProductDB = (
             })
                 .then(function (res) {
                     console.log(res);
-                    window.alert("결제 완료되셨습니다!")
-                    for(let i = 1; i < localStorage.length-1; i++){
-                        localStorage.removeItem(i)
-                    }
-                    history.push('/')
+                    
                 })
                 .catch(function (err) {
                     console.log("에러입니다", err);
                 });
         }
+        window.alert("결제 완료되셨습니다!")
+        for(let i = 1; i < localStorage.length-1; i++){
+            localStorage.removeItem(i)
+        }
+        history.push('/')
     };
 };
 
