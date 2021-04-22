@@ -5,13 +5,13 @@ import Rating from "@material-ui/lab/Rating";
 import moment from "moment";
 
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { actionsCreators as productActions } from "../redux/modules/product";
 import axios from "axios";
 
 const Comment = (props) => {
     const id = props.match.params.id;
     const token = localStorage.getItem("log_token");
-    console.log(id);
 
     const [goods, setGoods] = useState("");
     const [rating, setRating] = useState(5);
@@ -50,15 +50,16 @@ const Comment = (props) => {
             });
     };
 
-    // useEffect(() => {
-    //     const getComment = async (param) => {
-    //         setGoods(null);
-    //         const goods = await axios.get(`http://13.125.248.86/goods/${id}`);
-    //         setGoods(goods.data.result[0]);
-    //     };
-    //     getComment();
-    // }, []);
-    // if (!goods) return null;
+    const dispatch = useDispatch();
+    const product_list = useSelector((store) => store.product.list);
+
+    const idx = product_list.findIndex((p) => p._id === id);
+    const data = product_list[idx];
+
+    useEffect(() => {
+        dispatch(productActions.getProductDB());
+    }, [id]);
+    console.log(product_list);
 
     return (
         <>

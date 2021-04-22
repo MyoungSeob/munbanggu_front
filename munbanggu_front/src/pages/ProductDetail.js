@@ -24,235 +24,151 @@ const ProductDetail = (props) => {
         dispatch(productActions.getProductDB(id));
     }, []);
 
-    if (!data) {
-        return null;
-    } else {
-        const originPrice = data.sale_price;
-        const price = (originPrice * goodsCnt).toLocaleString("en");
-        const price_ = originPrice * goodsCnt
+    if (!data) return null;
 
-        const CntUp = () => {
-            setGoodsCnt(goodsCnt + 1);
-        };
-        const CntDwn = () => {
-            if (goodsCnt > 1) {
-                setGoodsCnt(goodsCnt - 1);
-            }
-        };
+    const originPrice = data.sale_price;
+    const price = (originPrice * goodsCnt).toLocaleString("en");
 
-        const addToCart = () => {
-            let index = 0;
-            let isSame = false;
-            const goods = data._id;
-            const name = data.title;
-            const amount = goodsCnt;
-            const url = data.thumbnail_url;
-            const option = data.option;
+    const CntUp = () => {
+        setGoodsCnt(goodsCnt + 1);
+    };
+    const CntDwn = () => {
+        if (goodsCnt > 1) {
+            setGoodsCnt(goodsCnt - 1);
+        }
+    };
 
-            if (localStorage.length > 0) {
-                for (var i = 0; i < localStorage.length; i++) {
-                    if (Number(index) < Number(localStorage.key(i))) {
-                        index = localStorage.key(i);
-                        var cartItem = JSON.parse(localStorage.getItem(localStorage.key(i)));
-                        if (
-                            JSON.stringify(cartItem.goods) === JSON.stringify(goods) &&
-                            JSON.stringify(cartItem.name) === JSON.stringify(name)
-                        ) {
-                            isSame = true;
-                            cartItem.amount = cartItem.amount + amount;
-                            cartItem.url = url;
-                            cartItem.price = cartItem.price + price_;
-                            cartItem.option = option;
-                            break;
-                        }
+    const addToCart = () => {
+        let index = 0;
+        let isSame = false;
+        const goods = data._id;
+        const name = data.title;
+        const amount = goodsCnt;
+        const url = data.thumbnail_url;
+        const option = data.option;
+
+        if (localStorage.length > 0) {
+            for (var i = 0; i < localStorage.length; i++) {
+                if (Number(index) < Number(localStorage.key(i))) {
+                    index = localStorage.key(i);
+                    var cartItem = JSON.parse(localStorage.getItem(localStorage.key(i)));
+                    if (
+                        JSON.stringify(cartItem.goods) === JSON.stringify(goods) &&
+                        JSON.stringify(cartItem.name) === JSON.stringify(name)
+                    ) {
+                        isSame = true;
+                        cartItem.amount = cartItem.amount + amount;
+                        cartItem.url = url;
+                        cartItem.price = cartItem.price + price;
+                        cartItem.option = option;
+                        break;
                     }
                 }
             }
-            if (isSame === true) {
-                var cartInfo = {
-                    id: index,
-                    goods: data._id,
-                    url: data.thumbnail_url,
-                    amount: goodsCnt,
-                    option: data.option,
-                    name: data.title,
-                    price: price_,
-                };
-            } else {
-                index = Number(index) + 1;
-                var cartInfo = {
-                    id: index,
-                    goods: data._id,
-                    url: data.thumbnail_url,
-                    amount: goodsCnt,
-                    option: data.option,
-                    name: data.title,
-                    price: price_,
-                };
-            }
-            localStorage.setItem(index, JSON.stringify(cartInfo));
-            window.alert("장바구니에 담겼습니다!");
-        };
+        }
+        if (isSame === true) {
+            var cartInfo = {
+                id: index,
+                goods: data._id,
+                url: data.thumbnail_url,
+                amount: goodsCnt,
+                option: data.option,
+                name: data.title,
+                price: price,
+            };
+        } else {
+            index = Number(index) + 1;
+            var cartInfo = {
+                id: index,
+                goods: data._id,
+                url: data.thumbnail_url,
+                amount: goodsCnt,
+                option: data.option,
+                name: data.title,
+                price: price,
+            };
+        }
+        localStorage.setItem(index, JSON.stringify(cartInfo));
+        window.alert("장바구니에 담겼습니다!");
+    };
 
-        return (
-            <>
-                <Wrap>
-                    <Body>
-                        <ImageBody>
-                            <img
-                                src={data.thumbnail_url}
-                                alt="product"
-                                width="473px"
-                                height="100%"
-                            />
-                        </ImageBody>
-                        <InfoBody>
-                            <div>
-                                <ProductName>{data.title}</ProductName>
-                                <ProductInfo>
-                                    <Dl>
-                                        <Dt>판매가격</Dt>
-                                        <DdPrice>{originPrice}원</DdPrice>
-                                    </Dl>
-                                    <Dl>
-                                        <Dt>배송정보</Dt>
-                                        <DdShipping>
-                                            <span>2,500원 (3만원 이상 구매시 무료)</span>
-                                            <span>오후 2시 당일배송마감</span>
-                                        </DdShipping>
-                                    </Dl>
-                                </ProductInfo>
-                                <Tables>
-                                    <tbody>
-                                        <tr>
-                                            <Td>
-                                                <Span>{data.option}</Span>
-                                            </Td>
-                                            <td>
-                                                <input
-                                                    type="text"
-                                                    className="goodsCnt"
-                                                    value={goodsCnt}
-                                                />
-                                                <span>
-                                                    <button
-                                                        type="button"
-                                                        className="goodsCntUp"
-                                                        onClick={CntUp}
-                                                    >
-                                                        증가
-                                                    </button>
-                                                    <button
-                                                        type="button"
-                                                        className="goodsCntDwn"
-                                                        onClick={CntDwn}
-                                                    >
-                                                        감소
-                                                    </button>
-                                                </span>
-                                            </td>
-                                            <TdPrice>{price}원</TdPrice>
-                                        </tr>
-                                    </tbody>
-                                </Tables>
-                            </div>
-                            <div>
-                                <Total>
-                                    <DtTotal>총 합계 금액</DtTotal>
-                                    <DdTotal>{price}원</DdTotal>
-                                </Total>
-                                <ButtonDiv>
-                                    <ProductButton is_like></ProductButton>
-                                    <ProductButton is_white _onClick={addToCart}>
-                                        장바구니
-                                    </ProductButton>
-                                    <ProductButton>바로 구매</ProductButton>
-                                </ButtonDiv>
-                            </div>
-                        </InfoBody>
-                    </Body>
-                </Wrap>
-                <ProductDetailInfo data={data} />
-            </>
-        );
-    }
+    return (
+        <>
+            <Wrap>
+                <Body>
+                    <ImageBody>
+                        <img src={data.thumbnail_url} alt="product" width="473px" height="100%" />
+                    </ImageBody>
+                    <InfoBody>
+                        <div>
+                            <ProductName>{data.title}</ProductName>
+                            <ProductInfo>
+                                <Dl>
+                                    <Dt>판매가격</Dt>
+                                    <DdPrice>{originPrice}원</DdPrice>
+                                </Dl>
+                                <Dl>
+                                    <Dt>배송정보</Dt>
+                                    <DdShipping>
+                                        <span>2,500원 (3만원 이상 구매시 무료)</span>
+                                        <span>오후 2시 당일배송마감</span>
+                                    </DdShipping>
+                                </Dl>
+                            </ProductInfo>
+                            <Tables>
+                                <tbody>
+                                    <tr>
+                                        <Td>
+                                            <Span>{data.option}</Span>
+                                        </Td>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                className="goodsCnt"
+                                                value={goodsCnt}
+                                            />
+                                            <span>
+                                                <button
+                                                    type="button"
+                                                    className="goodsCntUp"
+                                                    onClick={CntUp}
+                                                >
+                                                    증가
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    className="goodsCntDwn"
+                                                    onClick={CntDwn}
+                                                >
+                                                    감소
+                                                </button>
+                                            </span>
+                                        </td>
+                                        <TdPrice>{price}원</TdPrice>
+                                    </tr>
+                                </tbody>
+                            </Tables>
+                        </div>
+                        <div>
+                            <Total>
+                                <DtTotal>총 합계 금액</DtTotal>
+                                <DdTotal>{price}원</DdTotal>
+                            </Total>
+                            <ButtonDiv>
+                                <ProductButton is_like></ProductButton>
+                                <ProductButton is_white _onClick={addToCart}>
+                                    장바구니
+                                </ProductButton>
+                                <ProductButton>바로 구매</ProductButton>
+                            </ButtonDiv>
+                        </div>
+                    </InfoBody>
+                </Body>
+            </Wrap>
+            <ProductDetailInfo data={data} />
+        </>
+    );
 };
-
-//     return (
-//         <>
-//             <Wrap>
-//                 <Body>
-//                     <ImageBody>
-//                         <img src={data.thumbnail_url} alt="product" width="473px" height="100%" />
-//                     </ImageBody>
-//                     <InfoBody>
-//                         <div>
-//                             <ProductName>{data.title}</ProductName>
-//                             <ProductInfo>
-//                                 <Dl>
-//                                     <Dt>판매가격</Dt>
-//                                     <DdPrice>{data.sale_price}원</DdPrice>
-//                                 </Dl>
-//                                 <Dl>
-//                                     <Dt>배송정보</Dt>
-//                                     <DdShipping>
-//                                         <span>2,500원 (3만원 이상 구매시 무료)</span>
-//                                         <span>오후 2시 당일배송마감</span>
-//                                     </DdShipping>
-//                                 </Dl>
-//                             </ProductInfo>
-//                             <Tables>
-//                                 <tbody>
-//                                     <tr>
-//                                         <Td>
-//                                             <Span>{data.option}</Span>
-//                                         </Td>
-//                                         <td>
-//                                             <input
-//                                                 type="text"
-//                                                 className="goodsCnt"
-//                                                 value={goodsCnt}
-//                                             />
-//                                             <span>
-//                                                 <button
-//                                                     type="button"
-//                                                     className="goodsCntUp"
-//                                                     onClick={CntUp}
-//                                                 >
-//                                                     증가
-//                                                 </button>
-//                                                 <button
-//                                                     type="button"
-//                                                     className="goodsCntDwn"
-//                                                     onClick={CntDwn}
-//                                                 >
-//                                                     감소
-//                                                 </button>
-//                                             </span>
-//                                         </td>
-//                                         <TdPrice>{data.sale_price}원</TdPrice>
-//                                     </tr>
-//                                 </tbody>
-//                             </Tables>
-//                         </div>
-//                         <div>
-//                             <Total>
-//                                 <DtTotal>총 합계 금액</DtTotal>
-//                                 <DdTotal>{data.sale_price}원</DdTotal>
-//                             </Total>
-//                             <ButtonDiv>
-//                                 <ProductButton is_like></ProductButton>
-//                                 <ProductButton is_white>장바구니</ProductButton>
-//                                 <ProductButton>바로 구매</ProductButton>
-//                             </ButtonDiv>
-//                         </div>
-//                     </InfoBody>
-//                 </Body>
-//             </Wrap>
-//             <ProductDetailInfo data={data} />
-//         </>
-//     );
-// };
 
 const Wrap = styled.div`
     max-width: 1100px;
