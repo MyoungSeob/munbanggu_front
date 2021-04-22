@@ -18,7 +18,7 @@ const initialState = {
 const signUpDB = (id, name, pwd, email, isZoneCode, isAddress, detailAddress, phoneNumber) => {
     return function (dispatch, getState, { history }) {
         axios
-            .post("http://13.125.248.86/user/register", {
+            .post("http://13.125.248.86/auth/register", {
                 id: id,
                 name: name,
                 password: pwd,
@@ -41,7 +41,7 @@ const signUpDB = (id, name, pwd, email, isZoneCode, isAddress, detailAddress, ph
 const loginDB = (id, pwd) => {
     return function (dispatch, getState, { history }) {
         axios
-            .post("http://13.125.248.86/user/login", {
+            .post("http://13.125.248.86/auth/login", {
                 id: id,
                 password: pwd,
             })

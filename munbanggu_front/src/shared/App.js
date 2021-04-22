@@ -12,10 +12,12 @@ import Category from "../pages/Category";
 import Cart from "../pages/Cart"
 import Comment from "../pages/Comment"
 import Mypage from "../pages/Mypage"
+import Order from"../pages/Order"
 
 import { BrowserRouter, Route } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configStore";
+
 
 
 function App() {
@@ -33,6 +35,7 @@ function App() {
                     <Route exact path="/user/login" component={Login} />
                     <Route exact path="/goods/:id/comment" component={Comment} />
                     <Route exact path="/user/mypage" component={Mypage} />
+                    <Route exact path="/order" component={Order} />
                     <Footer />
                 </ConnectedRouter>
             </BrowserRouter>

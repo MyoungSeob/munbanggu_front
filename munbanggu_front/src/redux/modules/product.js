@@ -1,8 +1,11 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axios from "axios";
+import { connect } from "react-redux";
+import Mypage from "../../pages/Mypage";
+ 
 
-const GET_PRODUCT_LATELY = "GET_PRODUCT_LATELY";
+const SET_PRODUCT_LATELY = "GET_PRODUCT_LATELY";
 const GET_PRODUCT = "GET_PRODUCT";
 const GET_PRODUCT_LOW_HIGH = "GET_PRODUCT_LOW_HEIGH";
 const GET_PRODUCT_HIGH_LOW = "GET_PRODUCT_HIGH_LOW";
@@ -10,8 +13,9 @@ const LOADING = "LOADING";
 const getProduct = createAction(GET_PRODUCT, (product_list) => product_list);
 const getProductLowHigh = createAction(GET_PRODUCT_LOW_HIGH, (product_list) => product_list);
 const getProductHighLow = createAction(GET_PRODUCT_HIGH_LOW, (product_list) => product_list);
-const getProductlately = createAction(GET_PRODUCT_LATELY, (lately_orderlist) => lately_orderlist);
+const setProductlately = createAction(SET_PRODUCT_LATELY, (lately_orderlist) => lately_orderlist);
 const loading = createAction(LOADING, (is_loading) => is_loading);
+
 
 const initialState = {
     list: [],
@@ -44,7 +48,7 @@ const getProductDB = () => {
 
 const lately_orderlistDB = () => {
     return function (dispatch, getState, { history }) {
-        let lately_orderlist = [];
+        
 
         axios
             .get(`http://13.125.248.86/order`, {
@@ -52,14 +56,39 @@ const lately_orderlistDB = () => {
                     authorization: `Bearer ${localStorage.getItem("log_token")}`,
                 },
             })
-
+            
             .then((res) => {
-                console.log(res);
-                const lately_orderlist = res.data;
-                dispatch(getProductlately(lately_orderlist));
+                const results = res.data.result;
+                console.log(results)
+
+                let lately_orderlist = [];
+                
+                results.forEach((doc) => {
+                let _order={
+                   ...doc
+                 } 
+                let order={
+                  
+                  price:_order.goods.sale_price,
+                  url:_order.goods.thumbnail_url,
+                  name:_order.goods.title,
+                  amount:_order.quantity,
+                  option:_order.goods.option,
+                  date:_order.createdAt.substr(0,10),
+                  user_name:_order.user.name
+                };
+                
+                console.log(order);
+                lately_orderlist.push(order);
+               
+              });
+              
+               
+                 dispatch(setProductlately(lately_orderlist));
             });
     };
 };
+
 
 const orderProductDB = (
     isZoneCode,
@@ -72,7 +101,7 @@ const orderProductDB = (
     return function (dispatch, getState, { history }) {
         const orderInfoList = [];
         const order_list = [];
-        for (let i = 1; i < localStorage.length; i++) {
+        for (let i = 1; i < localStorage.length-1; i++) {
             orderInfoList.push(JSON.parse(localStorage.getItem(i)));
             const loginToken = localStorage.getItem("log_token");
             axios({
@@ -118,7 +147,7 @@ export default handleActions(
             produce(state, (draft) => {
                 draft.hightLow = action.payload;
             }),
-        [GET_PRODUCT_LATELY]: (state, action) =>
+        [SET_PRODUCT_LATELY]: (state, action) =>
             produce(state, (draft) => {
                 draft.lately_orderlist = action.payload;
             }),
@@ -133,7 +162,7 @@ const actionsCreators = {
     getProductHighLow,
     orderProductDB,
     lately_orderlistDB,
-    getProductlately,
+    setProductlately,
 };
 
 export { actionsCreators };

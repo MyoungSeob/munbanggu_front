@@ -5,10 +5,16 @@ import Header from "../components/Header";
 import CartContent from "../components/CartContent";
 import { useDispatch, useSelector } from "react-redux";
 import { actionsCreators as productActions } from "../redux/modules/product";
+import { CardContent } from "@material-ui/core";
+import LatelyodContent from "../components/LatelyodContent"
+
+
 
 const Mypage =(props) =>{
   const dispatch = useDispatch();
-  const lately_orderlist=useSelector((store)=>store.product.lately_orderlist)
+  
+  const lately_orderlist = useSelector((store)=>store.product.lately_orderlist)
+  
   
   React.useEffect(()=>{
     dispatch(productActions.lately_orderlistDB());
@@ -16,7 +22,7 @@ const Mypage =(props) =>{
   },[]);
 
   
-
+if (lately_orderlist)
   return(
   <React.Fragment>
      <Container>
@@ -78,7 +84,8 @@ const Mypage =(props) =>{
   
     <Mypage_top_txt>
         <div class="grade_txt">
-            <p>길근용님의</p><p> 회원등급은 <Span>일반회원그룹</Span> 입니다.
+          
+            <p>{props.user_name} 님의 회원등급은 <Span>일반회원그룹</Span> 입니다.
             </p>
                 
                 {/* <!-- N : 회원등급혜택 레이어 끝 --> */}
@@ -108,29 +115,27 @@ const Mypage =(props) =>{
                 <Tabletype>
     <Table>
         <Colgroup>
-            <Col /> 
-            <Col/>					
-            <Col /> 
-            <Col /> 
-            <Col /> 
+           <Col></Col> 
+            <Col></Col>				
+            <Col></Col> 
+            <Col></Col> 
         </Colgroup>
         <Thead>
         <Tr>
-            <Th>날짜/주문번호</Th>
+            <Th>구매날짜</Th>
             <Th>상품명/옵션</Th>
-            <Th>상품금액/수량</Th>
-            <Th>주문상태</Th>
-            <Th>
-                확인/리뷰
-            </Th>
+            <Th>수량</Th>
+            <Th>상품 금액</Th>
+            
+            
         </Tr>
         </Thead>
         <Tbody>
 
         <Tr>
-            {/* <Td>{lately_orderlist.map((p) => {
-              return <CartContent key={p.id} {...p} />;
-            })}</Td> */}
+            <Td>{lately_orderlist.map((p)=>{
+              return <LatelyodContent key={p.id}  {...p}/>;
+            })}</Td>
         </Tr>
         </Tbody>
     </Table>
@@ -148,7 +153,150 @@ const Mypage =(props) =>{
        
   </React.Fragment>
   )
+
+  return(
+    <Container>
+    <Contents>
+    {/* <!-- 본문 시작 --> */}
+  
+        <Location_wrap>
+            <Location_cont>
+                <Em><Local_home_a href="#" class="local_home">HOME</Local_home_a> &gt; 마이페이지</Em>
+            </Location_cont>
+        </Location_wrap>
+        {/* <!-- //location_wrap --> */}
+  
+        <Sub_content>
+  
+            <Side_cont>
+  <Sub_menu_box>
+  <H2>마이페이지</H2>
+  <Sub_menu_mypage_ul>
+    <Menu_box_li>쇼핑정보
+        <Sub_depth1_ul>
+            <Sub_depth1_li><A href="../mypage/order_list.php">주문목록/배송조회</A></Sub_depth1_li>
+            <Sub_depth1_li><A href="../mypage/cancel_list.php">취소/반품/교환 내역</A></Sub_depth1_li>
+            <Sub_depth1_li><A href="../mypage/refund_list.php">환불 내역</A></Sub_depth1_li>
+            <Sub_depth1_li><A href="../mypage/wish_list.php">찜리스트</A></Sub_depth1_li>
+           
+        </Sub_depth1_ul>
+    </Menu_box_li>
+  
+    <Auth_li>회원정보
+        <Sub_depth1_ul>
+            <Sub_depth1_li><A href="../mypage/mypage_qa.php">1:1 문의게시판</A></Sub_depth1_li>
+            <Sub_depth1_li><A href="../mypage/my_page_password.php">회원정보 변경</A></Sub_depth1_li>
+            <Sub_depth1_li><A href="../mypage/shipping.php">배송지 관리</A></Sub_depth1_li>
+            <Sub_depth1_li><A href="../mypage/mypage_goods_qa.php">나의 상품문의</A></Sub_depth1_li>
+            <Sub_depth1_li><A href="../mypage/mypage_goods_review.php">나의 상품후기</A></Sub_depth1_li>
+        </Sub_depth1_ul>
+    </Auth_li>
+  
+    
+  </Sub_menu_mypage_ul>
+  </Sub_menu_box>
+  {/* <!-- //sub_menu_box --> */}
+  
+            </Side_cont>
+            </Sub_content>
+  
+  <Content>
+  <Mypage_main>
+  
+    {/* <!-- 마이페이지 회원 요약정보 --> */}
+    <Mypage_top_info>
+  
+  
+  <Mypage_top_wallet>
+    <Text>
+        반가워요,
+    </Text>
+  
+    <Mypage_top_txt>
+        <div class="grade_txt">
+            <p>길근용님의</p><p> 회원등급은 <Span>일반회원그룹</Span> 입니다.
+            </p>
+                
+                {/* <!-- N : 회원등급혜택 레이어 끝 --> */}
+  
+            </div>
+        </Mypage_top_txt>
+      
+    </Mypage_top_wallet>
+    {/* <!-- //mypage_top_txt --> */}
+  </Mypage_top_info>
+  {/* <!-- //mypage_top_wallet --> */}
+  
+  
+  {/* <!-- //mypage_top_info --> */}
+  
+  
+    
+    {/* <!-- //mypage_order_info --> */}
+    
+    <Mypage_lately_info>
+            <Mypage_zone_tit>
+                <H>최근 주문 정보<TextSpan>최근 30일 내에 주문하신 내역입니다.</TextSpan></H>
+            </Mypage_zone_tit>
+  
+            <Mypage_lately_info_cont>
+                {/* <!-- 주문상품 리스트 --> */}
+                <Tabletype>
+    <Table>
+        <Colgroup>
+           <Col></Col> 
+            <Col></Col>				
+            <Col></Col> 
+            <Col></Col> 
+        </Colgroup>
+        <Thead>
+        <Tr>
+            <Th>구매날짜</Th>
+            <Th>상품명/옵션</Th>
+            <Th>수량</Th>
+            <Th>상품 금액</Th>
+            
+            
+        </Tr>
+        </Thead>
+        <Tbody>
+  
+        <Tr>
+            <Td><p class="no_data">조회내역이 없습니다.</p></Td>
+        </Tr>
+        </Tbody>
+    </Table>
+  </Tabletype>
+  
+  
+  
+  
+            </Mypage_lately_info_cont>
+        </Mypage_lately_info>
+        </Mypage_main>
+        </Content>
+        </Contents>
+  </Container>
+  )
 }
+
+
+
+
+
+
+
+const Td= styled.td`
+    height: 31px;
+    padding: 15px 10px 14px 10px;
+    color: #777777;
+    border-bottom: 1px solid #dbdbdb;
+    background: #ffffff;
+    text-align:left;
+`;
+
+
+
 
 const Container = styled.div`
     border-top: 1px solid #eaeaea;
@@ -367,8 +515,12 @@ const  Colgroup = styled.colgroup`
 const  Col = styled.col`
      width: 15%;
      display: table-column;
-
+     border-spacing: 0;
+    border-collapse: collapse;
+    text-align: center;
 `;
+
+
 
 const  Thead = styled.thead`
     display: table-header-group;
@@ -385,10 +537,11 @@ const  Tr = styled.tr`
     
 `;
 const  Th = styled.th`
-    padding: 9px 10px 10px 10px;
+    padding: 10px 10px 10px 10px;
     border-top: 1px solid #999999;
     border-bottom: 1px solid #dbdbdb;
     background: #f7f7f7;
+    width:auto;
 `;
 const  Tbody = styled.tbody`
     display: table-row-group;
@@ -400,16 +553,7 @@ const  Tbody = styled.tbody`
     
     border:0;
 `;
-const  Td = styled.td`
-    height: 31px;
-    padding: 15px 10px 14px 10px;
-    color: #777777;
-    line-height: 1.5;
-    border-bottom: 1px solid #dbdbdb;
-    text-align:center;
-    
-    
-`;
+
 
 
 const  P = styled.p`
