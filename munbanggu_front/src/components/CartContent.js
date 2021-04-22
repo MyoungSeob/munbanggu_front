@@ -4,13 +4,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 
 const CartContent = (props) => {
+  //localStorage에서 정보를 받아와 물품의 가격 및 수량, 원가를 구했습니다.
   const Price = props.price
   const amount =props.amount
   const originPrice = Price/(amount)
-  
-  // const totalPrice = amount*Price
+  // input checkbox를 이용하여 선택된 물품의 정보를 전달 할 때 사용할 체크유무를 나타내기 위한 useState입니다.
+  const [checkProduct, setCheckProduct] = React.useState(false);
+  // modal 내의 수량변경을 위해 사용하는 useState입니다.
   const [num, setNum] = React.useState(0);
-  console.log(typeof(Price))
+  
   const amountUp =()=>{
     setNum(1 + num);
   }
@@ -19,6 +21,31 @@ const CartContent = (props) => {
       setNum(num - 1)
     }
   }
+
+  const order_list = [];
+  const orderContent = {
+    goods : props.goods,
+    amount : amount+num,
+    price : Price+originPrice*(num)
+  }
+
+
+  const chooseOrderList = () => {
+    if (!checkProduct) {
+      setCheckProduct(true);
+    }else{
+      setCheckProduct(false);
+    }
+  }
+  if (checkProduct) {
+    order_list.push(orderContent)
+  }else{
+    order_list.pop()
+  }
+  console.log(order_list)
+
+  
+
   const optionChange=()=>{
     const changeInfo = {
       id : props.id,
@@ -28,14 +55,13 @@ const CartContent = (props) => {
       option : props.option,
       name : props.name,
       price : Price+(originPrice*num),
-      
     }
     localStorage.setItem(`${props.id}`, JSON.stringify(changeInfo))
     window.location.reload()
   }
-  console.log(originPrice)
-  
 
+  
+  
 
   function rand() {
     return Math.round(Math.random() * 20) - 10;
@@ -132,7 +158,7 @@ const CartContent = (props) => {
                     </CountSpan>
                   </BoxTd>
                   <PriceBox>
-                    <PriceStrong>{Price+originPrice*(num)}원</PriceStrong>
+                    <PriceStrong>{(Price+originPrice*(num)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</PriceStrong>
                   </PriceBox>
                 </ItemTr>
               </ItemTbody>
@@ -152,7 +178,7 @@ const CartContent = (props) => {
       <Tbody>
         <Tr>
           <Td>
-            <CheckBox type="checkbox" />
+            <CheckBox onClick={chooseOrderList} checked={checkProduct} value={orderContent} type="checkbox" />
           </Td>
           <Tdleft>
             <PickAddCont>
@@ -187,7 +213,7 @@ const CartContent = (props) => {
             </OrderGoodsNum>
           </Td>
           <Td>
-            <StrongPrice>{props.price}원</StrongPrice>
+            <StrongPrice>{(props.price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</StrongPrice>
           </Td>
           <TdDelivery>
             기본 배송비
@@ -486,6 +512,7 @@ const SpanAmount = styled.span`
   line-height: 22px;
   display: inline-block;
   font-size: 11px;
+  cursor : pointer;
 `;
 const StrongPrice = styled.strong`
   font-size: 13px;

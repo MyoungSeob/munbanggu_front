@@ -18,7 +18,7 @@ const initialState = {
 const signUpDB = (id, name, pwd, email, isZoneCode, isAddress, detailAddress, phoneNumber) => {
     return function (dispatch, getState, { history }) {
         axios
-            .post("http://13.125.248.86/user/register", {
+            .post("http://13.125.248.86/auth/register", {
                 id: id,
                 name: name,
                 password: pwd,
@@ -41,7 +41,7 @@ const signUpDB = (id, name, pwd, email, isZoneCode, isAddress, detailAddress, ph
 const loginDB = (id, pwd) => {
     return function (dispatch, getState, { history }) {
         axios
-            .post("http://13.125.248.86/user/login", {
+            .post("http://13.125.248.86/auth/login", {
                 id: id,
                 password: pwd,
             })
@@ -89,18 +89,21 @@ const googleLoginDB = (token) => {
             });
     };
 };
-const kakaoLoginDB = () => {
+const kakaoLoginDB = (id) => {
   return function (getState, dispatch, { history }) {
-    if (window.location.href === "http://13.125.248.86/auth/kakao") {
-      axios
-        .get("http://13.125.248.86/auth/kakao", {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-          },
-        })
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
-    }
+      axios({
+        method: "post",
+        url: "http://13.125.248.86/auth/me",
+        data : {
+            id : id,
+        },
+      }).then((res) => {
+        localStorage.setItem("kakao_token", res.user.token)
+        localStorage.setItem("id", res.user.id)
+      })
+        .catch((err) => 
+        console.log(err, "에러에여")
+        )   
   };
 };
 export default handleActions(

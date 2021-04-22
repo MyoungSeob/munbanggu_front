@@ -46,7 +46,7 @@ const HeaderLogo = (props) => {
                                 }}
                                 onSubmit={search}
                             ></Input>
-                            <SearchButton>
+                            <SearchButton onClick={search}>
                                 <BtnImg src={search_icon} />
                             </SearchButton>
                         </TopCont>
@@ -79,6 +79,7 @@ const Img = styled.img`
     vertical-align: middle;
     width: 100%;
     border: 0 none;
+    cursor : pointer;
 `;
 const InputBox = styled.div`
     position: absolute;

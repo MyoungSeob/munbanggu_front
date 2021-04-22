@@ -121,7 +121,7 @@ const orderProductDB = (
     return function (dispatch, getState, { history }) {
         const orderInfoList = [];
         const order_list = [];
-        for (let i = 1; i < localStorage.length; i++) {
+        for (let i = 1; i < localStorage.length-1; i++) {
             orderInfoList.push(JSON.parse(localStorage.getItem(i)));
             const loginToken = localStorage.getItem("log_token");
             axios({
@@ -144,6 +144,11 @@ const orderProductDB = (
             })
                 .then(function (res) {
                     console.log(res);
+                    window.alert("결제 완료되셨습니다!")
+                    for(let i = 1; i < localStorage.length-1; i++){
+                        localStorage.removeItem(i)
+                    }
+                    history.push('/')
                 })
                 .catch(function (err) {
                     console.log("에러입니다", err);

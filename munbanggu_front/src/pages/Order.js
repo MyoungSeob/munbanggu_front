@@ -29,6 +29,17 @@ const Order = (props) => {
   const [isCheckedPhone, setIsCheckedPhone] = React.useState(false);
   const [payMethod, setPayMethod] = React.useState("");
 
+  const price = [];
+
+  const countProduct = localStorage.length - 2
+  if( localStorage.length > 2){
+    for(let i = 1; i < localStorage.length - 1; i ++){
+      price.push(JSON.parse(localStorage.getItem(i)).price)
+    }
+    console.log(price)
+  }
+  const sum = price.reduce((a, b) => a+b, 0);
+
   const checkedCard = () => {
     if(!isCheckedCard && !isCheckedPhone){
       setIsCheckedCard(true)
@@ -163,10 +174,10 @@ const Order = (props) => {
                 <PriceSumList>
                   <Dl>
                     <Dt>
-                      총 <Strong>0</Strong> 개의 상품금액
+                      총 <Strong>{countProduct}</Strong> 개의 상품금액
                     </Dt>
                     <Dd>
-                      <StrongDd>0</StrongDd>원
+                      <StrongDd>{(sum).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</StrongDd>원
                     </Dd>
                   </Dl>
                   <PriceSpan>
@@ -175,7 +186,7 @@ const Order = (props) => {
                   <Dl>
                     <Dt>배송비</Dt>
                     <Dd>
-                      <StrongDd>0</StrongDd>원
+                      <StrongDd>{(sum >= 30000 ? 0 : 2500).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</StrongDd>원
                     </Dd>
                   </Dl>
                   <PriceSpan>
@@ -184,7 +195,7 @@ const Order = (props) => {
                   <Dl>
                     <Dt>합계</Dt>
                     <Dd>
-                      <StrongTotal>2,500</StrongTotal>원
+                      <StrongTotal>{(sum >= 30000 ? sum : sum+2500).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</StrongTotal>원
                     </Dd>
                   </Dl>
                 </PriceSumList>
@@ -322,7 +333,7 @@ const Order = (props) => {
                         <span>상품 합계 금액</span>
                       </Th>
                       <Td>
-                        <TotalPrice>13,500원</TotalPrice>
+                        <TotalPrice>{(sum).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</TotalPrice>
                       </Td>
                     </Tr>
                     <Tr>
@@ -331,7 +342,7 @@ const Order = (props) => {
                       </Th>
                       <Td>
                         <MemberWarning>
-                          <span>2,500</span>원
+                          <span>{(sum >= 30000 ? 0 : 2500).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>원
                         </MemberWarning>
                       </Td>
                     </Tr>
@@ -341,7 +352,7 @@ const Order = (props) => {
                       </Th>
                       <Td>
                         <MemberWarning>
-                          <TotalPrice>16,000</TotalPrice>원
+                          <TotalPrice>{(sum >= 30000 ? sum : sum+2500).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</TotalPrice>원
                         </MemberWarning>
                       </Td>
                     </Tr>
@@ -356,7 +367,7 @@ const Order = (props) => {
                 <FinalDt>최종 결제 금액</FinalDt>
                 <FinalDd>
                   <SpanFinal>
-                    <StrongFinal>16,000</StrongFinal>원
+                    <StrongFinal>{(sum >= 30000 ? sum : sum+2500).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</StrongFinal>원
                   </SpanFinal>
                 </FinalDd>
               </FinalDl>

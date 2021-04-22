@@ -28,7 +28,7 @@ const ProductDetail = (props) => {
 
     const originPrice = data.sale_price;
     const price = (originPrice * goodsCnt).toLocaleString("en");
-
+    const price_ = (originPrice * goodsCnt)
     const CntUp = () => {
         setGoodsCnt(goodsCnt + 1);
     };
@@ -59,7 +59,7 @@ const ProductDetail = (props) => {
                         isSame = true;
                         cartItem.amount = cartItem.amount + amount;
                         cartItem.url = url;
-                        cartItem.price = cartItem.price + price;
+                        cartItem.price = cartItem.price + price_;
                         cartItem.option = option;
                         break;
                     }
@@ -74,7 +74,7 @@ const ProductDetail = (props) => {
                 amount: goodsCnt,
                 option: data.option,
                 name: data.title,
-                price: price,
+                price: price_,
             };
         } else {
             index = Number(index) + 1;
@@ -85,11 +85,12 @@ const ProductDetail = (props) => {
                 amount: goodsCnt,
                 option: data.option,
                 name: data.title,
-                price: price,
+                price: price_,
             };
         }
         localStorage.setItem(index, JSON.stringify(cartInfo));
         window.alert("장바구니에 담겼습니다!");
+        window.location.replace('/cart')
     };
 
     return (

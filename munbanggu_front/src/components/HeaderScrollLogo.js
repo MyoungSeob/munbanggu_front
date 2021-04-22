@@ -49,7 +49,7 @@ const HeaderScrollLogo = (props) => {
                                             history.push("/cart");
                                         }}
                                     >
-                                        장바구니<CartCount>0</CartCount>
+                                        장바구니<CartCount>{!localStorage.getItem(log_token) ? localStorage.length-2 : "0"}</CartCount>
                                     </LoginText>
                                 </il>
                             </GridBox>
