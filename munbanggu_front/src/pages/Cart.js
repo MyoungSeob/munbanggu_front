@@ -8,6 +8,20 @@ import warningIcon from '../shared/icon_warning.png'
 import CartList from "../components/CartList";
 
 const Cart = (props) => {
+  const [deliveryPrice, setDeliveryPrice] = React.useState(0)
+  const price = [];
+
+  const countProduct = localStorage.length - 2
+  if( localStorage.length > 2){
+    for(let i = 1; i < localStorage.length - 1; i ++){
+      price.push(JSON.parse(localStorage.getItem(i)).price)
+    }
+    console.log(price)
+  }
+  const sum = price.reduce((a, b) => a+b, 0);
+  console.log(sum)
+
+  
   return (
     <React.Fragment>
       <SubContent>
@@ -47,12 +61,14 @@ const Cart = (props) => {
             <PriceSum>
               <PriceSumCont>
                 <PriceSumList>
+                  {localStorage.length > 2 ? (
+                    <div>
                   <Dl>
                     <Dt>
-                      총 <Strong>0</Strong> 개의 상품금액
+                      총 <Strong>{countProduct}</Strong> 개의 상품금액
                     </Dt>
                     <Dd>
-                      <StrongDd>0</StrongDd>원
+                      <StrongDd>{(sum).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</StrongDd>원
                     </Dd>
                   </Dl>
                   <PriceSpan>
@@ -61,7 +77,7 @@ const Cart = (props) => {
                   <Dl>
                     <Dt>배송비</Dt>
                     <Dd>
-                      <StrongDd>0</StrongDd>원
+                      <StrongDd>{(sum >= 30000 ? 0 : 2500).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</StrongDd>원
                     </Dd>
                   </Dl>
                   <PriceSpan>
@@ -70,9 +86,39 @@ const Cart = (props) => {
                   <Dl>
                     <Dt>합계</Dt>
                     <Dd>
-                      <StrongTotal>2,500</StrongTotal>원
+                      <StrongTotal>{(sum >= 30000 ? sum : sum+2500).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</StrongTotal>원
                     </Dd>
                   </Dl>
+                  </div>) : (
+                    <div>
+                    <Dl>
+                      <Dt>
+                        총 <Strong>0</Strong> 개의 상품금액
+                      </Dt>
+                      <Dd>
+                        <StrongDd>0</StrongDd>원
+                      </Dd>
+                    </Dl>
+                    <PriceSpan>
+                      <PlusIcon src={plusIcon} />
+                    </PriceSpan>
+                    <Dl>
+                      <Dt>배송비</Dt>
+                      <Dd>
+                        <StrongDd>0</StrongDd>원
+                      </Dd>
+                    </Dl>
+                    <PriceSpan>
+                      <PlusIcon src={equalicon} />
+                    </PriceSpan>
+                    <Dl>
+                      <Dt>합계</Dt>
+                      <Dd>
+                        <StrongTotal>0</StrongTotal>원
+                      </Dd>
+                    </Dl>
+                    </div>
+                  )}
                 </PriceSumList>
               </PriceSumCont>
             </PriceSum>

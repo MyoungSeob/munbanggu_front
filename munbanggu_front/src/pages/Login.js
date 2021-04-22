@@ -1,20 +1,21 @@
 import React from "react";
 
 import { useDispatch } from "react-redux";
-import { actionCreators as userActions } from "../redux/modules/user"
+import user, { actionCreators as userActions } from "../redux/modules/user"
 import styled from "styled-components";
 import {history} from"../redux/configStore"
 import KaKaoLogin from "react-kakao-login";
 
-const Login = (props) =>{
 
+const Login = (props) =>{
+    const _id = props.match.params.id
     const dispatch = useDispatch();
 
     const[id,setId] = React.useState("");
     const[pwd,setPwd] = React.useState("");
     const[kakaoToken, setKakaoToken] = React.useState();
 
-
+    
     const login = () => {
       // console.log(getCookie('user_id'))
       if(id === "" || pwd ==="") {
@@ -26,12 +27,15 @@ const Login = (props) =>{
       // redux의 loginDB에 id, pwd를 보내줍니다.
       // history.push('/')
   }
-
-    function sendKakaoToken(kakaoToken){
-      dispatch(userActions.kakaoLoginDB(kakaoToken))
-      console.log(kakaoToken)
+    function Move (web) {
+      window.location.href=web
     }
-
+    function Kakao() {
+        window.location.href = ("http://13.125.248.86/auth/kakao")
+        dispatch(userActions.kakaoLoginDB(_id))
+    }
+      
+      
 
 
 
@@ -68,7 +72,7 @@ const Login = (props) =>{
 				{/* <!-- //login_box --> */}
 				
         <div>
-					<KaKaoBtn
+					{/* <KaKaoBtn
             token={'77cf3a731ee167706680f1d2044f0f9e'}
             onSuccess={(res) => {
               setKakaoToken(res.response.access_token)
@@ -78,7 +82,9 @@ const Login = (props) =>{
             onFailure={(err) => console.log(err)}
             buttonText="카카오 계정으로 로그인"
             getProfile={true}
-          />
+          /> */}
+          
+          <a onClick={Kakao}>카카오톡로그인</a>
 				</div>
 				
 				

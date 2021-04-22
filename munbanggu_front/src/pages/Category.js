@@ -8,8 +8,10 @@ import Card from "../components/Card";
 
 const Category = (props) => {
     const category = props.match.params.id;
+
     const dispatch = useDispatch();
-    const product_list = useSelector((store) => store.product.list);
+    const living_list = useSelector((store) => store.product.living);
+    const stat_list = useSelector((store) => store.product.stat);
     const productLowHigh = useSelector((store) => store.product.lowHigh);
     const productHighLow = useSelector((store) => store.product.highLow);
 
@@ -18,7 +20,7 @@ const Category = (props) => {
     };
 
     const low = () => {
-        dispatch(productActions.getProduct(productLowHigh));
+        dispatch(productActions.getProduct(living_list));
     };
 
     const high = () => {
@@ -32,7 +34,7 @@ const Category = (props) => {
     return (
         <ListBody>
             <Sort>
-                <div>총 0개</div>
+                <div>총 {category === "문구" ? stat_list.length : living_list.length}개</div>
                 <div>
                     <SortId onClick={init}>추천순</SortId>
                     <SortId>인기순</SortId>
@@ -42,9 +44,9 @@ const Category = (props) => {
                 </div>
             </Sort>
             <ItemList>
-                {product_list.map((p) =>
-                    category === p.category ? <Card {...p} key={p.id} /> : null
-                )}
+                {category === "문구"
+                    ? stat_list.map((p) => <Card {...p} key={p.id} />)
+                    : living_list.map((p) => <Card {...p} key={p.id} />)}
             </ItemList>
         </ListBody>
     );
@@ -67,7 +69,7 @@ const Sort = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 40px 10px;
-     > * {
+    > * {
         font-size: 14px;
     }
 `;

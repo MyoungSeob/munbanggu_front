@@ -1,10 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { actionsCreators as productActions } from "../redux/modules/product";
+
 import "../shared/App.css";
 import styled from "styled-components";
 
 import { NavLink } from "react-router-dom";
 
 const HeaderCategory = (props) => {
+    const dispatch = useDispatch();
+
+    const living_list = useSelector((store) => store.product.living);
+    const stat_list = useSelector((store) => store.product.stat);
+
+    const living = () => {
+        dispatch(productActions.getLivingProductDB(living_list));
+    };
+
+    const stat = () => {
+        dispatch(productActions.getStatProductDB(stat_list));
+    };
+
+    useEffect(() => {
+        dispatch(productActions.getProductDB());
+    }, [dispatch]);
+
     return (
         <React.Fragment>
             <Headergnb>
@@ -14,10 +34,20 @@ const HeaderCategory = (props) => {
                             <NavLink exact to="/" activeClassName="is_active">
                                 <Category>전체</Category>
                             </NavLink>
-                            <NavLink exact to="/goods/category/문구/" activeClassName="is_active">
+                            <NavLink
+                                exact
+                                to="/goods/category/문구/"
+                                activeClassName="is_active"
+                                onClick={stat}
+                            >
                                 <Category>문구</Category>
                             </NavLink>
-                            <NavLink exact to="/goods/category/리빙/" activeClassName="is_active">
+                            <NavLink
+                                exact
+                                to="/goods/category/리빙/"
+                                activeClassName="is_active"
+                                onClick={living}
+                            >
                                 <Category>리빙</Category>
                             </NavLink>
                             <NavLink exact to="/goods/category/책/" activeClassName="is_active">
@@ -69,25 +99,21 @@ const HeaderCategory = (props) => {
 const Headergnb = styled.div`
     background: #fff;
     border-bottom: 1px solid #efefef;
+    margin: 0 auto;
 `;
 
 const Gnb = styled.div`
     text-align: center;
-    position: relative;
     width: 100%;
-    left: 140px;
 `;
 
 const Menubox = styled.div`
-    width: 1130px;
     box-sizing: border-box;
-    position: relative;
     display: inline-block;
     vertical-align: top;
     margin: auto;
     padding: 0 12px;
     align-items: center;
-    text-align: center;
 `;
 
 const ULNavLinkst = styled.div`
