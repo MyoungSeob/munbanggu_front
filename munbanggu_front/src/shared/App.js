@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "./App.css";
@@ -9,16 +10,14 @@ import SignUpInfo from "../pages/SignUpInfo";
 import ProductDetail from "../pages/ProductDetail";
 import Home from "../pages/Home";
 import Category from "../pages/Category";
-import Cart from "../pages/Cart"
-import Comment from "../pages/Comment"
-import Mypage from "../pages/Mypage"
-import Order from"../pages/Order"
-
+import Cart from "../pages/Cart";
+import Comment from "../pages/Comment";
+import Mypage from "../pages/Mypage";
+import Order from "../pages/Order";
+import Search from "../pages/Search";
 import { BrowserRouter, Route } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configStore";
-
-
 
 function App() {
     return (
@@ -28,12 +27,14 @@ function App() {
                     <Header />
                     <Route exact path="/" component={Home} />
                     <Route path="/goods/category/:id" component={Category} />
+                    <Route path="/goods/search/:id" component={Search} />
                     <Route exact path="/goods/:id" component={ProductDetail} />
+                    <Route exact path="/goods/:id/comment" component={Comment} />
+                    <Route exact path="/goods/:id/comment/:id" component={Comment} />
                     <Route exact path="/user/register" component={SignUp} />
                     <Route exact path="/cart" component={Cart} />
                     <Route exact path="/user/register/info" component={SignUpInfo} />
                     <Route exact path="/user/login" component={Login} />
-                    <Route exact path="/goods/:id/comment" component={Comment} />
                     <Route exact path="/user/mypage" component={Mypage} />
                     <Route exact path="/order" component={Order} />
                     <Footer />

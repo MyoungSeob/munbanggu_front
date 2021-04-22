@@ -4,12 +4,16 @@ import { actionsCreators as productActions } from "../redux/modules/product";
 
 import styled from "styled-components";
 import Card from "./Card";
+import Spinner from "../shared/Spinner";
+import axios from "axios";
+import { push } from "connected-react-router";
 
 const CardList = (props) => {
     const dispatch = useDispatch();
     const product_list = useSelector((store) => store.product.list);
     const productLowHigh = useSelector((store) => store.product.lowHigh);
     const productHighLow = useSelector((store) => store.product.highLow);
+    const loading = useSelector((store) => store.product.is_loading);
 
     const init = () => {
         dispatch(productActions.getProductDB());
@@ -40,9 +44,15 @@ const CardList = (props) => {
                 </div>
             </Sort>
             <ItemList>
-                {product_list.map((p) => {
-                    return <Card {...p} key={p.id} />;
-                })}
+                {loading ? (
+                    <Spinner />
+                ) : (
+                    <>
+                        {product_list.map((p) => {
+                            return <Card {...p} key={p.id} />;
+                        })}
+                    </>
+                )}
             </ItemList>
         </ListBody>
     );

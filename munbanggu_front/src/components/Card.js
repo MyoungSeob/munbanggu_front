@@ -12,7 +12,7 @@ const Card = (props) => {
         <>
             {props.discount === true ? (
                 <a
-                    onClick={() => {
+                    href={() => {
                         history.push(`/goods/${props._id}`);
                     }}
                     key={props._id}

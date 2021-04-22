@@ -1,20 +1,14 @@
-import React from "react";
-import react from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import Header from "../components/Header";
-import CartContent from "../components/CartContent";
 import { useDispatch, useSelector } from "react-redux";
 import { actionsCreators as productActions } from "../redux/modules/product";
-import { CardContent } from "@material-ui/core";
 import LatelyodContent from "../components/LatelyodContent";
 
 const Mypage = (props) => {
     const dispatch = useDispatch();
-
     const lately_orderlist = useSelector((store) => store.product.lately_orderlist);
-    const name = lately_orderlist[0].user.name;
 
-    React.useEffect(() => {
+    useEffect(() => {
         dispatch(productActions.lately_orderlistDB());
     }, []);
 
@@ -24,20 +18,6 @@ const Mypage = (props) => {
         <React.Fragment>
             <Container>
                 <Contents>
-                    {/* <!-- 본문 시작 --> */}
-
-                    <Location_wrap>
-                        <Location_cont>
-                            <Em>
-                                <Local_home_a href="#" class="local_home">
-                                    HOME
-                                </Local_home_a>{" "}
-                                &gt; 마이페이지
-                            </Em>
-                        </Location_cont>
-                    </Location_wrap>
-                    {/* <!-- //location_wrap --> */}
-
                     <Sub_content>
                         <Side_cont>
                             <Sub_menu_box>
@@ -107,7 +87,7 @@ const Mypage = (props) => {
                                     <Mypage_top_txt>
                                         <div class="grade_txt">
                                             <p>
-                                                {name} 님의 회원등급은 <Span>일반회원그룹</Span>{" "}
+                                                회원 님의 회원등급은 <Span>일반회원그룹</Span>
                                                 입니다.
                                             </p>
 
@@ -427,18 +407,6 @@ const Tbody = styled.tbody`
     text-align: center;
 
     border: 0;
-`;
-
-const P = styled.p`
-    padding: 50px 30px 50px 30px;
-    text-align: center;
-
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    margin: 0;
-    width: 100%;
 `;
 
 export default Mypage;

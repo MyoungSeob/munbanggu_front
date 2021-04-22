@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 
 import styled from "styled-components";
 import "../shared/Product.css";
@@ -11,11 +10,12 @@ import ProductDetailInfo from "./ProductDetailInfo";
 import ProductButton from "../elements/ProductButton";
 
 const ProductDetail = (props) => {
-    const id = props.match.params.id;
-
-    const product_list = useSelector((store) => store.product.list);
+    const id = props.match.params.id; //상품 id
 
     const dispatch = useDispatch();
+
+    //id로 해당 상품을 찾습니다
+    const product_list = useSelector((store) => store.product.list);
     const idx = product_list.findIndex((p) => p._id === id);
     const data = product_list[idx];
     const [goodsCnt, setGoodsCnt] = useState(1);
@@ -26,9 +26,10 @@ const ProductDetail = (props) => {
 
     if (!data) return null;
 
+    //가격 증감
     const originPrice = data.sale_price;
     const price = (originPrice * goodsCnt).toLocaleString("en");
-    const price_ = (originPrice * goodsCnt)
+    const price_ = originPrice * goodsCnt;
     const CntUp = () => {
         setGoodsCnt(goodsCnt + 1);
     };
@@ -38,6 +39,7 @@ const ProductDetail = (props) => {
         }
     };
 
+    //장바구니 담기 로컬에 저장합니다
     const addToCart = () => {
         let index = 0;
         let isSame = false;
@@ -90,7 +92,7 @@ const ProductDetail = (props) => {
         }
         localStorage.setItem(index, JSON.stringify(cartInfo));
         window.alert("장바구니에 담겼습니다!");
-        window.location.replace('/cart')
+        window.location.replace("/cart");
     };
 
     return (

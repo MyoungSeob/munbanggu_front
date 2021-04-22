@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
 
 import Input from "../elements/Input";
 import headerlogo from "../shared/header_logo.png";
@@ -8,6 +7,7 @@ import search_icon from "../shared/searchicon.png";
 import { history } from "../redux/configStore";
 
 const HeaderLogo = (props) => {
+    //입력받은 값을 props로 넘겨줍니다
     const [text, setText] = useState("");
 
     const search = () => {
@@ -56,18 +56,21 @@ const HeaderLogo = (props) => {
         </React.Fragment>
     );
 };
+
 const Container = styled.div`
     min-height: 103px;
     position: relative;
     width: 1200px;
     margin: 0 auto;
 `;
+
 const LogoBox = styled.div`
     text-align: center;
     width: 33.3%;
     margin: 0 auto;
     line-height: 103px;
 `;
+
 const ImgBox = styled.a`
     width: 156px;
     display: block;
@@ -75,12 +78,14 @@ const ImgBox = styled.a`
     color: #333;
     text-decoration: none;
 `;
+
 const Img = styled.img`
     vertical-align: middle;
     width: 100%;
     border: 0 none;
     cursor : pointer;
 `;
+
 const InputBox = styled.div`
     position: absolute;
     right: 0;
@@ -90,17 +95,20 @@ const InputBox = styled.div`
     z-index: 97;
     text-align: right;
 `;
+
 const Search = styled.div`
     position: relative;
     width: 250px;
     display: inline-block;
 `;
+
 const TopSearch = styled.div`
     display: inline-block;
     width: 100%;
     text-align: center;
     padding-bottom: 5px;
 `;
+
 const TopCont = styled.div`
     width: 100%;
     background: #ffffff;
@@ -119,6 +127,7 @@ const SearchButton = styled.button`
     cursor: pointer;
     outline: none;
 `;
+
 const BtnImg = styled.img`
     height: 34px;
     width: 34px;

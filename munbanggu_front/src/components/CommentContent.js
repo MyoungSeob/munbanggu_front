@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../shared/Product.css";
 import styled from "styled-components";
 
-import { useSelector } from "react-redux";
 import axios from "axios";
 
 import star from "../shared/icon_star_bg_new@3x.png";
 import starFill from "../shared/icon_star_fill_new@3x.png";
 
 const CommentContent = (props) => {
-    const id = props.id;
-    const title = props.title;
+    const id = props.id; //상품아이디
 
-    const comments = props.comment;
-    const stars = props.comment.star_rating;
-    const date = props.comment.createdAt.substr(0, 10);
+    const comments = props.comment; //코멘트내용
+    const stars = props.comment.star_rating; //별점
+    const date = props.comment.createdAt.substr(0, 10); //날짜
 
-    const commentId = props.comment._id;
+    const commentId = props.comment._id; //작성자
 
+    //해당 코멘트의 내용이 보여지는 토글입니다
     const [open, setOpen] = useState(false);
 
     const clickHandler = () => {
@@ -28,29 +27,26 @@ const CommentContent = (props) => {
         }
     };
 
+    //내가 작성한 코멘트인지 판별합니다
     const token = localStorage.getItem("log_token");
     const user_id = localStorage.getItem("id");
+    const comment_user_id = comments.user.id.replace(/(?<=.{2})./gi, "*");
 
+    //비회원도 상품 정보가 렌더링 되도록 합니다
     if (!token) return null;
     if (!user_id) return null;
 
+    //삭제한 후 새로고침해줍니다
     const deleteComment = () => {
-        const Id = {
-            _id: commentId,
-        };
         axios({
             method: "DELETE",
             url: `http://13.125.248.86/goods/${id}/comment`,
-            headers: {
-                authorization: `Bearer ${token}`,
-                "Content-type": "application/json",
-            },
-            data: Id,
+            id: commentId,
         })
             .then(function (response) {
                 console.log(response);
                 window.alert("후기가 삭제되었습니다");
-                window.replace("/");
+                window.location.replace(`/goods/${id}`);
             })
             .catch((error) => {
                 console.log(error.response);
@@ -66,7 +62,7 @@ const CommentContent = (props) => {
                     </Star>
                 </Td>
                 <TdTitle onClick={clickHandler}>{comments.title}</TdTitle>
-                <Td>{comments.user.id}</Td>
+                <Td>{comment_user_id}</Td>
                 <Td>{date}</Td>
             </Tr>
             <tr className={open === true ? "open" : "close"} open>

@@ -1,30 +1,42 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import "../shared/Product.css";
+import { actionsCreators as productActions } from "../redux/modules/product";
 
 import GoodsTab from "../components/GoodsTab";
-import CommentContent from "../components/CommentContent";
+import CommentList from "../components/CommentList";
 
 const ProductDetailInfo = (props) => {
+    //ProductDateil에서 데이터를 넘겨 받아옵니다
     const detailInfo = props.data;
     const id = detailInfo._id;
     const image = detailInfo.detail_image_url[0];
-    const title = detailInfo.title;
+    //사용자가 이 제품을 구매한 사람인지 판단합니다
+    const dispatch = useDispatch();
+    const order_list = useSelector((store) => store.product.lately_orderlist);
+    const idx = order_list.findIndex((p) => p.goods._id === id);
+    console.log(idx);
+    const data = order_list[idx];
 
-    const log_token = localStorage.getItem("log_token");
+    //코멘트 작성
+    const comment = () => {
+        if (data === undefined) {
+            window.alert("구매한 상품만 후기를 작성할 수 있습니다");
+            return;
+        } else {
+            window.open(
+                `${id}/comment`,
+                `window_name`,
+                "width=1020,height=1000,location=(50,50),status=no,scrollbars=yes"
+            );
+        }
+    };
 
-    const [comment, setComment] = useState();
-
+    //렌더링시 주문내역을 불러옵니다
     useEffect(() => {
-        const comment = async (param) => {
-            setComment(null);
-            const res = await axios.get(`http://13.125.248.86/goods/${id}/comment`);
-            setComment(res.data.result);
-        };
-        comment();
+        dispatch(productActions.lately_orderlistDB());
     }, []);
-    if (!comment) return null;
 
     return (
         <Body>
@@ -108,17 +120,7 @@ const ProductDetailInfo = (props) => {
             <GoodsTab is_reviews review_cnt={detailInfo.comment_count} />
             <Flex>
                 <h3>상품후기</h3>
-                <AReview
-                    onClick={() =>
-                        window.open(
-                            `${id}/comment`,
-                            `window_name`,
-                            "width=420,height=600,location=(50,50),status=no,scrollbars=yes"
-                        )
-                    }
-                >
-                    상품후기 글쓰기
-                </AReview>
+                <AReview onClick={comment}>상품후기 글쓰기</AReview>
             </Flex>
             {detailInfo.comment_count === 0 ? (
                 <Table>
@@ -130,9 +132,7 @@ const ProductDetailInfo = (props) => {
                 </Table>
             ) : (
                 <Table>
-                    {comment.map((p) => {
-                        return <CommentContent id={id} title={title} comment={p} />;
-                    })}
+                    <CommentList id={id} />
                 </Table>
             )}
             <GoodsTab review_cnt={detailInfo.comment_count} />
@@ -141,20 +141,6 @@ const ProductDetailInfo = (props) => {
                 <AReview>상품문의 글쓰기</AReview>
             </Flex>
             <Table>
-                {/* <colgroup>
-                <col width="13%" />
-                <col />
-                <col width="13%" />
-                <col width="13%" />
-            </colgroup>
-            <thead>
-                <tr>
-                    <th>평점</th>
-                    <th>제목</th>
-                    <th>작성자</th>
-                    <th>작성일</th>
-                </tr>
-            </thead> */}
                 <tbody>
                     <tr>
                         <Td colspan="4">등록된 상품문의가 없습니다.</Td>
@@ -258,4 +244,5 @@ const Td = styled.td`
     border-bottom: 1px solid #dbdbdb;
     font-size: 12px;
 `;
+
 export default ProductDetailInfo;

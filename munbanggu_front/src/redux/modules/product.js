@@ -1,9 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axios from "axios";
-import { connect } from "react-redux";
-import Mypage from "../../pages/Mypage";
- 
 
 const SET_PRODUCT_LATELY = "GET_PRODUCT_LATELY";
 const GET_PRODUCT = "GET_PRODUCT";
@@ -18,14 +15,13 @@ const getLivingProduct = createAction(GET_LIVING_PRODUCT, (product_list) => prod
 const getStatProduct = createAction(GET_STAT_PRODUCT, (product_list) => product_list);
 const getProductLowHigh = createAction(GET_PRODUCT_LOW_HIGH, (product_list) => product_list);
 const getProductHighLow = createAction(GET_PRODUCT_HIGH_LOW, (product_list) => product_list);
-const setProductlately = createAction(SET_PRODUCT_LATELY, (lately_orderlist) => lately_orderlist);
+const getProductlately = createAction(SET_PRODUCT_LATELY, (lately_orderlist) => lately_orderlist);
 const loading = createAction(LOADING, (is_loading) => is_loading);
-
 
 const initialState = {
     list: [],
-    lowHight: [],
-    hightLow: [],
+    lowHigh: [],
+    highLow: [],
     living: [],
     stat: [],
     lately_orderlist: [],
@@ -39,10 +35,13 @@ const getProductDB = () => {
             .get(`http://13.125.248.86/goods`)
             .then((response) => {
                 let product_list = [...response.data.result];
+                //초기 데이터
                 dispatch(getProduct(product_list));
+                //낮은 가격순
                 dispatch(
                     getProductLowHigh([...product_list].sort((a, b) => a.sale_price - b.sale_price))
                 );
+                //높은 가격순
                 dispatch(
                     getProductHighLow([...product_list].sort((a, b) => b.sale_price - a.sale_price))
                 );
@@ -53,6 +52,7 @@ const getProductDB = () => {
     };
 };
 
+//리빙데이터 저장
 const getLivingProductDB = () => {
     return function (dispatch, getState, { history }) {
         dispatch(loading(true));
@@ -61,12 +61,6 @@ const getLivingProductDB = () => {
             .then((response) => {
                 let product_list = [...response.data.result];
                 dispatch(getLivingProduct(product_list));
-                dispatch(
-                    getProductLowHigh([...product_list].sort((a, b) => a.sale_price - b.sale_price))
-                );
-                dispatch(
-                    getProductHighLow([...product_list].sort((a, b) => b.sale_price - a.sale_price))
-                );
             })
             .catch((error) => {
                 console.log(error);
@@ -74,6 +68,7 @@ const getLivingProductDB = () => {
     };
 };
 
+//문구 데이터 저장
 const getStatProductDB = () => {
     return function (dispatch, getState, { history }) {
         dispatch(loading(true));
@@ -82,12 +77,6 @@ const getStatProductDB = () => {
             .then((response) => {
                 let product_list = [...response.data.result];
                 dispatch(getStatProduct(product_list));
-                dispatch(
-                    getProductLowHigh([...product_list].sort((a, b) => a.sale_price - b.sale_price))
-                );
-                dispatch(
-                    getProductHighLow([...product_list].sort((a, b) => b.sale_price - a.sale_price))
-                );
             })
             .catch((error) => {
                 console.log(error);
@@ -95,50 +84,23 @@ const getStatProductDB = () => {
     };
 };
 
+//유저 정보를 토큰에 태워 주문 정보를 가져옵니다
 const lately_orderlistDB = () => {
     return function (dispatch, getState, { history }) {
-        
-
         axios
             .get(`http://13.125.248.86/order`, {
                 headers: {
                     authorization: `Bearer ${localStorage.getItem("log_token")}`,
+                    Accept: "application/json",
                 },
             })
-            
             .then((res) => {
-                const results = res.data.result;
-                console.log(results)
-
-                let lately_orderlist = [];
-                
-                results.forEach((doc) => {
-                let _order={
-                   ...doc
-                 } 
-                let order={
-                  
-                  price:_order.goods.sale_price,
-                  url:_order.goods.thumbnail_url,
-                  name:_order.goods.title,
-                  amount:_order.quantity,
-                  option:_order.goods.option,
-                  date:_order.createdAt.substr(0,10),
-                  user_name:_order.user.name,
-                  
-                };
-                
-                console.log(order);
-                lately_orderlist.push(order);
-               
-              });
-              
-               
-                 dispatch(setProductlately(lately_orderlist));
-            });
+                let lately_orderlist = [...res.data.result];
+                dispatch(getProductlately(lately_orderlist));
+            })
+            .catch((e) => console.log(e));
     };
 };
-
 
 const orderProductDB = (
     isZoneCode,
@@ -151,7 +113,7 @@ const orderProductDB = (
     return function (dispatch, getState, { history }) {
         const orderInfoList = [];
         const order_list = [];
-        for (let i = 1; i < localStorage.length-1; i++) {
+        for (let i = 1; i < localStorage.length - 1; i++) {
             orderInfoList.push(JSON.parse(localStorage.getItem(i)));
             const loginToken = localStorage.getItem("log_token");
             axios({
@@ -174,17 +136,16 @@ const orderProductDB = (
             })
                 .then(function (res) {
                     console.log(res);
-                    
                 })
                 .catch(function (err) {
                     console.log("에러입니다", err);
                 });
         }
-        window.alert("결제 완료되셨습니다!")
-        for(let i = 1; i < localStorage.length-1; i++){
-            localStorage.removeItem(i)
+        window.alert("결제 완료되셨습니다!");
+        for (let i = 1; i < localStorage.length - 1; i++) {
+            localStorage.removeItem(i);
         }
-        history.push('/')
+        history.push("/");
     };
 };
 
@@ -232,7 +193,7 @@ const actionsCreators = {
     getStatProductDB,
     orderProductDB,
     lately_orderlistDB,
-    setProductlately,
+    getProductlately,
 };
 
 export { actionsCreators };

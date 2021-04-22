@@ -10,15 +10,16 @@ import { actionsCreators as productActions } from "../redux/modules/product";
 import axios from "axios";
 
 const Comment = (props) => {
-    const id = props.match.params.id;
-    const token = localStorage.getItem("log_token");
+    const id = props.match.params.id; //상품Id
+    const token = localStorage.getItem("log_token"); //후기 작성에 필요한 토큰
 
-    const [goods, setGoods] = useState("");
+    //후기에 저장되는 내용들 입니다.
     const [rating, setRating] = useState(5);
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const createdAt = moment().format("YYYY.MM.DDTHH:mm:ss");
 
+    //코멘트 작성
     const comment = () => {
         if (title === "" || content === "") {
             window.alert("내용을 다 입력해 주세요");
@@ -41,7 +42,6 @@ const Comment = (props) => {
             data: comment,
         })
             .then(function (response) {
-                console.log(response);
                 window.alert("후기가 작성되었습니다");
                 window.close();
             })
@@ -50,21 +50,22 @@ const Comment = (props) => {
             });
     };
 
+    //상품 정보를 불러옵니다
     const dispatch = useDispatch();
     const product_list = useSelector((store) => store.product.list);
-
     const idx = product_list.findIndex((p) => p._id === id);
     const data = product_list[idx];
 
     useEffect(() => {
         dispatch(productActions.getProductDB());
-    }, [id]);
-    console.log(product_list);
+    }, []);
+
+    if (!data) return null;
 
     return (
         <>
             <Header>
-                <H3>{goods.title}</H3>
+                <H3>{data.title}</H3>
                 <span>에 대한 후기를 작성해 주세요!</span>
             </Header>
             <Star>
