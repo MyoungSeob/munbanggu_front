@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-import nexticon_off from "../shared/nexticon_off.png";
-import plusIcon from "../shared/PlusIcon.png";
-import equalicon from "../shared/equalicon.png";
+import nexticon_off from "../shared/Image/nexticon_off.png";
+import plusIcon from "../shared/Image/PlusIcon.png";
+import equalicon from "../shared/Image/equalicon.png";
 
 import CartList from "../components/CartList";
 
@@ -29,8 +29,9 @@ const Order = (props) => {
     const [payMethod, setPayMethod] = React.useState("");
 
     const price = [];
-
+    //장바구니에 담긴 상품들의 총 개수
     const countProduct = localStorage.length - 2;
+    //장바구니 상품들의 총 가격
     if (localStorage.length > 2) {
         for (let i = 1; i < localStorage.length - 1; i++) {
             price.push(JSON.parse(localStorage.getItem(i)).price);
@@ -38,7 +39,7 @@ const Order = (props) => {
         console.log(price);
     }
     const sum = price.reduce((a, b) => a + b, 0);
-
+    //지불방식 선택(신용카드)
     const checkedCard = () => {
         if (!isCheckedCard && !isCheckedPhone) {
             setIsCheckedCard(true);
@@ -55,6 +56,7 @@ const Order = (props) => {
             setPayMethod("");
         }
     };
+    //지불방식 선택(휴대폰결제)
     const checkedPhone = () => {
         if (!isCheckedCard && !isCheckedPhone) {
             setIsCheckedPhone(true);
@@ -72,7 +74,7 @@ const Order = (props) => {
         }
     };
     console.log(payMethod);
-
+    //모달관련 함수
     const useStyles = makeStyles((theme) => ({
         modal: {
             display: "flex",
@@ -94,6 +96,7 @@ const Order = (props) => {
     const handleClose = () => {
         setOpen(false);
     };
+    // 다음 우편번호 API에서 사용할 정보들 얻기
     const handleComplete = (data) => {
         let fullAddress = data.address;
         let extraAddress = "";
@@ -111,12 +114,13 @@ const Order = (props) => {
         setIsAddress(fullAddress);
         handleClose();
     };
+    //모달에 들어갈 내용
     const body = (
         <div>
             <DaumPostcode onComplete={handleComplete} />
         </div>
     );
-
+    //입력사항에 빈칸이 있을 시 구매 못하도록 만든 함수
     function orderProduct() {
         if (
             isZoneCode === "" ||

@@ -73,6 +73,8 @@ const logoutDB = () => {
         window.location.replace("/");
     };
 };
+
+//구현하지 못한 기능입니다.
 const googleLoginDB = (token) => {
     return function (getState, dispatch, { history }) {
         axios
@@ -89,6 +91,7 @@ const googleLoginDB = (token) => {
             });
     };
 };
+//구현하지 못한 기능입니다.
 const kakaoLoginDB = (id) => {
     return function (getState, dispatch, { history }) {
         axios({

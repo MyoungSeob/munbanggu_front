@@ -1,17 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 import { history } from "../redux/configStore";
-import nexticon from "../shared/next_icon.png";
-import plusIcon from "../shared/PlusIcon.png";
-import equalicon from "../shared/equalicon.png";
-import warningIcon from "../shared/icon_warning.png";
+import nexticon from "../shared/Image/next_icon.png";
+import plusIcon from "../shared/Image/PlusIcon.png";
+import equalicon from "../shared/Image/equalicon.png";
+import warningIcon from "../shared/Image/icon_warning.png";
 import CartList from "../components/CartList";
 
 const Cart = (props) => {
-    const [deliveryPrice, setDeliveryPrice] = React.useState(0);
     const price = [];
-
+    //로그인 시 발급받는 토큰들을 제외한 나머지의 수는 장바구니에 담은 상품개수
     const countProduct = localStorage.length - 2;
+    //장바구니에 담긴 상품들의 총 가격
     if (localStorage.length > 2) {
         for (let i = 1; i < localStorage.length - 1; i++) {
             price.push(JSON.parse(localStorage.getItem(i)).price);

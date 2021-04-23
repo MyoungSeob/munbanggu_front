@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 import styled from "styled-components";
 import HeaderLogin from "./HeaderLogin";
-import headerlogo from "../shared/header_logo.png";
+import headerlogo from "../shared/Image/header_logo.png";
 import HeaderCategory from "./HeaderCategory";
 import { history } from "../redux/configStore";
 import { actionCreators as userActions } from "../redux/modules/user";
 
 const HeaderScrollLogo = (props) => {
+    //HeaderLogin과 같은 헤더이지만 스크롤 시 고정되는 Header
     const dispatch = useDispatch();
 
     const is_login = useSelector((state) => state.user.is_login);
@@ -40,7 +41,7 @@ const HeaderScrollLogo = (props) => {
                                     <TextBar />
                                 </il>
                                 <il>
-                                    <LoginText>마이페이지</LoginText>
+                                    <LoginText onClick={()=>{history.push('/user/mypage')}}>마이페이지</LoginText>
                                     <TextBar />
                                 </il>
                                 <il>
@@ -89,7 +90,7 @@ const HeaderScrollLogo = (props) => {
                                 <TextBar />
                             </il>
                             <il>
-                                <LoginText>마이페이지</LoginText>
+                                <LoginText onClick={()=>{history.push('/user/mypage')}}>마이페이지</LoginText>
                                 <TextBar />
                             </il>
                             <il>

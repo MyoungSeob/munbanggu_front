@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import nexticon from "../shared/next_icon.png";
-import icondot from "../shared/icon_dot.png";
+import nexticon from "../shared/Image/next_icon.png";
+import icondot from "../shared/Image/icon_dot.png";
 import DaumPostcode from "react-daum-postcode";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
@@ -26,7 +26,7 @@ const SignUpInfo = (props) => {
     const [email, setEmail] = React.useState("");
     const [phoneNumber, setPhoneNumber] = React.useState("");
     const [detailAddress, setDetailAddress] = React.useState("");
-
+    // 모달 관련 함수들
     const useStyles = makeStyles((theme) => ({
         modal: {
             display: "flex",
@@ -48,6 +48,7 @@ const SignUpInfo = (props) => {
     const handleClose = () => {
         setOpen(false);
     };
+    //다음 우편번호 API 
     const handleComplete = (data) => {
         let fullAddress = data.address;
         let extraAddress = "";
@@ -70,7 +71,7 @@ const SignUpInfo = (props) => {
             <DaumPostcode onComplete={handleComplete} />
         </div>
     );
-
+    //회원가입 유효성 검사
     function SignUP() {
         console.log(isAddress);
         console.log(isZoneCode);

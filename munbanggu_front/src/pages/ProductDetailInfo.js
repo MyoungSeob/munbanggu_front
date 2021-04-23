@@ -11,12 +11,11 @@ const ProductDetailInfo = (props) => {
     //ProductDateil에서 데이터를 넘겨 받아옵니다
     const detailInfo = props.data;
     const id = detailInfo._id;
-    const image = detailInfo.detail_image_url[0];
+    const image = detailInfo.detail_image_url;
     //사용자가 이 제품을 구매한 사람인지 판단합니다
     const dispatch = useDispatch();
     const order_list = useSelector((store) => store.product.lately_orderlist);
     const idx = order_list.findIndex((p) => p.goods._id === id);
-    console.log(idx);
     const data = order_list[idx];
 
     //코멘트 작성
@@ -43,7 +42,9 @@ const ProductDetailInfo = (props) => {
             <GoodsTab is_info review_cnt={detailInfo.comment_count} />
             <InfoImg>
                 <H3>상품상세 정보</H3>
-                <img src={image} alt="product detail" />
+                {image.map((p) => (
+                    <img src={p} alt="product detail" />
+                ))}
             </InfoImg>
             {detailInfo.detail_info.length === 0 ? null : (
                 <InfoTable>

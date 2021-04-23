@@ -1,3 +1,4 @@
+//회원가입 시 유효성 검사
 export function isEmail(asValue) {
     var regExpEm = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
     return regExpEm.test(asValue); 

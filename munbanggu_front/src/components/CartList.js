@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import beer from "../shared/beer.jpeg";
 import CartContent from "./CartContent";
 
 const CartList = (props) => {
+    // localStorage에 담겨있는 정보들을 CartContent에 넣기위해 만든 함수
     const cart_list = [];
     for (let i = 1; i < localStorage.length - 1; i++) {
         cart_list.push(JSON.parse(localStorage.getItem(i)));

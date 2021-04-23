@@ -4,8 +4,8 @@ import styled from "styled-components";
 
 import axios from "axios";
 
-import star from "../shared/icon_star_bg_new@3x.png";
-import starFill from "../shared/icon_star_fill_new@3x.png";
+import star from "../shared/Image/icon_star_bg_new@3x.png";
+import starFill from "../shared/Image/icon_star_fill_new@3x.png";
 
 const CommentContent = (props) => {
     const id = props.id; //상품아이디

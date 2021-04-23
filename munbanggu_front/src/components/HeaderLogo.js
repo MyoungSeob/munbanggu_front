@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import Input from "../elements/Input";
-import headerlogo from "../shared/header_logo.png";
-import search_icon from "../shared/searchicon.png";
+import headerlogo from "../shared/Image/header_logo.png";
+import search_icon from "../shared/Image/searchicon.png";
 import { history } from "../redux/configStore";
 
 const HeaderLogo = (props) => {

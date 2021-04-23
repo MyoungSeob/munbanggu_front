@@ -1,14 +1,15 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import beaminbutton from "../shared/beamin_button.png";
-import facebookicon from "../shared/facebookicon.png";
+import beaminbutton from "../shared/Image/beamin_button.png";
+import facebookicon from "../shared/Image/facebookicon.png";
 import { history } from "../redux/configStore";
-import google_login_btn from "../shared/google_login_btn.png";
+import google_login_btn from "../shared/Image/google_login_btn.png";
 import { actionCreators as userActions } from "../redux/modules/user";
 
 const Signup = (props) => {
     const dispatch = useDispatch();
+    //구현하지 못한 기능입니다.
     function googleLogin() {
         dispatch(userActions.googleLoginDB());
     }

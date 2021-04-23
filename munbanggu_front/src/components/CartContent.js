@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-import upIcon from "../shared/btn_count_up.png";
-import downIcon from "../shared/btn_count_down.png";
+import upIcon from "../shared/Image/btn_count_up.png";
+import downIcon from "../shared/Image/btn_count_down.png";
 
 const CartContent = (props) => {
     //localStorage에서 정보를 받아와 물품의 가격 및 수량, 원가를 구했습니다.
@@ -14,7 +14,7 @@ const CartContent = (props) => {
     const [checkProduct, setCheckProduct] = React.useState(false);
     // modal 내의 수량변경을 위해 사용하는 useState입니다.
     const [num, setNum] = React.useState(0);
-
+    // modal 수량변경 함수
     const amountUp = () => {
         setNum(1 + num);
     };
@@ -23,7 +23,7 @@ const CartContent = (props) => {
             setNum(num - 1);
         }
     };
-
+    // 상품마다 체크박스를 이용하여 하나하나 장바구니 삭제, 구매 등을 진행하려 하였으나 기능을 구현하지 못했습니다.
     const order_list = [];
     const orderContent = {
         goods: props.goods,
@@ -44,7 +44,7 @@ const CartContent = (props) => {
         order_list.pop();
     }
     console.log(order_list);
-
+    // 장바구니 수량변경 시 localStorage값 변경
     const optionChange = () => {
         const changeInfo = {
             id: props.id,
@@ -58,7 +58,7 @@ const CartContent = (props) => {
         localStorage.setItem(`${props.id}`, JSON.stringify(changeInfo));
         window.location.reload();
     };
-
+    //modal 함수들
     function rand() {
         return Math.round(Math.random() * 20) - 10;
     }
@@ -157,6 +157,7 @@ const CartContent = (props) => {
                                         <PriceStrong>
                                             {(Price + originPrice * num)
                                                 .toString()
+                                                // 숫자의 3번째 자리에 ","를 넣어줬습니다.
                                                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                             원
                                         </PriceStrong>

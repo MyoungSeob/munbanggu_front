@@ -101,7 +101,7 @@ const lately_orderlistDB = () => {
             .catch((e) => console.log(e));
     };
 };
-
+// 구매하기 버튼을 누르면, 헤더에 토큰을 태워서 주문한 상품들의 정보를 서버로 보내줍니다.
 const orderProductDB = (
     isZoneCode,
     isAddress,

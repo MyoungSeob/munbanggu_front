@@ -18,7 +18,7 @@ a {
 }
 
 .goodsCntUp {
-    background: url(../shared/btn_count_up.png) no-repeat left top;
+    background: url(../shared/Image/btn_count_up.png) no-repeat left top;
     display: block;
     width: 24px;
     height: 19px;
@@ -30,7 +30,7 @@ a {
 
 .goodsCntDwn {
     margin: -3px 0 0;
-    background: url(../shared/btn_count_down.png) no-repeat left top;
+    background: url(../shared/Image/btn_count_down.png) no-repeat left top;
     display: block;
     width: 24px;
     height: 19px;
@@ -45,7 +45,7 @@ a {
     width: 52px;
     height: 52px;
     text-align: center;
-    background: url(../shared/zzim_heart@3x.png) no-repeat center center;
+    background: url(../shared/Image/zzim_heart@3x.png) no-repeat center center;
     background-size: 26px 23px;
     border: 1px solid #ccc;
 }

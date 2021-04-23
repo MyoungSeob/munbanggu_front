@@ -6,12 +6,13 @@ import HeaderCategory from "./HeaderCategory";
 import HeaderScrollLogo from "./HeaderScrollLogo";
 
 const Header = (props) => {
+    // 스크롤 시 상단에 헤더 고정
     const [scrollPosition, setScrollPosition] = useState(0); //스크롤바의 시작은 0
     const handleScroll = () => {
         const position = window.pageYOffset;
         setScrollPosition(position); //스크롤을 할 때마다 scrollPosition의 값은 변한다.
     };
-
+    //스크롤 이벤트 구독 및 구독 해제
     React.useEffect(() => {
         window.addEventListener("scroll", handleScroll, { passive: true }); //스크롤이벤트 구독
         return () => {

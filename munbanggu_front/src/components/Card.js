@@ -5,18 +5,13 @@ import { useDispatch } from "react-redux";
 import { history } from "../redux/configStore";
 import { Link } from "react-router-dom";
 
-import saleBadge from "../shared/SaleBadge.png";
+import saleBadge from "../shared/Image/SaleBadge.png";
 
 const Card = (props) => {
     return (
         <>
             {props.discount === true ? (
-                <a
-                    href={() => {
-                        history.push(`/goods/${props._id}`);
-                    }}
-                    key={props._id}
-                >
+                <a href={"/goods/" + props._id} key={props._id}>
                     <Item key={props._id}>
                         <ItemInner>
                             <img src={props.thumbnail_url} alt="detail" width="280px"></img>
@@ -33,12 +28,7 @@ const Card = (props) => {
                     </Item>
                 </a>
             ) : (
-                <a
-                    onClick={() => {
-                        history.push(`/goods/${props._id}`);
-                    }}
-                    key={props._id}
-                >
+                <a href={"/goods/" + props._id} key={props._id}>
                     <Item>
                         <ItemInner>
                             <img src={props.thumbnail_url} alt="detail" width="280px"></img>

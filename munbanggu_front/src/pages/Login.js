@@ -5,15 +5,17 @@ import user, { actionCreators as userActions } from "../redux/modules/user";
 import styled from "styled-components";
 import { history } from "../redux/configStore";
 import KaKaoLogin from "react-kakao-login";
-import KakaoLogin from "react-kakao-login";
+
 
 const Login = (props) => {
-    const _id = props.match.params.id;
+    // 구현하지 못한 기능
+    // const _id = props.match.params.id;
     const dispatch = useDispatch();
 
     const [id, setId] = React.useState("");
     const [pwd, setPwd] = React.useState("");
-    const [kakaoToken, setKakaoToken] = React.useState();
+    // 구현하지 못한 기능
+    // const [kakaoToken, setKakaoToken] = React.useState();
 
     const login = () => {
         // console.log(getCookie('user_id'))
@@ -27,13 +29,15 @@ const Login = (props) => {
         // redux의 loginDB에 id, pwd를 보내줍니다.
         // history.push('/')
     };
-    function Move(web) {
-        window.location.href = web;
-    }
-    function Kakao() {
-        window.location.href = "http://13.125.248.86/auth/kakao";
-        dispatch(userActions.kakaoLoginDB(_id));
-    }
+
+    //구현하지 못한 기능
+    // function Move(web) {
+    //     window.location.href = web;
+    // }
+    // function Kakao() {
+    //     window.location.href = "http://13.125.248.86/auth/kakao";
+    //     dispatch(userActions.kakaoLoginDB(_id));
+    // }
 
     return (
         <React.Fragment>
@@ -106,17 +110,17 @@ const Login = (props) => {
 
                                     {/* <!-- //login_box --> */}
 
-                                    <div>
+                                    {/* <div>
                                         <KaKaoBtn
-                                            token={"77cf3a731ee167706680f1d2044f0f9e"}
-                                            onSuccess={(res) => {
-                                                console.log(res);
-                                            }}
-                                            onFailure={(err) => console.log(err)}
-                                            buttonText="카카오 계정으로 로그인"
-                                            getProfile={true}
+                                            // token={"77cf3a731ee167706680f1d2044f0f9e"}
+                                            // onSuccess={(res) => {
+                                            //     console.log(res);
+                                            // }}
+                                            // onFailure={(err) => console.log(err)}
+                                            // buttonText="카카오 계정으로 로그인"
+                                            // getProfile={true}
                                         />
-                                    </div>
+                                    </div> */}
 
                                     <Btn_login_box>
                                         <UL>
